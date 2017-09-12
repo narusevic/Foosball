@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Foosball
 {
-    public partial class Form1 : Form
+    public partial class Video : Form
     {
-        public Form1()
+        public Video()
         {
             InitializeComponent();
         }
