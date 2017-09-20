@@ -17,7 +17,6 @@ namespace Foosball
 {
     public partial class BallTracking : Form
     {
-
         Capture capWebcam;
         bool blnCapturingInProcess = false;
 
@@ -96,7 +95,6 @@ namespace Foosball
             imageBoxOriginal.Image = imgOriginal;
             imageBoxTresh.Image = imgThresh;
         }
-
 
         private void buttonPauseAndResume_Click(object sender, EventArgs e)
         {
