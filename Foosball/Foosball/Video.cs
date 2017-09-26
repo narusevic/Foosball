@@ -12,9 +12,17 @@ namespace Foosball
 {
     public partial class Video : Form
     {
+        private readonly VideoProvider _videoProvider;
+
         public Video()
         {
             InitializeComponent();
+            _videoProvider = new VideoProvider(@"C:\Users\narus\Downloads\LiveByNight.mkv");
+        }
+
+        private void Video_Load(object sender, EventArgs e)
+        {
+            videoPlayer.URL = _videoProvider.GetVideoUrl();
         }
     }
 }
