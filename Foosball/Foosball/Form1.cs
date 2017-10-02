@@ -19,15 +19,15 @@ namespace Foosball
 
     public partial class Form1 : Form
     {
-        Capture capture;
-        Deque<Point> deque = new Deque<Point>();
- 
-        int HLow = 0;
-        int SLow = 43;
-        int VLow = 209;
-        int HHigh = 13;
-        int SHigh = 255;
-        int VHigh = 255;
+        private Capture capture;
+        private Deque<Point> deque = new Deque<Point>();
+        private int HLow = 0;
+        private int SLow = 43;
+        private int VLow = 209;
+        private int HHigh = 13;
+        private int SHigh = 255;
+        private int VHigh = 255;
+
         public Form1()
         {
             InitializeComponent();
@@ -35,62 +35,55 @@ namespace Foosball
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
-                     
-
-            if (capture==null)
-            capture = new Emgu.CV.Capture(0);
+            if (capture == null)
+            {
+                capture = new Emgu.CV.Capture(0);
+            }
 
             capture.ImageGrabbed += Capture_ImageGrabbed;
-            capture.Start(); 
-
+            capture.Start();
         }
 
         private void Capture_ImageGrabbed(object sender, EventArgs e)
         {
             try
             {
-
                 Hsv lowerLimit = new Hsv(HLow, SLow, VLow);
                 Hsv upperLimit = new Hsv(HHigh, SHigh, VHigh);
 
                 Image<Hsv, byte> imgHSV;
 
                 Mat m = new Mat();
-
-
+                
                 capture.Retrieve(m);
                 //capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, 10);
-                CvInvoke.Resize(m, m, new Size(1280, 720));
+                CvInvoke.Resize(m, m, new Size(600, 300));
                 //CvInvoke.GaussianBlur(m, m, new Size(11, 11), 0);
                 imgHSV = new Image<Hsv, byte>(m.Bitmap);
                 Image<Bgr, byte> imgBGR = new Image<Bgr, byte>(m.Bitmap); ;
                 Image<Gray, byte> imgHSVDest = imgHSV.InRange(lowerLimit, upperLimit);
                 imgHSVDest.Erode(2);
                 imgHSVDest.Dilate(2);
-               
-
 
                 int largest_contour_index = 0;
                 double largest_area = 0;
-               VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
-              
-               CvInvoke.FindContours(imgHSVDest, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
+                VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
+
+                CvInvoke.FindContours(imgHSVDest, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
                 for (int i = 0; i < contours.Size; i++)
                 {
                     MCvScalar color = new MCvScalar(0, 0, 255);
 
-                    double a = CvInvoke.ContourArea(contours[i], false);  
+                    double a = CvInvoke.ContourArea(contours[i], false);
                     if (a > largest_area)
                     {
                         largest_area = a;
-                        largest_contour_index = i;               
+                        largest_contour_index = i;
                     }
-
-                   
                 }
-               
+
                 Rectangle rect = CvInvoke.BoundingRectangle(contours[largest_contour_index]);
-              
+
                 CvInvoke.Rectangle(imgBGR, rect, new MCvScalar(255, 0, 0));
                 /* 
                   CvInvoke.Rectangle(imgHSVDest, rect, new MCvScalar(255, 0, 0));
@@ -116,11 +109,10 @@ namespace Foosball
                 //CvInvoke.DrawContours(imgHSVDest, contours, -1, new MCvScalar(255, 0, 0));
 
                 pictureBox1.Image = imgBGR.ToBitmap();
-               // pictureBox1.Image = m.ToImage<Bgr, byte>().Bitmap;
-             //  pictureBox1.Image = imgHSVDest.ToBitmap();
+                // pictureBox1.Image = m.ToImage<Bgr, byte>().Bitmap;
+                //  pictureBox1.Image = imgHSVDest.ToBitmap();
                 Thread.Sleep((int)capture.GetCaptureProperty(CapProp.Fps));
             }
-
             catch (Exception) { }
         }
 
@@ -168,7 +160,6 @@ namespace Foosball
             trackBar4.Value = HHigh;
             trackBar5.Value = SHigh;
             trackBar6.Value = VHigh;
-
         }
 
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
@@ -181,7 +172,7 @@ namespace Foosball
 
         private void videoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-          if(capture==null)
+            if (capture == null)
             {
                 OpenFileDialog ofd = new OpenFileDialog();
                 if (ofd.ShowDialog() == DialogResult.OK)
