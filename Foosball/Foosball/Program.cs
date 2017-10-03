@@ -16,7 +16,7 @@ namespace Foosball
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Video());
+            Application.Run(new BallTracker());
         }
     }
 }
