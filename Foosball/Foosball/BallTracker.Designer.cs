@@ -1,6 +1,6 @@
 ﻿namespace Foosball
 {
-    partial class Form1
+    partial class BallTracker
     {
         /// <summary>
         /// Required designer variable.
