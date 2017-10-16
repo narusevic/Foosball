@@ -1,6 +1,6 @@
 ﻿namespace Foosball
 {
-    partial class Tournament_Winner
+    partial class TournamentWinner
     {
         /// <summary>
         /// Required designer variable.

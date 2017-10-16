@@ -1,6 +1,6 @@
 ﻿namespace Foosball
 {
-    partial class Tournament_bracket
+    partial class TournamentBracket
     {
         /// <summary>
         /// Required designer variable.

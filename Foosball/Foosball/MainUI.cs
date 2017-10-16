@@ -48,7 +48,7 @@ namespace Foosball
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             this.Hide();
-            var load = new Tournament_mode();
+            var load = new TournamentMode();
             load.ShowDialog();
             this.Close();
         }

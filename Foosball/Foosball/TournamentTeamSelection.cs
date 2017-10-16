@@ -11,32 +11,32 @@ using System.Windows.Forms;
 
 namespace Foosball
 {
-    public partial class Tournament_team_selection : Form
+    public partial class TournamentTeamSelection : Form
     {
-        public Tournament_team_selection(int selectedMode)
+        public TournamentTeamSelection(int selectedMode)
         {
             InitializeComponent();
-            textBoxRemover(selectedMode);
+            TextBoxRemover(selectedMode);
         }
 
         private void back_Click(object sender, EventArgs e)
         {
             this.Hide();
-            var load = new Tournament_mode();
+            var load = new TournamentMode();
             load.ShowDialog();
             this.Close();
         }
 
-        private void textBoxRemover(int amount)
+        private void TextBoxRemover(int amount)
         {
             TextBox[] textBox = new TextBox[16];
-            for (int i = amount; i < 16; i++) {
+            for (int i = amount; i < 16; i++)
+            {
                 textBox[i] = new TextBox();
                 textBox16.Name = "textBox" + i;
                 var textBoxToRemove = this.Controls["TextBox" + i];
                 this.Controls.Remove(textBoxToRemove);
             }
-
         }
 
         private void next_Click(object sender, EventArgs e)
@@ -47,14 +47,15 @@ namespace Foosball
             {
                 teamNames.Add(txt.Text);
             }
-            nameValidation(teamNames);
+            NameValidation(teamNames);
         }
 
-        private void nameValidation(List<String> names)
+        private void NameValidation(List<String> names)
         {
             var pattern1 = @"^[a-zA-Z]+\s[a-zA-Z]+\s[a-zA-Z]+$";
             var pattern2 = @"^[a-zA-Z]+\s[a-zA-Z]+$";
             var pattern3 = @"^[a-zA-Z]+$";
+
             foreach (string s in names)
             {
                 if ((Regex.IsMatch(s, pattern1)) || (Regex.IsMatch(s, pattern2)) || (Regex.IsMatch(s, pattern3)))
@@ -62,7 +63,7 @@ namespace Foosball
                     if (s == names.Last<String>())
                     {
                         this.Hide();
-                        var load = new Tournament_bracket(names);
+                        var load = new TournamentBracket(names);
                         load.ShowDialog();
                         this.Close();
                     }

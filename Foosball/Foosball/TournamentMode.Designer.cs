@@ -1,6 +1,6 @@
 ﻿namespace Foosball
 {
-    partial class Tournament_mode
+    partial class TournamentMode
     {
         /// <summary>
         /// Required designer variable.
@@ -56,7 +56,7 @@
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox3.TabIndex = 0;
             this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
+            this.pictureBox3.Click += new System.EventHandler(this.PictureBox3_Click);
             // 
             // pictureBox2
             // 
