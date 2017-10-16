@@ -261,7 +261,6 @@
             this.lbPlayerA.Size = new System.Drawing.Size(46, 13);
             this.lbPlayerA.TabIndex = 16;
             this.lbPlayerA.Text = "Player A";
-            this.lbPlayerA.Click += new System.EventHandler(this.label9_Click);
             // 
             // lbPlayerB
             // 
