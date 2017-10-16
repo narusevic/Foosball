@@ -2,6 +2,7 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
+using Foosball.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,12 +29,24 @@ namespace Foosball
         private int _width = 600;
         private int _height = 300;
 
+        private Match _match;
+
         private int _scoreA = 0;
         private int _scoreB = 0;
 
-        public BallTracker()
+        public BallTracker(Match match)
         {
+            _match = match;
+
             InitializeComponent();
+
+            SetPlayerNames();
+        }
+
+        private void SetPlayerNames()
+        {
+            lbPlayerA.Text = _match.PlayerA.Name;
+            lbPlayerB.Text = _match.PlayerB.Name;
         }
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)

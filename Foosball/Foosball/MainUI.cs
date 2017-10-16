@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Foosball.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,10 +26,16 @@ namespace Foosball
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             this.Hide();
-            BallTracker ballTrackerLoad = new BallTracker();
+
+            Match match = new Match();
+
+            InputPlayerNames inputPlayerNames = new InputPlayerNames(match);
+            inputPlayerNames.ShowDialog();
+
+            BallTracker ballTrackerLoad = new BallTracker(match);
             ballTrackerLoad.ShowDialog(); 
+
             this.Close();
-            
         }
 
         private void pictureBox5_MouseHover(object sender, EventArgs e)
