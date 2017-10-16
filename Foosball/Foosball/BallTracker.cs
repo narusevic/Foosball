@@ -3,7 +3,11 @@ using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -19,6 +23,13 @@ namespace Foosball
         private int _hHigh = 13;
         private int _sHigh = 255;
         private int _vHigh = 255;
+
+        private List<Rectangle> _lastRectangles = new List<Rectangle>();
+        private int _width = 600;
+        private int _height = 300;
+
+        private int _scoreA = 0;
+        private int _scoreB = 0;
 
         public BallTracker()
         {
@@ -49,7 +60,7 @@ namespace Foosball
 
                 _capture.Retrieve(m);
                 //_capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, 10);
-                CvInvoke.Resize(m, m, new Size(600, 300));
+                CvInvoke.Resize(m, m, new Size(_width, _height));
                 //CvInvoke.GaussianBlur(m, m, new Size(11, 11), 0);
                 imgHSV = new Image<Hsv, byte>(m.Bitmap);
                 Image<Bgr, byte> imgBGR = new Image<Bgr, byte>(m.Bitmap); ;
@@ -76,7 +87,12 @@ namespace Foosball
 
                 var rect = CvInvoke.BoundingRectangle(contours[largestContourIndex]);
 
+                _lastRectangles.Add(rect);
+
                 CvInvoke.Rectangle(imgBGR, rect, new MCvScalar(255, 0, 0));
+
+                SetScores();
+
                 /* 
                   CvInvoke.Rectangle(imgHSVDest, rect, new MCvScalar(255, 0, 0));
                   _deque.AddToFront(new Point(rect.Left + rect.Width / 2,
@@ -107,6 +123,59 @@ namespace Foosball
             }
             catch (Exception) { }
         }
+
+        private void SetScores()
+        {
+            //the idea is to select 30 frames and compare if first 15 rectangle coordinates
+            //are different than last 15. In that case, The user, who had the ball before
+            //loosing it, has scored.
+            if (_lastRectangles.Count < 20)
+                return;
+
+            if (IsBallLost())
+            {
+                if (_lastRectangles[9].X < _width / 2)
+                    _scoreB++;
+                else
+                    _scoreA++;
+
+                BeginInvoke(new Action(UpdateScores));
+            }
+
+            _lastRectangles.RemoveAt(0);
+        }
+
+        private bool IsBallLost()
+        {
+            for (var i = 0; i < 9; i++)
+            {
+                if (Math.Abs(_lastRectangles[i].X - _lastRectangles[i + 1].X) > 20 ||
+                    Math.Abs(_lastRectangles[i].Y - _lastRectangles[i + 1].Y) > 20)
+                    return false;
+            }
+
+            for (var i = 10; i < 19; i++)
+            {
+                if (Math.Abs(_lastRectangles[i].X - _lastRectangles[i + 1].X) > 20 ||
+                    Math.Abs(_lastRectangles[i].Y - _lastRectangles[i + 1].Y) > 20)
+                    return false;
+            }
+
+            if (Math.Abs(_lastRectangles[14].X - _lastRectangles[15].X) > 50 ||
+                Math.Abs(_lastRectangles[14].Y - _lastRectangles[15].Y) > 50)
+            {
+                return true;
+            }
+            
+            return false;
+        }
+
+        private void UpdateScores()
+        {
+            lbScoreA.Text = _scoreA.ToString();
+            lbScoreB.Text = _scoreB.ToString();
+        }
+
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
@@ -156,10 +225,7 @@ namespace Foosball
 
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_capture != null)
-            {
-                _capture.Pause();
-            }
+            _capture?.Pause();
         }
 
         private void videoToolStripMenuItem_Click(object sender, EventArgs e)
