@@ -21,7 +21,7 @@ namespace Foosball
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new BallTracker());
+            Application.Run(new MainUI());
         }
 
         private static void SetupRepositories()

@@ -50,6 +50,39 @@
     <Compile Include="BallTracker.Designer.cs">
       <DependentUpon>BallTracker.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainUI.Designer.cs">
+      <DependentUpon>MainUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tournament_bracket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tournament_bracket.Designer.cs">
+      <DependentUpon>Tournament_bracket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tournament_mode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tournament_mode.Designer.cs">
+      <DependentUpon>Tournament_mode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tournament_team_selection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tournament_team_selection.Designer.cs">
+      <DependentUpon>Tournament_team_selection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tournament_Winner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tournament_Winner.Designer.cs">
+      <DependentUpon>Tournament_Winner.cs</DependentUpon>
+    </Compile>
+=======
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Program.cs" />
@@ -70,6 +103,9 @@
     <EmbeddedResource Include="BallTracker.resx">
       <DependentUpon>BallTracker.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainUI.resx">
+      <DependentUpon>MainUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -78,7 +114,20 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Tournament_bracket.resx">
+      <DependentUpon>Tournament_bracket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tournament_mode.resx">
+      <DependentUpon>Tournament_mode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tournament_team_selection.resx">
+      <DependentUpon>Tournament_team_selection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tournament_Winner.resx">
+      <DependentUpon>Tournament_Winner.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Video.resx">
       <DependentUpon>Video.cs</DependentUpon>
     </EmbeddedResource>
@@ -104,6 +153,15 @@
     <Content Include="License-LGPL.txt" />
     <Content Include="msvcp140.dll" />
     <Content Include="opencv_ffmpeg320.dll" />
+    <None Include="Resources\4 Teams.jpg" />
+    <None Include="Resources\8 teams.jpg" />
+    <None Include="Resources\16 Teams.jpg" />
+    <None Include="Resources\apple.jpg" />
+    <None Include="Resources\foosball logo.jpg" />
+    <None Include="Resources\Statistics.jpg" />
+    <None Include="Resources\stock-vector-foosball-table-figurine-foosball-table-logo-design-620920640.jpg" />
+    <None Include="Resources\Untitled-1.jpg" />
+    <None Include="Resources\Winner.jpg" />
     <Content Include="vcruntime140.dll" />
   </ItemGroup>
   <ItemGroup>
