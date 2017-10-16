@@ -12,6 +12,7 @@ namespace Foosball.Repositories
         public PlayerRepository(DataContext dataContext)
         {
             _dataContext = dataContext;
+            Instance = this;
         }
 
         public Player Get(int id)
@@ -22,6 +23,7 @@ namespace Foosball.Repositories
         public void Post(Player player)
         {
             _dataContext.Players.Add(player);
+            _dataContext.SaveChanges();
         }
 
         public void Update(int id, Player player)
@@ -32,6 +34,7 @@ namespace Foosball.Repositories
         public void Remove(int id)
         {
             _dataContext.Players.Remove(Get(id));
+            _dataContext.SaveChanges();
         }
     }
 }
