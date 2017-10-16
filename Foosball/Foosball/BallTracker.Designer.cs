@@ -47,6 +47,13 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lbPlayerA = new System.Windows.Forms.Label();
+            this.lbPlayerB = new System.Windows.Forms.Label();
+            this.lbScoreA = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.lbScoreB = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -61,7 +68,7 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(12, 66);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1248, 716);
+            this.pictureBox1.Size = new System.Drawing.Size(720, 480);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -71,7 +78,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1484, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(939, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -116,7 +123,7 @@
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(1317, 171);
+            this.trackBar1.Location = new System.Drawing.Point(755, 66);
             this.trackBar1.Maximum = 255;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(104, 45);
@@ -126,7 +133,7 @@
             // 
             // trackBar2
             // 
-            this.trackBar2.Location = new System.Drawing.Point(1317, 222);
+            this.trackBar2.Location = new System.Drawing.Point(755, 117);
             this.trackBar2.Maximum = 255;
             this.trackBar2.Name = "trackBar2";
             this.trackBar2.Size = new System.Drawing.Size(104, 45);
@@ -136,7 +143,7 @@
             // 
             // trackBar3
             // 
-            this.trackBar3.Location = new System.Drawing.Point(1317, 273);
+            this.trackBar3.Location = new System.Drawing.Point(755, 168);
             this.trackBar3.Maximum = 255;
             this.trackBar3.Name = "trackBar3";
             this.trackBar3.Size = new System.Drawing.Size(104, 45);
@@ -146,7 +153,7 @@
             // 
             // trackBar4
             // 
-            this.trackBar4.Location = new System.Drawing.Point(1317, 324);
+            this.trackBar4.Location = new System.Drawing.Point(755, 219);
             this.trackBar4.Maximum = 255;
             this.trackBar4.Name = "trackBar4";
             this.trackBar4.Size = new System.Drawing.Size(104, 45);
@@ -156,7 +163,7 @@
             // 
             // trackBar5
             // 
-            this.trackBar5.Location = new System.Drawing.Point(1317, 375);
+            this.trackBar5.Location = new System.Drawing.Point(755, 270);
             this.trackBar5.Maximum = 255;
             this.trackBar5.Name = "trackBar5";
             this.trackBar5.Size = new System.Drawing.Size(104, 45);
@@ -166,7 +173,7 @@
             // 
             // trackBar6
             // 
-            this.trackBar6.Location = new System.Drawing.Point(1317, 426);
+            this.trackBar6.Location = new System.Drawing.Point(755, 321);
             this.trackBar6.Maximum = 255;
             this.trackBar6.Name = "trackBar6";
             this.trackBar6.Size = new System.Drawing.Size(104, 45);
@@ -177,62 +184,133 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1427, 182);
+            this.label1.Location = new System.Drawing.Point(865, 77);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(33, 13);
             this.label1.TabIndex = 8;
-            this.label1.Text = "label1";
+            this.label1.Text = "hLow";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1427, 231);
+            this.label2.Location = new System.Drawing.Point(865, 126);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 9;
-            this.label2.Text = "label2";
+            this.label2.Text = "sLow";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1427, 284);
+            this.label3.Location = new System.Drawing.Point(865, 179);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.Size = new System.Drawing.Size(33, 13);
             this.label3.TabIndex = 10;
-            this.label3.Text = "label3";
+            this.label3.Text = "vLow";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1427, 334);
+            this.label4.Location = new System.Drawing.Point(865, 229);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(35, 13);
             this.label4.TabIndex = 11;
-            this.label4.Text = "label4";
+            this.label4.Text = "hHigh";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1427, 384);
+            this.label5.Location = new System.Drawing.Point(865, 279);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.Size = new System.Drawing.Size(34, 13);
             this.label5.TabIndex = 12;
-            this.label5.Text = "label5";
+            this.label5.Text = "sHigh";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1427, 435);
+            this.label6.Location = new System.Drawing.Point(865, 330);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 13);
             this.label6.TabIndex = 13;
-            this.label6.Text = "label6";
+            this.label6.Text = "vHigh";
             // 
-            // Form1
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(165, 41);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Score";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(439, 41);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(35, 13);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Score";
+            // 
+            // lbPlayerA
+            // 
+            this.lbPlayerA.AutoSize = true;
+            this.lbPlayerA.Location = new System.Drawing.Point(220, 41);
+            this.lbPlayerA.Name = "lbPlayerA";
+            this.lbPlayerA.Size = new System.Drawing.Size(46, 13);
+            this.lbPlayerA.TabIndex = 16;
+            this.lbPlayerA.Text = "Player A";
+            this.lbPlayerA.Click += new System.EventHandler(this.label9_Click);
+            // 
+            // lbPlayerB
+            // 
+            this.lbPlayerB.AutoSize = true;
+            this.lbPlayerB.Location = new System.Drawing.Point(370, 41);
+            this.lbPlayerB.Name = "lbPlayerB";
+            this.lbPlayerB.Size = new System.Drawing.Size(46, 13);
+            this.lbPlayerB.TabIndex = 17;
+            this.lbPlayerB.Text = "Player B";
+            // 
+            // lbScoreA
+            // 
+            this.lbScoreA.AutoSize = true;
+            this.lbScoreA.Location = new System.Drawing.Point(304, 41);
+            this.lbScoreA.Name = "lbScoreA";
+            this.lbScoreA.Size = new System.Drawing.Size(13, 13);
+            this.lbScoreA.TabIndex = 18;
+            this.lbScoreA.Text = "0";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(323, 41);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(10, 13);
+            this.label12.TabIndex = 19;
+            this.label12.Text = ":";
+            // 
+            // lbScoreB
+            // 
+            this.lbScoreB.AutoSize = true;
+            this.lbScoreB.Location = new System.Drawing.Point(339, 41);
+            this.lbScoreB.Name = "lbScoreB";
+            this.lbScoreB.Size = new System.Drawing.Size(13, 13);
+            this.lbScoreB.TabIndex = 20;
+            this.lbScoreB.Text = "0";
+            // 
+            // BallTracker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1484, 919);
+            this.ClientSize = new System.Drawing.Size(939, 568);
+            this.Controls.Add(this.lbScoreB);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.lbScoreA);
+            this.Controls.Add(this.lbPlayerB);
+            this.Controls.Add(this.lbPlayerA);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -248,7 +326,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "BallTracker";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -286,6 +364,13 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ToolStripMenuItem videoToolStripMenuItem;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lbPlayerA;
+        private System.Windows.Forms.Label lbPlayerB;
+        private System.Windows.Forms.Label lbScoreA;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lbScoreB;
     }
 }
 
