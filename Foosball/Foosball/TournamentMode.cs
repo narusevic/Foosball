@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Foosball
 {
-    public partial class Tournament_mode : Form
+    public partial class TournamentMode : Form
     {
-        public Tournament_mode()
+        public TournamentMode()
         {
             InitializeComponent();
         }
@@ -20,7 +20,7 @@ namespace Foosball
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            var load = new Tournament_team_selection(4);
+            var load = new TournamentTeamSelection(4);
             load.ShowDialog();
             this.Close();
         }
@@ -28,15 +28,15 @@ namespace Foosball
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             this.Hide();
-            var load = new Tournament_team_selection(8);
+            var load = new TournamentTeamSelection(8);
             load.ShowDialog();
             this.Close();
         }
 
-        private void pictureBox3_Click(object sender, EventArgs e)
+        private void PictureBox3_Click(object sender, EventArgs e)
         {
             this.Hide();
-            var load = new Tournament_team_selection(16);
+            var load = new TournamentTeamSelection(16);
             load.ShowDialog();
             this.Close();
         }

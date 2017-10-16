@@ -10,11 +10,12 @@ using System.Windows.Forms;
 
 namespace Foosball
 {
-    public partial class Tournament_Winner : Form
+    public partial class TournamentWinner : Form
     {
-        public Tournament_Winner(string winner)
+        public TournamentWinner(string winner)
         {
             InitializeComponent();
+
             var myLabel = Controls.OfType<Label>();
             myLabel.First().Text = winner;
         }

@@ -10,22 +10,24 @@ using System.Windows.Forms;
 
 namespace Foosball
 {
-    public partial class Tournament_bracket : Form
+    public partial class TournamentBracket : Form
     {
-        private static Random rng = new Random();
-        public Tournament_bracket(List<String> teamNames, int round = 1)
+        private int _amount;
+
+        public TournamentBracket(List<String> teamNames, int round = 1)
         {
             if(round == 1) {
                 var shuffledTeamNames = teamNames.OrderBy(a => Guid.NewGuid()).ToList();
                 teamNames = shuffledTeamNames;
             }
-            checkIfEnded(teamNames);
+            CheckIfEnded(teamNames);
             InitializeComponent();
-            removeLabel(amountFinder(teamNames.Count));
-            addTeamNames(teamNames, amountFinder(teamNames.Count), round);
+            _amount = AmountFinder(teamNames.Count);
+            RemoveLabel(_amount);
+            AddTeamNames(teamNames, _amount, round);
         }
 
-        private void removeLabel(int amount)
+        private void RemoveLabel(int amount)
         {
             var label = new Label[32];
             for(int i = amount * 2; i < 32; i++)
@@ -37,7 +39,7 @@ namespace Foosball
             }
         }
 
-        private void addTeamNames(List<string> teamNames, int amount, int round)
+        private void AddTeamNames(List<string> teamNames, int amount, int round)
         {
             int n = amount * 2 - 1;
             var myLabel = Controls.OfType<Label>();
@@ -51,7 +53,7 @@ namespace Foosball
             }
         }
 
-        private int amountFinder(int amount)
+        private int AmountFinder(int amount)
         {
             if (amount < 8)
             {
@@ -65,15 +67,15 @@ namespace Foosball
             {
                 return 16;
             }
-            else return 0;
+            return 0;
         }
 
-        private void checkIfEnded(List<string> teamNames)
+        private void CheckIfEnded(List<string> teamNames)
         {
-            if(teamNames.Count == amountFinder(teamNames.Count) * 2 - 1)
+            if(teamNames.Count == AmountFinder(teamNames.Count) * 2 - 1)
             {
                 this.Hide();
-                var load = new Tournament_Winner(teamNames.Last());
+                var load = new TournamentWinner(teamNames.Last());
                 load.ShowDialog();
                 this.Close();
             }
