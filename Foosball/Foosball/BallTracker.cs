@@ -25,6 +25,9 @@ namespace Foosball
         private int _sHigh = 255;
         private int _vHigh = 255;
 
+        private int _round;
+        private List<String> _teamNames = new List<string>();
+
         private List<Rectangle> _lastRectangles = new List<Rectangle>();
         private int _width = 600;
         private int _height = 300;
@@ -43,10 +46,24 @@ namespace Foosball
             SetPlayerNames();
         }
 
+        public BallTracker(List<String> teamNames, int round)
+        {
+            _teamNames = teamNames;
+            _round = round;
+            InitializeComponent();
+            SetTeamNames(teamNames, round);
+        }
+
         private void SetPlayerNames()
         {
             lbPlayerA.Text = _match.PlayerA.Name;
             lbPlayerB.Text = _match.PlayerB.Name;
+        }
+
+        private void SetTeamNames(List<string> teamNames, int round)
+        {
+            lbPlayerA.Text = teamNames[round * 2 - 2];
+            lbPlayerB.Text = teamNames[round * 2 - 1];
         }
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
@@ -185,10 +202,35 @@ namespace Foosball
 
         private void UpdateScores()
         {
+            CheckForWinner();
             lbScoreA.Text = _scoreA.ToString();
             lbScoreB.Text = _scoreB.ToString();
         }
 
+        private void CheckForWinner()
+        {
+            if(_teamNames.Count() != 0)
+            {
+                if(_scoreA >= 10)
+                {
+                    _teamNames.Add(_teamNames[_round * 2 - 2]);
+                    _round++;
+                    this.Hide();
+                    var load = new TournamentBracket(_teamNames, _round);
+                    load.ShowDialog();
+                    this.Close();
+                }
+                if (_scoreB >= 10)
+                {
+                    _teamNames.Add(_teamNames[_round * 2 - 1]);
+                    _round++;
+                    this.Hide();
+                    var load = new TournamentBracket(_teamNames, _round);
+                    load.ShowDialog();
+                    this.Close();
+                }
+            }
+        }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
@@ -253,6 +295,18 @@ namespace Foosball
                     _capture.Start();
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _scoreA++;
+            UpdateScores();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            _scoreB++;
+            UpdateScores();
         }
     }
 }
