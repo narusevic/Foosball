@@ -82,11 +82,8 @@
     <Compile Include="Tournament_Winner.Designer.cs">
       <DependentUpon>Tournament_Winner.cs</DependentUpon>
     </Compile>
-=======
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\Player.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\MatchRepository.cs" />
     <Compile Include="Repositories\PlayerRepository.cs" />
