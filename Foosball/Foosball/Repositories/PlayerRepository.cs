@@ -23,7 +23,7 @@ namespace Foosball.Repositories
         public void Post(Player player)
         {
             _dataContext.Players.Add(player);
-            _dataContext.SaveChanges();
+            _dataContext.WriteChanges();
         }
 
         public void Update(int id, Player player)
@@ -34,7 +34,7 @@ namespace Foosball.Repositories
         public void Remove(int id)
         {
             _dataContext.Players.Remove(Get(id));
-            _dataContext.SaveChanges();
+            _dataContext.WriteChanges();
         }
     }
 }

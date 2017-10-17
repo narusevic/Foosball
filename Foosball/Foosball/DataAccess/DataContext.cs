@@ -9,17 +9,18 @@ namespace Foosball.DataAccess
 
         public DbSet<Player> Players { get; set; }
 
-        public override int SaveChanges()
-        {
-            WriteChanges();
-
-            return 0;
-        }
-
         public void WriteChanges()
         {
-            DataWriter.WriteFileCsv<Match>(Matches);
-            DataWriter.WriteFileCsv<Player>(Players);
+            DataWriter.WriteFileCsv(Matches);
+            DataWriter.WriteFileCsv(Players);
+        }
+
+        public void ReadChanges()
+        {
+            DataReader.ReadFromCsv(Matches);
+            DataReader.ReadFromCsv(Players);
+
+            SaveChanges();
         }
     }
 }

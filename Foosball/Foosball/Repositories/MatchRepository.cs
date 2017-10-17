@@ -23,7 +23,7 @@ namespace Foosball.Repositories
         public void Post(Match match)
         {
             _dataContext.Matches.Add(match);
-            _dataContext.SaveChanges();
+            _dataContext.WriteChanges();
         }
 
         public void Update(int id, Match entity)
@@ -34,7 +34,7 @@ namespace Foosball.Repositories
         public void Remove(int id)
         {
             _dataContext.Matches.Remove(Get(id));
-            _dataContext.SaveChanges();
+            _dataContext.WriteChanges();
         }
     }
 }

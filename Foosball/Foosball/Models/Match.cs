@@ -25,6 +25,9 @@ namespace Foosball.Models
         public Match()
         {
             Id = GlobalId++;
+            Start = DateTime.Now;
+            AScore = 0;
+            BScore = 0;
         }
 
         public Match(string playerA, string playerB)
@@ -32,9 +35,6 @@ namespace Foosball.Models
         {
             PlayerA = new Player(playerA);
             PlayerB = new Player(playerB);
-            Start = DateTime.Now;
-            AScore = 0;
-            BScore = 0;
         }
     }
 }
