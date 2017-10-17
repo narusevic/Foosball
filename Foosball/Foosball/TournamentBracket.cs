@@ -14,6 +14,8 @@ namespace Foosball
     public partial class TournamentBracket : Form
     {
         private int _amount;
+        private List<string> _teamNames = new List<string>();
+        private int _round;
 
         public TournamentBracket(List<String> teamNames, int round = 1)
         {
@@ -21,17 +23,21 @@ namespace Foosball
                 var shuffledTeamNames = teamNames.OrderBy(a => Guid.NewGuid()).ToList();
                 teamNames = shuffledTeamNames;
             }
-            CheckIfEnded(teamNames);
+
+            _teamNames = teamNames;
+            _round = round;
+
+            CheckIfEnded();
             InitializeComponent();
-            _amount = AmountFinder(teamNames.Count);
-            RemoveLabel(_amount);
-            AddTeamNames(teamNames, _amount, round);
+            _amount = AmountFinder();
+            RemoveLabel();
+            AddTeamNames();
         }
 
-        private void RemoveLabel(int amount)
+        private void RemoveLabel()
         {
             var label = new Label[32];
-            for(int i = amount * 2; i < 32; i++)
+            for(int i = _amount * 2; i < 32; i++)
             {
                 label[i] = new Label();
                 label[i].Name = "Label" + i;
@@ -40,22 +46,25 @@ namespace Foosball
             }
         }
 
-        private void AddTeamNames(List<string> teamNames, int amount, int round)
+        private void AddTeamNames()
         {
-            int n = amount * 2 - 1;
+            int n = _amount * 2 - 1;
+            int z = _teamNames.Count - 1;
             var myLabel = Controls.OfType<Label>();
-            myLabel = myLabel.OrderByDescending(label => label.TabIndex);
-            for (int i = n - teamNames.Count; i >= 0; i--) {
-                myLabel.ElementAt(i).Text = teamNames[n - teamNames.Count - i];
-                if ((n - teamNames.Count - i == round * 2 - 1) || (n - teamNames.Count - i == round * 2 - 2))
+            myLabel = myLabel.OrderBy(label => label.TabIndex);
+            for (int i = n - _teamNames.Count; i < n; i++) {
+                myLabel.ElementAt(i).Text = _teamNames[z];
+                if ((z == _round * 2 - 1) || (z == _round * 2 - 2))
                 {
                     myLabel.ElementAt(i).BackColor = Color.Red;
                 }
+                z--;
             }
         }
 
-        private int AmountFinder(int amount)
+        private int AmountFinder()
         {
+            int amount = _teamNames.Count();
             if (amount < 8)
             {
                 return 4;
@@ -71,12 +80,12 @@ namespace Foosball
             return 0;
         }
 
-        private void CheckIfEnded(List<string> teamNames)
+        private void CheckIfEnded()
         {
-            if(teamNames.Count == AmountFinder(teamNames.Count) * 2 - 1)
+            if(_teamNames.Count == AmountFinder() * 2 - 1)
             {
                 this.Hide();
-                var load = new TournamentWinner(teamNames.Last());
+                var load = new TournamentWinner(_teamNames.Last());
                 load.ShowDialog();
                 this.Close();
             }
@@ -85,15 +94,8 @@ namespace Foosball
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-
-            Match match = new Match();
-
-            InputPlayerNames inputPlayerNames = new InputPlayerNames(match);
-            inputPlayerNames.ShowDialog();
-
-            var load = new BallTracker(match);
+            var load = new BallTracker(_teamNames, _round);
             load.ShowDialog();
-
             this.Close();
         }
     }
