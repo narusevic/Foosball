@@ -82,7 +82,7 @@ namespace Foosball
 
         private void CheckIfEnded()
         {
-            if(_teamNames.Count == AmountFinder(_teamNames.Count) * 2 - 1)
+            if(_teamNames.Count == AmountFinder() * 2 - 1)
             {
                 this.Hide();
                 var load = new TournamentWinner(_teamNames.Last());
