@@ -28,18 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.components = new System.ComponentModel.Container();
+            this.view = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dataContextBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.matchesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.playersDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.view)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataContextBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // view
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(22, 12);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(617, 425);
-            this.dataGridView1.TabIndex = 0;
+            this.view.AutoGenerateColumns = false;
+            this.view.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.view.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.matchesDataGridViewTextBoxColumn,
+            this.playersDataGridViewTextBoxColumn});
+            this.view.DataSource = this.dataContextBindingSource;
+            this.view.Location = new System.Drawing.Point(22, 12);
+            this.view.Name = "view";
+            this.view.Size = new System.Drawing.Size(617, 425);
+            this.view.TabIndex = 0;
             // 
             // button1
             // 
@@ -51,6 +61,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // dataContextBindingSource
+            // 
+            this.dataContextBindingSource.DataSource = typeof(Foosball.DataAccess.DataContext);
+            // 
+            // matchesDataGridViewTextBoxColumn
+            // 
+            this.matchesDataGridViewTextBoxColumn.DataPropertyName = "Matches";
+            this.matchesDataGridViewTextBoxColumn.HeaderText = "Matches";
+            this.matchesDataGridViewTextBoxColumn.Name = "matchesDataGridViewTextBoxColumn";
+            // 
+            // playersDataGridViewTextBoxColumn
+            // 
+            this.playersDataGridViewTextBoxColumn.DataPropertyName = "Players";
+            this.playersDataGridViewTextBoxColumn.HeaderText = "Players";
+            this.playersDataGridViewTextBoxColumn.Name = "playersDataGridViewTextBoxColumn";
+            // 
             // Statistics
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -59,19 +85,23 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(666, 513);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.view);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Statistics";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Statistics";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.view)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataContextBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView view;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn matchesDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn playersDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource dataContextBindingSource;
     }
 }
