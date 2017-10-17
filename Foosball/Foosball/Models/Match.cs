@@ -31,7 +31,7 @@ namespace Foosball.Models
         }
 
         public Match(string playerA, string playerB)
-            : base()
+            : this()
         {
             PlayerA = new Player(playerA);
             PlayerB = new Player(playerB);
