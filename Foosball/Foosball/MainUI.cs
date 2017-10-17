@@ -63,6 +63,8 @@ namespace Foosball
         private void pictureBox4_Click(object sender, EventArgs e)
         {
             this.Hide();
+            var load = new Statistics();
+            load.ShowDialog();
             this.Close();
         }
         private void pictureBox5_Click(object sender, EventArgs e)
