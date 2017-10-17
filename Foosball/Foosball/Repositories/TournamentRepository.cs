@@ -1,4 +1,5 @@
-﻿using Foosball.DataAccess;
+﻿using System.Collections;
+using Foosball.DataAccess;
 using Foosball.Models;
 using System.Linq;
 
@@ -35,6 +36,11 @@ namespace Foosball.Repositories
         {
             _dataContext.Tournaments.Remove(Read(id));
             _dataContext.WriteChanges();
+        }
+
+        public IEnumerable<Tournament> ReadAll()
+        {
+            return _dataContext.Tournaments
         }
     }
 }
