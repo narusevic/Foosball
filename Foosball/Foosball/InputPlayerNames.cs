@@ -20,12 +20,12 @@ namespace Foosball
         {
             var playerA = new Player(tbPlayerAName.Text);
             var playerB = new Player(tbPlayerBName.Text);
-            PlayerRepository.Instance.Post(playerA);
-            PlayerRepository.Instance.Post(playerB);
+            PlayerRepository.Instance.Create(playerA);
+            PlayerRepository.Instance.Create(playerB);
 
             _match.PlayerA = playerA;
             _match.PlayerB = playerB;
-            MatchRepository.Instance.Post(_match);
+            MatchRepository.Instance.Create(_match);
 
             DialogResult = DialogResult.OK;
         }

@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\TournamentRepository.cs" />
     <Compile Include="TournamentBracket.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +141,7 @@
     <EmbeddedResource Include="Video.resx">
       <DependentUpon>Video.cs</DependentUpon>
     </EmbeddedResource>
+    <Compile Include="Models\Tournament.cs" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

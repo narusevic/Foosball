@@ -15,12 +15,12 @@ namespace Foosball.Repositories
             Instance = this;
         }
 
-        public Player Get(int id)
+        public Player Read(int id)
         {
             return _dataContext.Players.First(p => p.Id == id);
         }
 
-        public void Post(Player player)
+        public void Create(Player player)
         {
             _dataContext.Players.Add(player);
             _dataContext.WriteChanges();
@@ -31,9 +31,9 @@ namespace Foosball.Repositories
             
         }
 
-        public void Remove(int id)
+        public void Delete(int id)
         {
-            _dataContext.Players.Remove(Get(id));
+            _dataContext.Players.Remove(Read(id));
             _dataContext.WriteChanges();
         }
     }
