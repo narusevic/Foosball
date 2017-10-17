@@ -2,12 +2,12 @@
 {
     public interface IRepository<T>
     {
-        T Get(int id);
+        void Create(T entity);
 
-        void Post(T entity);
+        T Read(int id);
 
         void Update(int id, T entity);
 
-        void Remove(int id);
+        void Delete(int id);
     }
 }

@@ -42,6 +42,8 @@
       <DependentUpon>BallTracking.cs</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\DataContext.cs" />
+    <Compile Include="DataAccess\DataReader.cs" />
+    <Compile Include="DataAccess\DataWriter.cs" />
     <Compile Include="DataAccess\IDataContext.cs" />
     <Compile Include="Deque.cs" />
     <Compile Include="BallTracker.cs">
@@ -50,6 +52,7 @@
     <Compile Include="BallTracker.Designer.cs">
       <DependentUpon>BallTracker.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\DataExtension.cs" />
     <Compile Include="InputPlayerNames.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +67,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\TournamentRepository.cs" />
     <Compile Include="Statistics.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +150,7 @@
     <EmbeddedResource Include="Video.resx">
       <DependentUpon>Video.cs</DependentUpon>
     </EmbeddedResource>
+    <Compile Include="Models\Tournament.cs" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -242,7 +247,9 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="FileDatabase\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

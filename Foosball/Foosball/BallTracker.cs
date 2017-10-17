@@ -5,10 +5,7 @@ using Emgu.CV.Util;
 using Foosball.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -84,29 +81,26 @@ namespace Foosball
                 var lowerLimit = new Hsv(_hLow, _sLow, _vLow);
                 var upperLimit = new Hsv(_hHigh, _sHigh, _vHigh);
 
-                Image<Hsv, byte> imgHSV;
-
                 var m = new Mat();
 
                 _capture.Retrieve(m);
-                //_capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, 10);
                 CvInvoke.Resize(m, m, new Size(_width, _height));
-                //CvInvoke.GaussianBlur(m, m, new Size(11, 11), 0);
-                imgHSV = new Image<Hsv, byte>(m.Bitmap);
-                Image<Bgr, byte> imgBGR = new Image<Bgr, byte>(m.Bitmap); ;
+
+                Image<Hsv, byte> imgHSV = new Image<Hsv, byte>(m.Bitmap);
+                Image<Bgr, byte> imgBGR = new Image<Bgr, byte>(m.Bitmap);
                 Image<Gray, byte> imgHSVDest = imgHSV.InRange(lowerLimit, upperLimit);
                 imgHSVDest.Erode(2);
                 imgHSVDest.Dilate(2);
 
-                int largestContourIndex = 0;
+                var largestContourIndex = 0;
                 double largestArea = 0;
                 var contours = new VectorOfVectorOfPoint();
 
                 CvInvoke.FindContours(imgHSVDest, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
-                for (int i = 0; i < contours.Size; i++)
+
+                for (var i = 0; i < contours.Size; i++)
                 {
-                    var color = new MCvScalar(0, 0, 255);
-                    double a = CvInvoke.ContourArea(contours[i], false);
+                    var a = CvInvoke.ContourArea(contours[i]);
 
                     if (a > largestArea)
                     {
@@ -123,32 +117,7 @@ namespace Foosball
 
                 SetScores();
 
-                /* 
-                  CvInvoke.Rectangle(imgHSVDest, rect, new MCvScalar(255, 0, 0));
-                  _deque.AddToFront(new Point(rect.Left + rect.Width / 2,
-                                      rect.Top + rect.Height / 2));
-                 if (_deque.Count > 20)
-                 {
-                     _deque.RemoveFromBack();
-                 }
-                 CvInvoke.Line(imgBGR, _deque[0], _deque[1], new MCvScalar(0, 255, 0), 10);
-                 for (int i=1; i<_deque.Count; i++)
-                 {
-
-                     CvInvoke.Line(imgBGR, _deque[i-1], _deque[i], new MCvScalar(0, 255, 0), _deque.Count - i);
-                 }
-
-                 */
-
-
-
-                //CvInvoke.DrawContours(imgHSVDest, contours, largest_contour_index, new MCvScalar(255, 0, 0));
-
-                //CvInvoke.DrawContours(imgHSVDest, contours, -1, new MCvScalar(255, 0, 0));
-
                 pictureBox1.Image = imgBGR.ToBitmap();
-                // pictureBox1.Image = m.ToImage<Bgr, byte>().Bitmap;
-                //  pictureBox1.Image = imgHSVDest.ToBitmap();
                 Thread.Sleep((int)_capture.GetCaptureProperty(CapProp.Fps));
             }
             catch (Exception) { }
@@ -196,7 +165,7 @@ namespace Foosball
             {
                 return true;
             }
-            
+
             return false;
         }
 
