@@ -211,18 +211,16 @@ namespace Foosball
         {
             if(_teamNames.Count() != 0)
             {
-                if(_scoreA >= 10)
+                if((_scoreA >= 10) || (_scoreB >= 10))
                 {
-                    _teamNames.Add(_teamNames[_round * 2 - 2]);
-                    _round++;
-                    this.Hide();
-                    var load = new TournamentBracket(_teamNames, _round);
-                    load.ShowDialog();
-                    this.Close();
-                }
-                if (_scoreB >= 10)
-                {
-                    _teamNames.Add(_teamNames[_round * 2 - 1]);
+                    if(_scoreA >= 10) 
+                    {
+                        _teamNames.Add(_teamNames[_round * 2 - 2]);
+                    }
+                    if (_scoreB >= 10)
+                    {
+                        _teamNames.Add(_teamNames[_round * 2 - 1]);
+                    }
                     _round++;
                     this.Hide();
                     var load = new TournamentBracket(_teamNames, _round);
