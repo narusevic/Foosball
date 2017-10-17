@@ -51,7 +51,7 @@ namespace Foosball
             _teamNames = teamNames;
             _round = round;
             InitializeComponent();
-            SetTeamNames(teamNames, round);
+            SetTeamNames();
         }
 
         private void SetPlayerNames()
@@ -60,10 +60,10 @@ namespace Foosball
             lbPlayerB.Text = _match.PlayerB.Name;
         }
 
-        private void SetTeamNames(List<string> teamNames, int round)
+        private void SetTeamNames()
         {
-            lbPlayerA.Text = teamNames[round * 2 - 2];
-            lbPlayerB.Text = teamNames[round * 2 - 1];
+            lbPlayerA.Text = _teamNames[_round * 2 - 2];
+            lbPlayerB.Text = _teamNames[_round * 2 - 1];
         }
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
