@@ -27,11 +27,11 @@ namespace Foosball
             _teamNames = teamNames;
             _round = round;
 
-            CheckIfEnded(_teamNames);
+            CheckIfEnded();
             InitializeComponent();
-            _amount = AmountFinder(teamNames.Count);
+            _amount = AmountFinder();
             RemoveLabel();
-            AddTeamNames(teamNames);
+            AddTeamNames();
         }
 
         private void RemoveLabel()
@@ -46,14 +46,14 @@ namespace Foosball
             }
         }
 
-        private void AddTeamNames(List<string> teamNames)
+        private void AddTeamNames()
         {
             int n = _amount * 2 - 1;
-            int z = teamNames.Count - 1;
+            int z = _teamNames.Count - 1;
             var myLabel = Controls.OfType<Label>();
             myLabel = myLabel.OrderBy(label => label.TabIndex);
-            for (int i = n - teamNames.Count; i < n; i++) {
-                myLabel.ElementAt(i).Text = teamNames[z];
+            for (int i = n - _teamNames.Count; i < n; i++) {
+                myLabel.ElementAt(i).Text = _teamNames[z];
                 if ((z == _round * 2 - 1) || (z == _round * 2 - 2))
                 {
                     myLabel.ElementAt(i).BackColor = Color.Red;
@@ -62,8 +62,9 @@ namespace Foosball
             }
         }
 
-        private int AmountFinder(int amount)
+        private int AmountFinder()
         {
+            int amount = _teamNames.Count();
             if (amount < 8)
             {
                 return 4;
@@ -79,12 +80,12 @@ namespace Foosball
             return 0;
         }
 
-        private void CheckIfEnded(List<string> teamNames)
+        private void CheckIfEnded()
         {
-            if(teamNames.Count == AmountFinder(teamNames.Count) * 2 - 1)
+            if(_teamNames.Count == AmountFinder(_teamNames.Count) * 2 - 1)
             {
                 this.Hide();
-                var load = new TournamentWinner(teamNames.Last());
+                var load = new TournamentWinner(_teamNames.Last());
                 load.ShowDialog();
                 this.Close();
             }
