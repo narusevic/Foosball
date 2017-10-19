@@ -27,11 +27,11 @@ namespace Foosball
 
         private void next_Click(object sender, EventArgs e)
         {
-            List<Player> teamNames = new List<Player>();
+            List<string> teamNames = new List<string>();
             var myTextBox = Controls.OfType<TextBox>();
             foreach(var txt in myTextBox)
             {
-                teamNames.Add(new Player(txt.Text));
+                teamNames.Add(txt.Text);
             }
             methods.NameValidation(teamNames, this);
         }

@@ -1,0 +1,43 @@
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Foosball;
+using Foosball.Models;
+
+namespace FoosballTests
+{
+    [TestClass]
+    public class TournamentBracketContollerTest
+    {
+        [TestMethod]
+        public void TournamentBracketContollerAmountFinderTest1()
+        {
+            var tournament = new Tournament();
+            var view = new TournamentBracket(tournament);
+            var controller = new Foosball.TournamentBracketController(tournament, view);
+
+            Assert.AreEqual(4, controller.AmountFinder());
+        }
+
+        public void TournamentBracketContollerAmountFinderTest2()
+        {
+            var tournament = new Tournament();
+            for (int i = 0; i < 5; i++)
+            {
+                tournament.Players.Add(new Player("lol"));
+            }
+            var view = new TournamentBracket(tournament);
+            var controller = new Foosball.TournamentBracketController(tournament, view);
+
+            Assert.AreEqual(8, controller.AmountFinder());
+        }
+
+        public void TournamentBracketContollerAmountFinderTest3()
+        {
+            var tournament = new Tournament();
+            var view = new TournamentBracket(tournament);
+            var controller = new Foosball.TournamentBracketController(tournament, view);
+
+            Assert.AreEqual(16, controller.AmountFinder());
+        }
+    }
+}

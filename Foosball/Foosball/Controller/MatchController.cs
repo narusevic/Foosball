@@ -31,7 +31,7 @@ namespace Foosball
         public int AScore
         {
             get { return _match.AScore; }
-            set {  _match.AScore = value; }
+            set { _match.AScore = value; }
         }
 
         public int BScore
@@ -47,39 +47,39 @@ namespace Foosball
 
         public Rectangle FindBall(Mat m, Hsv lowerLimit, Hsv upperLimit)
         {
-            
+
             Image<Hsv, byte> imgHSV = new Image<Hsv, byte>(m.Bitmap);
             Image<Bgr, byte> imgBGR = new Image<Bgr, byte>(m.Bitmap); ;
             Image<Gray, byte> imgHSVDest = imgHSV.InRange(lowerLimit, upperLimit);
             imgHSVDest.Erode(2);
             imgHSVDest.Dilate(2);
-         
+
             int largestContourIndex = 0;
             double largestArea = 0;
             var contours = new VectorOfVectorOfPoint();
-            
+
             CvInvoke.FindContours(imgHSVDest, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
             Console.WriteLine(contours.Size);
             for (int i = 0; i < contours.Size; i++)
-              {
-                  var color = new MCvScalar(0, 0, 255);
-                  double a = CvInvoke.ContourArea(contours[i], false);
+            {
+                var color = new MCvScalar(0, 0, 255);
+                double a = CvInvoke.ContourArea(contours[i], false);
 
-                  if (a > largestArea)
-                  {
-                      largestArea = a;
-                      largestContourIndex = i;
-                  }
-              }
+                if (a > largestArea)
+                {
+                    largestArea = a;
+                    largestContourIndex = i;
+                }
+            }
 
             Rectangle rect = CvInvoke.BoundingRectangle(contours[largestContourIndex]);
             _lastRectangles.Add(rect);
-            
+
 
             return rect;
-           
 
-            
+
+
         }
 
         public bool SetScores(int width)
@@ -96,11 +96,11 @@ namespace Foosball
             {
                 if (_lastRectangles[9].X < width / 2)
                     _match.BScore++;
-                else 
+                else
                     _match.AScore++;
 
                 goal = true;
-               
+
             }
 
             _lastRectangles.RemoveAt(0);
@@ -134,10 +134,10 @@ namespace Foosball
         }
 
         public bool CheckForWinner()
-        { 
-              
+        {
+
             if (_match.AScore >= 10)
-            { 
+            {
                 return true;
             }
             if (_match.BScore >= 10)
@@ -146,8 +146,15 @@ namespace Foosball
             }
 
             return false;
-                    
+
         }
 
+        public bool CheckIfPlayerAWon()
+        {
+            if (_match.AScore >= 10) {
+                return true;
+            }
+            return false;
+        }
     }
 }
