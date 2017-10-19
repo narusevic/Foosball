@@ -9,12 +9,15 @@ namespace Foosball.DataAccess
 
         public DbSet<Player> Players { get; set; }
 
+        public DbSet<Team> Teams { get; set; }
+
         public DbSet<Tournament> Tournaments { get; set; }
 
         public void WriteChanges()
         {
             DataWriter.WriteFileCsv(Matches);
             DataWriter.WriteFileCsv(Players);
+            DataWriter.WriteFileCsv(Teams);
             DataWriter.WriteFileCsv(Tournaments);
         }
 
@@ -22,6 +25,7 @@ namespace Foosball.DataAccess
         {
             DataReader.ReadFromCsv(Matches);
             DataReader.ReadFromCsv(Players);
+            DataReader.ReadFromCsv(Teams);
             DataReader.ReadFromCsv(Tournaments);
 
             SaveChanges();
