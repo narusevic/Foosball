@@ -178,7 +178,7 @@ namespace Foosball
 
         private void CheckForWinner()
         {
-            if(_teamNames.Count() != 0)
+            if(_teamNames.Count != 0)
             {
                 if((_scoreA >= 10) || (_scoreB >= 10))
                 {

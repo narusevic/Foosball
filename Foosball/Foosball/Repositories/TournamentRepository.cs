@@ -2,6 +2,7 @@
 using Foosball.DataAccess;
 using Foosball.Models;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Foosball.Repositories
 {
@@ -40,7 +41,7 @@ namespace Foosball.Repositories
 
         public IEnumerable<Tournament> ReadAll()
         {
-            return _dataContext.Tournaments
+            return _dataContext.Tournaments;
         }
     }
 }
