@@ -81,10 +81,10 @@ namespace Foosball
 
         private void UpdateScores()
         {
-            if(_matchController.CheckForWinner() == true)
+            if(_matchController.CheckForWinner())
             {
                 if(_tournament.Players.Count != 0) {
-                    if(_matchController.CheckIfPlayerAWon() == true)
+                    if(_matchController.CheckIfPlayerAWon())
                     {
                         _tournament.Players.Add(_matchController.PlayerA);
                     }
@@ -101,7 +101,7 @@ namespace Foosball
                 else
                 {
                     this.Hide();
-                    if (_matchController.CheckIfPlayerAWon() == true)
+                    if (_matchController.CheckIfPlayerAWon())
                     {
                         var load = new TournamentWinner(_matchController.PlayerA.ToString());
                         load.ShowDialog();
