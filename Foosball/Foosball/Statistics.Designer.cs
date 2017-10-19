@@ -32,30 +32,25 @@
             this.view = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.dataContextBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.matchesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.playersDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.view)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataContextBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // view
             // 
-            this.view.AutoGenerateColumns = false;
             this.view.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.view.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.matchesDataGridViewTextBoxColumn,
-            this.playersDataGridViewTextBoxColumn});
-            this.view.DataSource = this.dataContextBindingSource;
-            this.view.Location = new System.Drawing.Point(22, 12);
+            this.view.Location = new System.Drawing.Point(16, 11);
+            this.view.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.view.Name = "view";
-            this.view.Size = new System.Drawing.Size(617, 425);
+            this.view.Size = new System.Drawing.Size(463, 345);
             this.view.TabIndex = 0;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(22, 460);
+            this.button1.Location = new System.Drawing.Point(16, 374);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(69, 41);
+            this.button1.Size = new System.Drawing.Size(52, 33);
             this.button1.TabIndex = 1;
             this.button1.Text = "Back";
             this.button1.UseVisualStyleBackColor = true;
@@ -65,28 +60,17 @@
             // 
             this.dataContextBindingSource.DataSource = typeof(Foosball.DataAccess.DataContext);
             // 
-            // matchesDataGridViewTextBoxColumn
-            // 
-            this.matchesDataGridViewTextBoxColumn.DataPropertyName = "Matches";
-            this.matchesDataGridViewTextBoxColumn.HeaderText = "Matches";
-            this.matchesDataGridViewTextBoxColumn.Name = "matchesDataGridViewTextBoxColumn";
-            // 
-            // playersDataGridViewTextBoxColumn
-            // 
-            this.playersDataGridViewTextBoxColumn.DataPropertyName = "Players";
-            this.playersDataGridViewTextBoxColumn.HeaderText = "Players";
-            this.playersDataGridViewTextBoxColumn.Name = "playersDataGridViewTextBoxColumn";
-            // 
             // Statistics
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Foosball.Properties.Resources.apple;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(666, 513);
+            this.ClientSize = new System.Drawing.Size(500, 417);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.view);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Statistics";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Statistics";
@@ -100,8 +84,6 @@
 
         private System.Windows.Forms.DataGridView view;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn matchesDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn playersDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource dataContextBindingSource;
     }
 }

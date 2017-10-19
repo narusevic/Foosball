@@ -19,6 +19,8 @@ namespace Foosball.DataAccess
             DataWriter.WriteFileCsv(Players);
             DataWriter.WriteFileCsv(Teams);
             DataWriter.WriteFileCsv(Tournaments);
+
+            SaveChanges();
         }
 
         public void ReadChanges()

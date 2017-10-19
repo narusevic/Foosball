@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Foosball.Controllers;
 using Foosball.Models;
 
 namespace Foosball
@@ -34,8 +35,8 @@ namespace Foosball
         {
             var match = new Match(_tournament.Players[_tournament.Round * 2 - 2].ToString(), _tournament.Players[_tournament.Round * 2 - 1].ToString());
             this.Hide();
-            var load = new BallTracker(match, _tournament);
-            load.ShowDialog();
+            //var load = new BallTracker(match, _tournament);
+            //load.ShowDialog();
             this.Close();
         }
 

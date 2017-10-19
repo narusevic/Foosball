@@ -8,5 +8,9 @@ namespace Foosball.DataAccess
         DbSet<Match> Matches { get; set; }
 
         DbSet<Player> Players { get; set; }
+
+        DbSet<Team> Teams { get; set; }
+
+        DbSet<Tournament> Tournaments { get; set; }
     }
 }

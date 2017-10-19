@@ -9,12 +9,6 @@ namespace Foosball.Controllers
     {
         public List<Team> GetAllTeams()
         {
-            TeamRepository.Instance.Create(new Team("Ant penkiu", 2, 1, 8));
-            TeamRepository.Instance.Create(new Team("Komaliukas", 4, 1, 11));
-            TeamRepository.Instance.Create(new Team("FastBall", 0, 0, 3));
-            TeamRepository.Instance.Create(new Team("LeoCup", 8, 2, 21));
-            TeamRepository.Instance.Create(new Team("Kepure", 2, 1, 7));
-
             return TeamRepository.Instance.ReadAll().ToList();
         }
     }

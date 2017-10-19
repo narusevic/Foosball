@@ -66,6 +66,15 @@
     <Compile Include="MainUI.Designer.cs">
       <DependentUpon>MainUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710162118534_InitialCreate.cs" />
+    <Compile Include="Migrations\201710162118534_InitialCreate.Designer.cs">
+      <DependentUpon>201710162118534_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710192010308_Initial.cs" />
+    <Compile Include="Migrations\201710192010308_Initial.Designer.cs">
+      <DependentUpon>201710192010308_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -126,6 +135,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainUI.resx">
       <DependentUpon>MainUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710162118534_InitialCreate.resx">
+      <DependentUpon>201710162118534_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710192010308_Initial.resx">
+      <DependentUpon>201710192010308_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

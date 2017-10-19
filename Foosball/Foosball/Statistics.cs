@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using Foosball.Controllers;
+using System;
 using System.Linq;
-using Foosball.Repositories;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Foosball
 {
     public partial class Statistics : Form
     {
+        private readonly StatisticsController _statisticsController = new StatisticsController();
+
         public Statistics()
         {
             InitializeComponent();
-            view.DataSource = PlayerRepository.Instance.ReadAll().ToList();
+            view.DataSource = _statisticsController.GetAllTeams().ToList();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
             var load = new MainUI();
             load.ShowDialog();
-            this.Close();
+            Close();
         }
     }
 }
