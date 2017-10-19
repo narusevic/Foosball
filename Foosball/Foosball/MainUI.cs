@@ -1,12 +1,5 @@
 ﻿using Foosball.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Foosball
@@ -20,12 +13,11 @@ namespace Foosball
 
         private void MainUI_Load(object sender, EventArgs e)
         {
-
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
 
             Match match = new Match();
 
@@ -35,7 +27,7 @@ namespace Foosball
             BallTracker ballTrackerLoad = new BallTracker(match);
             ballTrackerLoad.ShowDialog(); 
 
-            this.Close();
+            Close();
         }
 
         private void pictureBox5_MouseHover(object sender, EventArgs e)
@@ -54,24 +46,31 @@ namespace Foosball
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
             var load = new TournamentMode();
             load.ShowDialog();
-            this.Close();
+            Close();
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
             var load = new Statistics();
             load.ShowDialog();
-            this.Close();
+            Close();
         }
+
+        private void pictureBox6_Click(object sender, EventArgs e)
+        {
+            Hide();
+            var load = new ManagingForm();
+            load.ShowDialog();
+            Close();
+        }
+
         private void pictureBox5_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-
-
     }
 }

@@ -16,8 +16,10 @@ namespace Foosball.Models
 
         public int MatchesPlayed { get; set; } = 0;
 
-        public List<Player> Players { get; set; }
+        public Player PlayerA { get; set; }
 
+        public Player PlayerB { get; set; }
+        
         public Team()
         {
             Id = GlobalId++;
@@ -27,6 +29,14 @@ namespace Foosball.Models
             : this()
         {
             Name = name;
+        }
+
+        public Team(string name, Player playerA, Player playerB)
+            : this()
+        {
+            Name = name;
+            PlayerA = playerA;
+            PlayerB = playerB;
         }
 
         public Team(string name, int mw, int tw, int mp)
