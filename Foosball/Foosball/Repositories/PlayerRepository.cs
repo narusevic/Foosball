@@ -47,16 +47,6 @@ namespace Foosball.Repositories
 
         public IEnumerable<Player> ReadAll()
         {
-            _dataContext.Players.Add(new Player("Linas"));
-            _dataContext.Players.Add(new Player("Lukas"));
-            _dataContext.Players.Add(new Player("Tomas"));
-            _dataContext.Players.Add(new Player("Magnus"));
-            _dataContext.Players.Add(new Player("Marijus"));
-            _dataContext.Players.Add(new Player("Aurimas"));
-            _dataContext.Players.Add(new Player("Rokas"));
-            _dataContext.Players.Add(new Player("Greta"));
-            _dataContext.Players.Add(new Player("Sabina"));
-            _dataContext.Players.Add(new Player("Elžbieta"));
             return _dataContext.Players;
         }
     }

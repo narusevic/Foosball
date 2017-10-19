@@ -32,6 +32,7 @@ namespace Foosball
             var playersRepo = new PlayerRepository(dataContext);
             var teamRepo = new TeamRepository(dataContext);
 
+            //now dbcontext handles saving, so reading from file is only needed then restoring database
             //dataContext.ReadChanges();
         }
     }

@@ -47,8 +47,6 @@ namespace Foosball.Repositories
 
         public IEnumerable<Team> ReadAll()
         {
-            var deletes = _dataContext.Teams.Where(d => d.Id > 5);
-            _dataContext.Teams.RemoveRange(deletes);
             return _dataContext.Teams;
         }
     }

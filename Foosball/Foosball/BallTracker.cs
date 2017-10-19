@@ -192,8 +192,8 @@ namespace Foosball
                     }
                     _round++;
                     this.Hide();
-                    ////var load = new TournamentBracket(_teamNames, _round);
-                    //load.ShowDialog();
+                    var load = new TournamentBracket(_teamNames, _round);
+                    load.ShowDialog();
                     this.Close();
                 }
             }
