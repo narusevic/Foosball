@@ -14,6 +14,7 @@ namespace Foosball
     public partial class BallTracker : Form
     {
         private Capture _capture;
+       
         private Deque<Point> _deque = new Deque<Point>();
         private int _hLow = 0;
         private int _sLow = 43;
@@ -21,25 +22,23 @@ namespace Foosball
         private int _hHigh = 13;
         private int _sHigh = 255;
         private int _vHigh = 255;
+        private MatchController _matchController;
+        Mat m = new Mat();
 
-        private int _round;
+        
         private List<String> _teamNames = new List<string>();
-
-        private List<Rectangle> _lastRectangles = new List<Rectangle>();
+                
         private int _width = 600;
         private int _height = 300;
 
-        private Match _match;
+        private int _round;
 
-        private int _scoreA = 0;
-        private int _scoreB = 0;
+
 
         public BallTracker(Match match)
         {
-            _match = match;
-
+            _matchController = new MatchController(match);
             InitializeComponent();
-
             SetPlayerNames();
         }
 
@@ -53,8 +52,8 @@ namespace Foosball
 
         private void SetPlayerNames()
         {
-            lbPlayerA.Text = _match.PlayerA.Name;
-            lbPlayerB.Text = _match.PlayerB.Name;
+            lbPlayerA.Text = _matchController.PlayerA.Name;
+            lbPlayerB.Text = _matchController.PlayerB.Name;
         }
 
         private void SetTeamNames()
@@ -62,14 +61,14 @@ namespace Foosball
             lbPlayerA.Text = _teamNames[_round * 2 - 2];
             lbPlayerB.Text = _teamNames[_round * 2 - 1];
         }
-
+        
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_capture == null)
             {
                 _capture = new Capture(0);
             }
-
+           
             _capture.ImageGrabbed += Capture_ImageGrabbed;
             _capture.Start();
         }
@@ -78,125 +77,24 @@ namespace Foosball
         {
             try
             {
-                var lowerLimit = new Hsv(_hLow, _sLow, _vLow);
-                var upperLimit = new Hsv(_hHigh, _sHigh, _vHigh);
-
-                var m = new Mat();
-
                 _capture.Retrieve(m);
                 CvInvoke.Resize(m, m, new Size(_width, _height));
-
-                Image<Hsv, byte> imgHSV = new Image<Hsv, byte>(m.Bitmap);
                 Image<Bgr, byte> imgBGR = new Image<Bgr, byte>(m.Bitmap);
-                Image<Gray, byte> imgHSVDest = imgHSV.InRange(lowerLimit, upperLimit);
-                imgHSVDest.Erode(2);
-                imgHSVDest.Dilate(2);
-
-                var largestContourIndex = 0;
-                double largestArea = 0;
-                var contours = new VectorOfVectorOfPoint();
-
-                CvInvoke.FindContours(imgHSVDest, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
-
-                for (var i = 0; i < contours.Size; i++)
-                {
-                    var a = CvInvoke.ContourArea(contours[i]);
-
-                    if (a > largestArea)
-                    {
-                        largestArea = a;
-                        largestContourIndex = i;
-                    }
-                }
-
-                var rect = CvInvoke.BoundingRectangle(contours[largestContourIndex]);
-
-                _lastRectangles.Add(rect);
-
+                var rect = _matchController.FindBall(m, new Hsv(_hLow, _sLow, _vLow), new Hsv(_hHigh, _sHigh, _vHigh));
                 CvInvoke.Rectangle(imgBGR, rect, new MCvScalar(255, 0, 0));
-
-                SetScores();
-
                 pictureBox1.Image = imgBGR.ToBitmap();
+                if (_matchController.SetScores(_width)) UpdateScores();             
                 Thread.Sleep((int)_capture.GetCaptureProperty(CapProp.Fps));
             }
             catch (Exception) { }
         }
 
-        private void SetScores()
-        {
-            //the idea is to select 30 frames and compare if first 15 rectangle coordinates
-            //are different than last 15. In that case, The user, who had the ball before
-            //loosing it, has scored.
-            if (_lastRectangles.Count < 20)
-                return;
-
-            if (IsBallLost())
-            {
-                if (_lastRectangles[9].X < _width / 2)
-                    _scoreB++;
-                else
-                    _scoreA++;
-
-                BeginInvoke(new Action(UpdateScores));
-            }
-
-            _lastRectangles.RemoveAt(0);
-        }
-
-        private bool IsBallLost()
-        {
-            for (var i = 0; i < 9; i++)
-            {
-                if (Math.Abs(_lastRectangles[i].X - _lastRectangles[i + 1].X) > 20 ||
-                    Math.Abs(_lastRectangles[i].Y - _lastRectangles[i + 1].Y) > 20)
-                    return false;
-            }
-
-            for (var i = 10; i < 19; i++)
-            {
-                if (Math.Abs(_lastRectangles[i].X - _lastRectangles[i + 1].X) > 20 ||
-                    Math.Abs(_lastRectangles[i].Y - _lastRectangles[i + 1].Y) > 20)
-                    return false;
-            }
-
-            if (Math.Abs(_lastRectangles[14].X - _lastRectangles[15].X) > 50 ||
-                Math.Abs(_lastRectangles[14].Y - _lastRectangles[15].Y) > 50)
-            {
-                return true;
-            }
-
-            return false;
-        }
 
         private void UpdateScores()
         {
-            CheckForWinner();
-            lbScoreA.Text = _scoreA.ToString();
-            lbScoreB.Text = _scoreB.ToString();
-        }
-
-        private void CheckForWinner()
-        {
-            if(_teamNames.Count != 0)
-            {
-                if((_scoreA >= 10) || (_scoreB >= 10))
-                {
-                    if(_scoreA >= 10) 
-                    {
-                        _teamNames.Add(_teamNames[_round * 2 - 2]);
-                    }
-                    if (_scoreB >= 10)
-                    {
-                        _teamNames.Add(_teamNames[_round * 2 - 1]);
-                    }
-                    _round++;
-                    this.Hide();
-                    var load = new TournamentBracket(_teamNames, _round);
-                    load.ShowDialog();
-                    this.Close();
-                }
-            }
+            _matchController.CheckForWinner();
+            lbScoreA.Text = _matchController.AScore.ToString();
+            lbScoreB.Text = _matchController.BScore.ToString();
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -262,17 +160,18 @@ namespace Foosball
                     _capture.Start();
                 }
             }
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _scoreA++;
+            _matchController.AScore++;
             UpdateScores();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _scoreB++;
+            _matchController.BScore++;
             UpdateScores();
         }
     }
