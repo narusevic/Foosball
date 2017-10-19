@@ -13,88 +13,27 @@ namespace Foosball
 {
     public partial class TournamentBracket : Form
     {
-        private int _amount;
-        private List<string> _teamNames = new List<string>();
-        private int _round;
-
-        public TournamentBracket(List<String> teamNames, int round = 1)
+        private Tournament _tournament;
+        public TournamentBracket(Tournament tournament, int round = 1)
         {
             if(round == 1) {
-                var shuffledTeamNames = teamNames.OrderBy(a => Guid.NewGuid()).ToList();
-                teamNames = shuffledTeamNames;
+                var shuffledTeamNames = tournament.Players.OrderBy(a => Guid.NewGuid()).ToList();
+                tournament.Players = shuffledTeamNames;
             }
-
-            _teamNames = teamNames;
-            _round = round;
-
-            CheckIfEnded();
+            _tournament = tournament;
+            TournamentBracketMethods methods = new TournamentBracketMethods(tournament, this);
+            methods.CheckIfEnded();
             InitializeComponent();
-            _amount = AmountFinder();
-            RemoveLabel();
-            AddTeamNames();
-        }
-
-        private void RemoveLabel()
-        {
-            var label = new Label[32];
-            for(int i = _amount * 2; i < 32; i++)
-            {
-                label[i] = new Label();
-                label[i].Name = "Label" + i;
-                var textBoxToRemove = this.Controls["Label" + i];
-                this.Controls.Remove(textBoxToRemove);
-            }
-        }
-
-        private void AddTeamNames()
-        {
-            int n = _amount * 2 - 1;
-            int z = _teamNames.Count - 1;
-            var myLabel = Controls.OfType<Label>();
-            myLabel = myLabel.OrderBy(label => label.TabIndex);
-            for (int i = n - _teamNames.Count; i < n; i++) {
-                myLabel.ElementAt(i).Text = _teamNames[z];
-                if ((z == _round * 2 - 1) || (z == _round * 2 - 2))
-                {
-                    myLabel.ElementAt(i).BackColor = Color.Red;
-                }
-                z--;
-            }
-        }
-
-        private int AmountFinder()
-        {
-            int amount = _teamNames.Count();
-            if (amount < 8)
-            {
-                return 4;
-            }
-            else if (amount < 16)
-            {
-                return 8;
-            }
-            else if (amount < 32)
-            {
-                return 16;
-            }
-            return 0;
-        }
-
-        private void CheckIfEnded()
-        {
-            if(_teamNames.Count == AmountFinder() * 2 - 1)
-            {
-                this.Hide();
-                var load = new TournamentWinner(_teamNames.Last());
-                load.ShowDialog();
-                this.Close();
-            }
+            methods.AmountFinder();
+            methods.RemoveLabel();
+            methods.AddTeamNames();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var match = new Match(_tournament.Players[_tournament.Round * 2 - 2].ToString(), _tournament.Players[_tournament.Round * 2 - 1].ToString());
             this.Hide();
-            var load = new BallTracker(_teamNames, _round);
+            var load = new BallTracker(match, _tournament);
             load.ShowDialog();
             this.Close();
         }

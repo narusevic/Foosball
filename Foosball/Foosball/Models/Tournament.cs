@@ -13,6 +13,8 @@ namespace Foosball.Models
 		public List<Player> Players { get; set; }
 
         public Player Winner { get; set; }
+
+        public int Round { get; set; } = 1;
 		
         public Tournament()
         {

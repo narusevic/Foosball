@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Foosball.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,10 +14,11 @@ namespace Foosball
 {
     public partial class TournamentTeamSelection : Form
     {
+        TournamentTeamSelectionMethods methods = new TournamentTeamSelectionMethods();
         public TournamentTeamSelection(int selectedMode)
         {
             InitializeComponent();
-            TextBoxRemover(selectedMode);
+            methods.TextBoxRemover(selectedMode, this);
         }
 
         private void back_Click(object sender, EventArgs e)
@@ -27,53 +29,15 @@ namespace Foosball
             this.Close();
         }
 
-        private void TextBoxRemover(int amount)
-        {
-            TextBox[] textBox = new TextBox[16];
-            for (int i = amount; i < 16; i++)
-            {
-                textBox[i] = new TextBox();
-                textBox16.Name = "textBox" + i;
-                var textBoxToRemove = this.Controls["TextBox" + i];
-                this.Controls.Remove(textBoxToRemove);
-            }
-        }
-
         private void next_Click(object sender, EventArgs e)
         {
-            List<string> teamNames = new List<string>();
+            List<Player> teamNames = new List<Player>();
             var myTextBox = Controls.OfType<TextBox>();
             foreach(var txt in myTextBox)
             {
-                teamNames.Add(txt.Text);
+                teamNames.Add(new Player(txt.Text));
             }
-            NameValidation(teamNames);
-        }
-
-        private void NameValidation(List<String> names)
-        {
-            var pattern1 = @"^[a-zA-Z]+\s[a-zA-Z]+\s[a-zA-Z]+$";
-            var pattern2 = @"^[a-zA-Z]+\s[a-zA-Z]+$";
-            var pattern3 = @"^[a-zA-Z]+$";
-
-            foreach (string s in names)
-            {
-                if ((Regex.IsMatch(s, pattern1)) || (Regex.IsMatch(s, pattern2)) || (Regex.IsMatch(s, pattern3)))
-                {
-                    if (s == names.Last<String>())
-                    {
-                        this.Hide();
-                        var load = new TournamentBracket(names);
-                        load.ShowDialog();
-                        this.Close();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Bad name", "Bad name", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
-                }
-            }
+            methods.NameValidation(teamNames, this);
         }
     }
 }
