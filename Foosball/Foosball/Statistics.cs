@@ -12,10 +12,11 @@ namespace Foosball
         public Statistics()
         {
             InitializeComponent();
-            view.DataSource = _statisticsController.GetAllTeams().ToList();
+            dgvPlayer.DataSource = _statisticsController.GetAllPlayers().ToList();
+            dgvTeam.DataSource = _statisticsController.GetAllTeams().ToList();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnBack_Click(object sender, EventArgs e)
         {
             Hide();
             var load = new MainUI();

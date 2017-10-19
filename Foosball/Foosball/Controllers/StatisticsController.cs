@@ -11,5 +11,10 @@ namespace Foosball.Controllers
         {
             return TeamRepository.Instance.ReadAll().ToList();
         }
+
+        public List<Player> GetAllPlayers()
+        {
+            return PlayerRepository.Instance.ReadAll().ToList();
+        }
     }
 }
