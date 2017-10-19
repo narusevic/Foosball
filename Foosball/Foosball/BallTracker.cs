@@ -103,12 +103,12 @@ namespace Foosball
                     this.Hide();
                     if (_matchController.CheckIfPlayerAWon())
                     {
-                        var load = new TournamentWinner(_matchController.PlayerA.ToString());
+                        var load = new TournamentWinner(_matchController.PlayerA.Name);
                         load.ShowDialog();
                     }
                     else
                     {
-                        var load = new TournamentWinner(_matchController.PlayerB.ToString());
+                        var load = new TournamentWinner(_matchController.PlayerB.Name);
                         load.ShowDialog();
                     }
                     this.Close();
