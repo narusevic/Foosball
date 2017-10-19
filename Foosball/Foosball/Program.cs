@@ -30,6 +30,8 @@ namespace Foosball
 
             var matchRepository = new MatchRepository(dataContext);
             var playersRepo = new PlayerRepository(dataContext);
+
+            dataContext.ReadChanges();
         }
     }
 }

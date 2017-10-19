@@ -1,5 +1,6 @@
 ﻿using Foosball.DataAccess;
 using Foosball.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Foosball.Repositories
@@ -12,16 +13,18 @@ namespace Foosball.Repositories
         public MatchRepository(DataContext dataContext)
         {
             _dataContext = dataContext;
+            Instance = this;
         }
 
-        public Match Get(int id)
+        public Match Read(int id)
         {
             return _dataContext.Matches.First(m => m.Id == id);
         }
-
-        public void Post(Match match)
+        
+        public void Create(Match match)
         {
             _dataContext.Matches.Add(match);
+            _dataContext.WriteChanges();
         }
 
         public void Update(int id, Match entity)
@@ -29,9 +32,15 @@ namespace Foosball.Repositories
 
         }
 
-        public void Remove(int id)
+        public void Delete(int id)
         {
-            _dataContext.Matches.Remove(Get(id));
+            _dataContext.Matches.Remove(Read(id));
+            _dataContext.WriteChanges();
+        }
+
+        public IEnumerable<Match> ReadAll()
+        {
+            return _dataContext.Matches;
         }
     }
 }

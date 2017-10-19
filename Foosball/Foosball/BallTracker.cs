@@ -5,10 +5,7 @@ using Emgu.CV.Util;
 using Foosball.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -92,13 +89,13 @@ namespace Foosball
             catch (Exception) { }
         }
 
+
         private void UpdateScores()
         {
             _matchController.CheckForWinner();
             lbScoreA.Text = _matchController.AScore.ToString();
             lbScoreB.Text = _matchController.BScore.ToString();
         }
-
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {

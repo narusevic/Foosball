@@ -1,5 +1,6 @@
 ﻿using Foosball.DataAccess;
 using Foosball.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Foosball.Repositories
@@ -12,16 +13,18 @@ namespace Foosball.Repositories
         public PlayerRepository(DataContext dataContext)
         {
             _dataContext = dataContext;
+            Instance = this;
         }
 
-        public Player Get(int id)
+        public Player Read(int id)
         {
             return _dataContext.Players.First(p => p.Id == id);
         }
 
-        public void Post(Player player)
+        public void Create(Player player)
         {
             _dataContext.Players.Add(player);
+            _dataContext.WriteChanges();
         }
 
         public void Update(int id, Player player)
@@ -29,9 +32,15 @@ namespace Foosball.Repositories
             
         }
 
-        public void Remove(int id)
+        public void Delete(int id)
         {
-            _dataContext.Players.Remove(Get(id));
+            _dataContext.Players.Remove(Read(id));
+            _dataContext.WriteChanges();
+        }
+
+        public IEnumerable<Player> ReadAll()
+        {
+            return _dataContext.Players;
         }
     }
 }

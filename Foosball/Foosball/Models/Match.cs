@@ -25,16 +25,16 @@ namespace Foosball.Models
         public Match()
         {
             Id = GlobalId++;
-        }
-
-        public Match(string playerA, string playerB)
-            : base()
-        {
-            PlayerA = new Player(playerA);
-            PlayerB = new Player(playerB);
             Start = DateTime.Now;
             AScore = 0;
             BScore = 0;
+        }
+
+        public Match(string playerA, string playerB)
+            : this()
+        {
+            PlayerA = new Player(playerA);
+            PlayerB = new Player(playerB);
         }
     }
 }
