@@ -1,1 +1,1 @@
-1,Ant penkiu,2,1,8,,2,Komaliukas,4,1,11,,3,FastBall,0,0,3,,4,LeoCup,8,2,21,,5,Kepure,2,1,7,,6,Ant penkiu,2,1,8,,7,Komaliukas,4,1,11,,8,FastBall,0,0,3,,9,LeoCup,8,2,21,,10,Kepure,2,1,7,,11,Ant penkiu,2,1,8,,12,Komaliukas,4,1,11,,13,FastBall,0,0,3,,14,LeoCup,8,2,21,,
+1,Ant penkiu,2,1,8,,,2,Komaliukas,4,1,11,,,3,FastBall,0,0,3,,,5,Kepure,2,1,7,,,42,luko,0,0,0,Foosball.Models.Player,Foosball.Models.Player,43,Normali,0,0,0,,,
