@@ -9,28 +9,16 @@ using System.Windows.Forms;
 
 namespace Foosball
 {
-    class TournamentBracketMethods
+    class TournamentBracketController
     {
         private Tournament _tournament;
         private TournamentBracket _tournamentBracket;
         private int _amount;
 
-        public TournamentBracketMethods(Tournament tournament, TournamentBracket tournamentBracket)
+        public TournamentBracketController(Tournament tournament, TournamentBracket tournamentBracket)
         {
             this._tournament = tournament;
             this._tournamentBracket = tournamentBracket;
-        }
-
-        public void RemoveLabel()
-        {
-            var label = new Label[32];
-            for (int i = _amount * 2; i < 32; i++)
-            {
-                label[i] = new Label();
-                label[i].Name = "Label" + i;
-                var textBoxToRemove = _tournamentBracket.Controls["Label" + i];
-                _tournamentBracket.Controls.Remove(textBoxToRemove);
-            }
         }
 
         public void AddTeamNames()

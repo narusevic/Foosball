@@ -14,11 +14,11 @@ namespace Foosball
 {
     public partial class TournamentTeamSelection : Form
     {
-        TournamentTeamSelectionMethods methods = new TournamentTeamSelectionMethods();
+        TournamentTeamSelectionController methods = new TournamentTeamSelectionController();
         public TournamentTeamSelection(int selectedMode)
         {
             InitializeComponent();
-            methods.TextBoxRemover(selectedMode, this);
+            TextBoxRemover(selectedMode, this);
         }
 
         private void back_Click(object sender, EventArgs e)
@@ -38,6 +38,18 @@ namespace Foosball
                 teamNames.Add(new Player(txt.Text));
             }
             methods.NameValidation(teamNames, this);
+        }
+
+        private void TextBoxRemover(int amount, TournamentTeamSelection teamSelection)
+        {
+            TextBox[] textBox = new TextBox[17];
+            for (int i = amount + 1; i < 17; i++)
+            {
+                textBox[i] = new TextBox();
+                textBox[i].Name = "textBox" + i;
+                var textBoxToRemove = this.Controls["TextBox" + i];
+                this.Controls.Remove(textBoxToRemove);
+            }
         }
     }
 }

@@ -9,21 +9,8 @@ using System.Windows.Forms;
 
 namespace Foosball
 {
-    class TournamentTeamSelectionMethods
+    class TournamentTeamSelectionController
     {
-        public void TextBoxRemover(int amount, TournamentTeamSelection teamSelection)
-        {
-
-            TextBox[] textBox = new TextBox[17];
-            for (int i = amount + 1; i < 17; i++)
-            {
-                textBox[i] = new TextBox();
-                textBox[i].Name = "textBox" + i;
-                var textBoxToRemove = teamSelection.Controls["TextBox" + i];
-                teamSelection.Controls.Remove(textBoxToRemove);
-            }
-        }
-
         public void NameValidation(List<Player> names, TournamentTeamSelection teamSelection)
         {
             var pattern1 = @"^[a-zA-Z]+\s[a-zA-Z]+\s[a-zA-Z]+$";
@@ -46,7 +33,7 @@ namespace Foosball
                 }
                 else
                 {
-                    MessageBox.Show("Bad name", "Bad name", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Incorrect Name" + s, "Bad name", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
                 }
             }

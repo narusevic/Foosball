@@ -80,14 +80,14 @@
     <Compile Include="TournamentBracket.Designer.cs">
       <DependentUpon>TournamentBracket.cs</DependentUpon>
     </Compile>
-    <Compile Include="TournamentBracketMethods.cs" />
+    <Compile Include="Controllers\TournamentBracketController.cs" />
     <Compile Include="TournamentMode.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TournamentMode.Designer.cs">
       <DependentUpon>TournamentMode.cs</DependentUpon>
     </Compile>
-    <Compile Include="TournamentTeamSelectionMethods.cs" />
+    <Compile Include="Controllers\TournamentTeamSelectionController.cs" />
     <Compile Include="TournamentTeamSelection.cs">
       <SubType>Form</SubType>
     </Compile>
