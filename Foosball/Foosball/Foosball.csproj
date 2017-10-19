@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controller\MatchController.cs" />
     <Compile Include="BallTracking.cs">
       <SubType>Form</SubType>
     </Compile>
