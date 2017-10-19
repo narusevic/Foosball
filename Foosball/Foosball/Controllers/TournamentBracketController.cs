@@ -17,23 +17,6 @@ namespace Foosball.Controllers
             this._tournamentBracket = tournamentBracket;
         }
 
-        public void AddTeamNames()
-        {
-            int n = _amount * 2 - 1;
-            int z = _tournament.Players.Count - 1;
-            var myLabel = _tournamentBracket.Controls.OfType<Label>();
-            myLabel = myLabel.OrderBy(label => label.TabIndex);
-            for (int i = n - _tournament.Players.Count; i < n; i++)
-            {
-                myLabel.ElementAt(i).Text = _tournament.Players[z].ToString();
-                if ((z == _tournament.Round * 2 - 1) || (z == _tournament.Round * 2 - 2))
-                {
-                    myLabel.ElementAt(i).BackColor = Color.Red;
-                }
-                z--;
-            }
-        }
-
         public int AmountFinder()
         {
             int amount = _tournament.Players.Count();
@@ -61,7 +44,7 @@ namespace Foosball.Controllers
             {
                 _tournament.Winner = _tournament.Players.Last();
                 _tournamentBracket.Hide();
-                var load = new TournamentWinner(_tournament.Winner.ToString());
+                var load = new TournamentWinner(_tournament.Winner.Name.ToString());
                 load.ShowDialog();
                 _tournamentBracket.Close();
             }
