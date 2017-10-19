@@ -14,9 +14,36 @@ namespace Foosball
     class MatchController
     {
         private List<Rectangle> _lastRectangles = new List<Rectangle>();
-        private int _scoreA = 0;
-        private int _scoreB = 0;
+        private Match _match;
 
+        public Player PlayerA
+        {
+            get { return _match.PlayerA; }
+            set { _match.PlayerA = value; }
+        }
+
+        public Player PlayerB
+        {
+            get { return _match.PlayerB; }
+            set { _match.PlayerB = value; }
+        }
+
+        public int AScore
+        {
+            get { return _match.AScore; }
+            set {  _match.AScore = value; }
+        }
+
+        public int BScore
+        {
+            get { return _match.BScore; }
+            set { _match.BScore = value; }
+        }
+
+        public MatchController(Match match)
+        {
+            _match = match;
+        }
 
         public Rectangle FindBall(Mat m, Hsv lowerLimit, Hsv upperLimit)
         {
@@ -68,9 +95,9 @@ namespace Foosball
             if (IsBallLost())
             {
                 if (_lastRectangles[9].X < width / 2)
-                    _scoreB++;
+                    _match.BScore++;
                 else 
-                    _scoreA++;
+                    _match.AScore++;
 
                 goal = true;
                
@@ -109,11 +136,11 @@ namespace Foosball
         public bool CheckForWinner()
         { 
               
-            if (_scoreA >= 10)
+            if (_match.AScore >= 10)
             { 
                 return true;
             }
-            if (_scoreB >= 10)
+            if (_match.BScore >= 10)
             {
                 return true;
             }

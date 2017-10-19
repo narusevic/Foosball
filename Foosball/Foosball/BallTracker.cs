@@ -25,7 +25,7 @@ namespace Foosball
         private int _hHigh = 13;
         private int _sHigh = 255;
         private int _vHigh = 255;
-        private MatchController _ball = new MatchController();
+        private MatchController _matchController;
         Mat m = new Mat();
 
         
@@ -34,14 +34,13 @@ namespace Foosball
         private int _width = 600;
         private int _height = 300;
 
-        private Match _match;
         private int _round;
-        private int _scoreA = 0;
-        private int _scoreB = 0;
+
+
 
         public BallTracker(Match match)
         {
-            _match = match;
+            _matchController = new MatchController(match);
             InitializeComponent();
             SetPlayerNames();
         }
@@ -56,8 +55,8 @@ namespace Foosball
 
         private void SetPlayerNames()
         {
-            lbPlayerA.Text = _match.PlayerA.Name;
-            lbPlayerB.Text = _match.PlayerB.Name;
+            lbPlayerA.Text = _matchController.PlayerA.Name;
+            lbPlayerB.Text = _matchController.PlayerB.Name;
         }
 
         private void SetTeamNames()
@@ -84,10 +83,10 @@ namespace Foosball
                 _capture.Retrieve(m);
                 CvInvoke.Resize(m, m, new Size(_width, _height));
                 Image<Bgr, byte> imgBGR = new Image<Bgr, byte>(m.Bitmap);
-                var rect = _ball.FindBall(m, new Hsv(_hLow, _sLow, _vLow), new Hsv(_hHigh, _sHigh, _vHigh));
+                var rect = _matchController.FindBall(m, new Hsv(_hLow, _sLow, _vLow), new Hsv(_hHigh, _sHigh, _vHigh));
                 CvInvoke.Rectangle(imgBGR, rect, new MCvScalar(255, 0, 0));
                 pictureBox1.Image = imgBGR.ToBitmap();
-                if (_ball.SetScores(_width)) UpdateScores();             
+                if (_matchController.SetScores(_width)) UpdateScores();             
                 Thread.Sleep((int)_capture.GetCaptureProperty(CapProp.Fps));
             }
             catch (Exception) { }
@@ -95,33 +94,11 @@ namespace Foosball
 
         private void UpdateScores()
         {
-            _ball.CheckForWinner();
-            lbScoreA.Text = _scoreA.ToString();
-            lbScoreB.Text = _scoreB.ToString();
+            _matchController.CheckForWinner();
+            lbScoreA.Text = _matchController.AScore.ToString();
+            lbScoreB.Text = _matchController.BScore.ToString();
         }
 
-        private void CheckForWinner()
-        {
-            if(_teamNames.Count() != 0)
-            {
-                if((_scoreA >= 10) || (_scoreB >= 10))
-                {
-                    if(_scoreA >= 10) 
-                    {
-                        _teamNames.Add(_teamNames[_round * 2 - 2]);
-                    }
-                    if (_scoreB >= 10)
-                    {
-                        _teamNames.Add(_teamNames[_round * 2 - 1]);
-                    }
-                    _round++;
-                    this.Hide();
-                    var load = new TournamentBracket(_teamNames, _round);
-                    load.ShowDialog();
-                    this.Close();
-                }
-            }
-        }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
@@ -191,13 +168,13 @@ namespace Foosball
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _scoreA++;
+            _matchController.AScore++;
             UpdateScores();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _scoreB++;
+            _matchController.BScore++;
             UpdateScores();
         }
     }
