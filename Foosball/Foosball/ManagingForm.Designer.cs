@@ -42,16 +42,18 @@
             this.dgvTeams.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTeams.Dock = System.Windows.Forms.DockStyle.Top;
             this.dgvTeams.Location = new System.Drawing.Point(0, 0);
+            this.dgvTeams.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvTeams.Name = "dgvTeams";
             this.dgvTeams.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTeams.Size = new System.Drawing.Size(321, 266);
+            this.dgvTeams.Size = new System.Drawing.Size(428, 327);
             this.dgvTeams.TabIndex = 0;
             // 
             // btnRenameTeam
             // 
-            this.btnRenameTeam.Location = new System.Drawing.Point(190, 296);
+            this.btnRenameTeam.Location = new System.Drawing.Point(253, 364);
+            this.btnRenameTeam.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRenameTeam.Name = "btnRenameTeam";
-            this.btnRenameTeam.Size = new System.Drawing.Size(75, 23);
+            this.btnRenameTeam.Size = new System.Drawing.Size(100, 28);
             this.btnRenameTeam.TabIndex = 1;
             this.btnRenameTeam.Text = "Rename Team";
             this.btnRenameTeam.UseVisualStyleBackColor = true;
@@ -59,9 +61,10 @@
             // 
             // btnSelectPlayers
             // 
-            this.btnSelectPlayers.Location = new System.Drawing.Point(43, 339);
+            this.btnSelectPlayers.Location = new System.Drawing.Point(57, 417);
+            this.btnSelectPlayers.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSelectPlayers.Name = "btnSelectPlayers";
-            this.btnSelectPlayers.Size = new System.Drawing.Size(103, 23);
+            this.btnSelectPlayers.Size = new System.Drawing.Size(137, 28);
             this.btnSelectPlayers.TabIndex = 2;
             this.btnSelectPlayers.Text = "Select Players";
             this.btnSelectPlayers.UseVisualStyleBackColor = true;
@@ -69,9 +72,10 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(190, 339);
+            this.btnDelete.Location = new System.Drawing.Point(253, 417);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.Size = new System.Drawing.Size(100, 28);
             this.btnDelete.TabIndex = 3;
             this.btnDelete.Text = "Delete Team";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -79,9 +83,10 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(234, 390);
+            this.btnClose.Location = new System.Drawing.Point(312, 480);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.Size = new System.Drawing.Size(100, 28);
             this.btnClose.TabIndex = 4;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -89,9 +94,10 @@
             // 
             // btnCreateTeam
             // 
-            this.btnCreateTeam.Location = new System.Drawing.Point(43, 296);
+            this.btnCreateTeam.Location = new System.Drawing.Point(57, 364);
+            this.btnCreateTeam.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCreateTeam.Name = "btnCreateTeam";
-            this.btnCreateTeam.Size = new System.Drawing.Size(103, 23);
+            this.btnCreateTeam.Size = new System.Drawing.Size(137, 28);
             this.btnCreateTeam.TabIndex = 5;
             this.btnCreateTeam.Text = "Create Team";
             this.btnCreateTeam.UseVisualStyleBackColor = true;
@@ -99,16 +105,21 @@
             // 
             // ManagingForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(321, 429);
+            this.BackgroundImage = global::Foosball.Properties.Resources.apple;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(428, 528);
             this.Controls.Add(this.btnCreateTeam);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSelectPlayers);
             this.Controls.Add(this.btnRenameTeam);
             this.Controls.Add(this.dgvTeams);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ManagingForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ManagingForm";
             ((System.ComponentModel.ISupportInitialize)(this.dgvTeams)).EndInit();
             this.ResumeLayout(false);

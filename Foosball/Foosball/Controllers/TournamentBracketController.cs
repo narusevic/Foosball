@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Foosball.Controllers
 {
-    class TournamentBracketController
+    public class TournamentBracketController
     {
         private Tournament _tournament;
         private TournamentBracket _tournamentBracket;
