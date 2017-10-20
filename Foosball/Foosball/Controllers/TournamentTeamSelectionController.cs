@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Foosball.Repositories;
 
 namespace Foosball.Controllers
 {
@@ -13,18 +14,26 @@ namespace Foosball.Controllers
             var pattern1 = @"^[a-zA-Z]+\s[a-zA-Z]+\s[a-zA-Z]+$";
             var pattern2 = @"^[a-zA-Z]+\s[a-zA-Z]+$";
             var pattern3 = @"^[a-zA-Z]+$";
-            var teamNames = new List<Player>();
+            var teamNames = new List<Team>();
 
             foreach (var s in names)
             {
                 if ((Regex.IsMatch(s.ToString(), pattern1)) || (Regex.IsMatch(s.ToString(), pattern2)) || (Regex.IsMatch(s.ToString(), pattern3)))
                 {
-                    var player = new Player(s);
-                    teamNames.Add(player);
+                    var team = TeamRepository.Instance[s];
+
+                    if (team == null)
+                    {
+                        team = new Team(s);
+                        TeamRepository.Instance.Create(team);
+                    }
+
+                    teamNames.Add(team);
+
                     if (s == names.Last())
                     {
                         Tournament tournament = new Tournament();
-                        tournament.Players = teamNames;
+                        tournament.Teams = teamNames;
                         teamSelection.Hide();
                         var load = new TournamentBracket(tournament);
                         load.ShowDialog();

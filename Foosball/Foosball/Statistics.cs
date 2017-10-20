@@ -14,6 +14,9 @@ namespace Foosball
             InitializeComponent();
             dgvPlayer.DataSource = _statisticsController.GetAllPlayers().ToList();
             dgvTeam.DataSource = _statisticsController.GetAllTeams().ToList();
+
+            SortableHeaders(dgvPlayer);
+            SortableHeaders(dgvTeam);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -22,6 +25,14 @@ namespace Foosball
             var load = new MainUI();
             load.ShowDialog();
             Close();
+        }
+
+        private void SortableHeaders(DataGridView dgv)
+        {
+            for (int i = 0; i < dgv.Columns.Count; i++)
+            {
+                dgv.Columns[i].SortMode = DataGridViewColumnSortMode.Automatic;
+            }
         }
     }
 }
