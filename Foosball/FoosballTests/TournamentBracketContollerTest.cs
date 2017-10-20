@@ -17,6 +17,7 @@ namespace FoosballTests
 
             Assert.AreEqual(4, controller.AmountFinder());
         }
+
         [TestMethod]
         public void TournamentBracketContollerAmountFinderTest2()
         {
@@ -30,6 +31,7 @@ namespace FoosballTests
 
             Assert.AreEqual(8, controller.AmountFinder());
         }
+
         [TestMethod]
         public void TournamentBracketContollerAmountFinderTest3()
         {

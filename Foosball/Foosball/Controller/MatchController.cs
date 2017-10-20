@@ -13,7 +13,7 @@ using Foosball.Repositories;
 
 namespace Foosball
 {
-    class MatchController
+    public class MatchController
     {
         private List<Rectangle> _lastRectangles = new List<Rectangle>();
         private Match _match;
