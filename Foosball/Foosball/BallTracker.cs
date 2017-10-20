@@ -14,15 +14,24 @@ namespace Foosball
     public partial class BallTracker : Form
     {
         private Capture _capture;
-       
+
         private int _hLow = 0;
-        private int _sLow = 43;
-        private int _vLow = 209;
-        private int _hHigh = 13;
+        private int _sLow = 100;
+        private int _vLow = 185;
+        private int _hHigh = 15;
         private int _sHigh = 255;
         private int _vHigh = 255;
+
+        private int _hLowG = 0;
+        private int _sLowG = 0;
+        private int _vLowG = 0;
+        private int _hHighG = 30;
+        private int _sHighG = 60;
+        private int _vHighG = 80;
+
         private MatchController _matchController;
         Mat m = new Mat();
+
                 
         private int _width = 600;
         private int _height = 300;
@@ -62,22 +71,28 @@ namespace Foosball
         }
 
         private void Capture_ImageGrabbed(object sender, EventArgs e)
-        {
-            try
+        { 
+            _capture.Retrieve(m);
+            CvInvoke.Resize(m, m, new Size(_width, _height));          
+            Image<Bgr, byte> imgBGR = new Image<Bgr, byte>(m.Bitmap);  
+            var ball = _matchController.FindObject(m, new Hsv(_hLow, _sLow, _vLow), new Hsv(_hHigh, _sHigh, _vHigh));
+            CvInvoke.Rectangle(imgBGR, ball, new MCvScalar(255, 0, 0));
+            Tuple<Rectangle, Rectangle> goals = _matchController.FindGoals(m, new Hsv(_hLowG, _sLowG, _vLowG), new Hsv(_hHighG, _sHighG, _vHighG));
+            var rectA = goals.Item1;
+            var rectB = goals.Item2;            
+            CvInvoke.Rectangle(imgBGR, rectA, new MCvScalar(0, 255, 0));      
+            CvInvoke.Rectangle(imgBGR, rectB, new MCvScalar(0, 0, 255));
+
+            if (_matchController.SetScores(ball))
             {
-                _capture.Retrieve(m);
-                CvInvoke.Resize(m, m, new Size(_width, _height));
-                Image<Bgr, byte> imgBGR = new Image<Bgr, byte>(m.Bitmap);
-                var rect = _matchController.FindBall(m, new Hsv(_hLow, _sLow, _vLow), new Hsv(_hHigh, _sHigh, _vHigh));
-                CvInvoke.Rectangle(imgBGR, rect, new MCvScalar(255, 0, 0));
-                pictureBox1.Image = imgBGR.ToBitmap();
-                if (_matchController.SetScores(_width)) UpdateScores();             
-                Thread.Sleep((int)_capture.GetCaptureProperty(CapProp.Fps));
+                BeginInvoke(new Action(UpdateScores));
             }
-            catch (Exception) { }
+            
+            pictureBox1.Image = imgBGR.ToBitmap();
+          
+            Thread.Sleep((int)_capture.GetCaptureProperty(CapProp.Fps));  
         }
-
-
+        
         private void UpdateScores()
         {
             if(_matchController.CheckForWinner())
@@ -162,6 +177,13 @@ namespace Foosball
             trackBar4.Value = _hHigh;
             trackBar5.Value = _sHigh;
             trackBar6.Value = _vHigh;
+
+            trackBar12.Value = _hLowG;
+            trackBar11.Value = _sLowG;
+            trackBar10.Value = _vLowG;
+            trackBar9.Value = _hHighG;
+            trackBar8.Value = _sHighG;
+            trackBar7.Value = _vHighG;
         }
 
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
@@ -194,6 +216,42 @@ namespace Foosball
         {
             _matchController.BScore++;
             UpdateScores();
+        }
+
+        private void trackBar12_Scroll(object sender, EventArgs e)
+        {
+            _hLowG = trackBar12.Value;
+            label15.Text = trackBar12.Value.ToString();
+        }
+
+        private void trackBar11_Scroll(object sender, EventArgs e)
+        {
+            _sLowG = trackBar11.Value;
+            label14.Text = trackBar11.Value.ToString();
+        }
+
+        private void trackBar10_Scroll(object sender, EventArgs e)
+        {
+            _vLowG = trackBar10.Value;
+            label13.Text = trackBar10.Value.ToString();
+        }
+
+        private void trackBar9_Scroll(object sender, EventArgs e)
+        {
+            _hHighG = trackBar9.Value;
+            label11.Text = trackBar9.Value.ToString();
+        }
+
+        private void trackBar8_Scroll(object sender, EventArgs e)
+        {
+            _sHighG = trackBar8.Value;
+            label10.Text = trackBar8.Value.ToString();
+        }
+
+        private void trackBar7_Scroll(object sender, EventArgs e)
+        {
+            _vHighG = trackBar7.Value;
+            label9.Text = trackBar7.Value.ToString();
         }
     }
 }
