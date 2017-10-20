@@ -3,6 +3,7 @@ using System;
 using System.Windows.Forms;
 using Foosball.Repositories;
 using System.Text.RegularExpressions;
+using Foosball.Controllers;
 
 namespace Foosball
 {
