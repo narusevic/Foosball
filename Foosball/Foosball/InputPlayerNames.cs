@@ -39,7 +39,7 @@ namespace Foosball
             this.Close();
         }
 
-        private bool NameValidation(string playerA, string playerB)
+        public bool NameValidation(string playerA, string playerB)
         {
             var pattern1 = @"^[a-zA-Z]+\s[a-zA-Z]+\s[a-zA-Z]+$";
             var pattern2 = @"^[a-zA-Z]+\s[a-zA-Z]+$";
