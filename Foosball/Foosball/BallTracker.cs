@@ -32,16 +32,11 @@ namespace Foosball
         private MatchController _matchController;
         Mat m = new Mat();
 
-       
-        
-        private List<String> _teamNames = new List<string>();
                 
         private int _width = 600;
         private int _height = 300;
 
-        private int _round;
-
-
+        private Tournament _tournament = new Tournament();
 
         public BallTracker(Match match)
         {
@@ -50,24 +45,18 @@ namespace Foosball
             SetPlayerNames();
         }
 
-        public BallTracker(List<String> teamNames, int round)
+        public BallTracker(Match match, Tournament tournament)
         {
-            _teamNames = teamNames;
-            _round = round;
+            _matchController = new MatchController(match);
+            _tournament = tournament;
             InitializeComponent();
-            SetTeamNames();
+            SetPlayerNames();
         }
 
         private void SetPlayerNames()
         {
             lbPlayerA.Text = _matchController.PlayerA.Name;
             lbPlayerB.Text = _matchController.PlayerB.Name;
-        }
-
-        private void SetTeamNames()
-        {
-            lbPlayerA.Text = _teamNames[_round * 2 - 2];
-            lbPlayerB.Text = _teamNames[_round * 2 - 1];
         }
         
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
@@ -110,7 +99,40 @@ namespace Foosball
 
         private void UpdateScores()
         {
-            _matchController.CheckForWinner();
+            if(_matchController.CheckForWinner())
+            {
+                if(_tournament.Players.Count != 0) {
+                    if(_matchController.CheckIfPlayerAWon())
+                    {
+                        _tournament.Players.Add(_matchController.PlayerA);
+                    }
+                    else
+                    {
+                        _tournament.Players.Add(_matchController.PlayerB);
+                    }
+                    _tournament.Round++;
+                    this.Hide();
+                    var load = new TournamentBracket(_tournament);
+                    load.ShowDialog();
+                    this.Close();
+                }
+                else
+                {
+                    this.Hide();
+                    if (_matchController.CheckIfPlayerAWon())
+                    {
+                        var load = new TournamentWinner(_matchController.PlayerA.Name);
+                        load.ShowDialog();
+                    }
+                    else
+                    {
+                        var load = new TournamentWinner(_matchController.PlayerB.Name);
+                        load.ShowDialog();
+                    }
+                    this.Close();
+                }
+            }
+            
             lbScoreA.Text = _matchController.AScore.ToString();
             lbScoreB.Text = _matchController.BScore.ToString();
 

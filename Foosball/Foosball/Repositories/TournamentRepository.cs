@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using Foosball.DataAccess;
+﻿using Foosball.DataAccess;
 using Foosball.Models;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Foosball.Repositories
 {

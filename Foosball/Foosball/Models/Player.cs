@@ -8,6 +8,10 @@
 
         public string Name { get; set; }
 
+        public int MatchWins { get; set; } = 0;
+
+        public int PersonalWins { get; set; } = 0;
+
         public Player()
         {
             Id = GlobalId++;

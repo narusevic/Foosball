@@ -10,6 +10,8 @@ namespace Foosball.Repositories
         public static PlayerRepository Instance;
         private readonly DataContext _dataContext;
 
+        public Player this[string name] => FindByName(name);
+
         public PlayerRepository(DataContext dataContext)
         {
             _dataContext = dataContext;
@@ -19,6 +21,11 @@ namespace Foosball.Repositories
         public Player Read(int id)
         {
             return _dataContext.Players.First(p => p.Id == id);
+        }
+
+        public Player FindByName(string name)
+        {
+            return _dataContext.Players.FirstOrDefault(p => p.Name == name);
         }
 
         public void Create(Player player)

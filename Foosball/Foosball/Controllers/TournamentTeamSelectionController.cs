@@ -1,30 +1,30 @@
 ﻿using Foosball.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Foosball
+namespace Foosball.Controllers
 {
     class TournamentTeamSelectionController
     {
-        public void NameValidation(List<Player> names, TournamentTeamSelection teamSelection)
+        public void NameValidation(List<string> names, TournamentTeamSelection teamSelection)
         {
             var pattern1 = @"^[a-zA-Z]+\s[a-zA-Z]+\s[a-zA-Z]+$";
             var pattern2 = @"^[a-zA-Z]+\s[a-zA-Z]+$";
             var pattern3 = @"^[a-zA-Z]+$";
+            var teamNames = new List<Player>();
 
-            foreach (Player s in names)
+            foreach (var s in names)
             {
                 if ((Regex.IsMatch(s.ToString(), pattern1)) || (Regex.IsMatch(s.ToString(), pattern2)) || (Regex.IsMatch(s.ToString(), pattern3)))
                 {
-                    if (s == names.Last<Player>())
+                    var player = new Player(s);
+                    teamNames.Add(player);
+                    if (s == names.Last())
                     {
                         Tournament tournament = new Tournament();
-                        tournament.Players = names;
+                        tournament.Players = teamNames;
                         teamSelection.Hide();
                         var load = new TournamentBracket(tournament);
                         load.ShowDialog();
@@ -33,7 +33,7 @@ namespace Foosball
                 }
                 else
                 {
-                    MessageBox.Show("Incorrect Name" + s, "Bad name", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Incorrect Name " + s.ToString(), "Bad name", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
                 }
             }

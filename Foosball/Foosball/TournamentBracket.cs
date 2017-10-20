@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Foosball.Controllers;
 using Foosball.Models;
 
 namespace Foosball
@@ -15,13 +16,14 @@ namespace Foosball
     {
         private int _amount;
         private Tournament _tournament;
-        public TournamentBracket(Tournament tournament, int round = 1)
+        public TournamentBracket(Tournament tournament)
         {
-            if(round == 1) {
+            _tournament = tournament;
+            if(_tournament.Round == 1) {
                 var shuffledTeamNames = tournament.Players.OrderBy(a => Guid.NewGuid()).ToList();
                 tournament.Players = shuffledTeamNames;
             }
-            _tournament = tournament;
+            
             TournamentBracketController methods = new TournamentBracketController(tournament, this);
             methods.CheckIfEnded();
             InitializeComponent();
@@ -32,7 +34,7 @@ namespace Foosball
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var match = new Match(_tournament.Players[_tournament.Round * 2 - 2].ToString(), _tournament.Players[_tournament.Round * 2 - 1].ToString());
+            var match = new Match(_tournament.Players[_tournament.Round * 2 - 2].Name.ToString(), _tournament.Players[_tournament.Round * 2 - 1].Name.ToString());
             this.Hide();
             var load = new BallTracker(match, _tournament);
             load.ShowDialog();
@@ -57,9 +59,8 @@ namespace Foosball
             int z = _tournament.Players.Count - 1;
             var myLabel = this.Controls.OfType<Label>();
             myLabel = myLabel.OrderBy(label => label.TabIndex);
-            for (int i = n - _tournament.Players.Count; i < n; i++)
-            {
-                myLabel.ElementAt(i).Text = _tournament.Players[z].ToString();
+            for(int i = n - _tournament.Players.Count; i < n; i++) {
+                myLabel.ElementAt(i).Text = _tournament.Players[z].Name.ToString();
                 if ((z == _tournament.Round * 2 - 1) || (z == _tournament.Round * 2 - 2))
                 {
                     myLabel.ElementAt(i).BackColor = Color.Red;

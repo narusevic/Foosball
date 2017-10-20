@@ -1,13 +1,8 @@
-﻿using Foosball.Models;
+﻿using Foosball.Controllers;
+using Foosball.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Foosball
@@ -15,6 +10,7 @@ namespace Foosball
     public partial class TournamentTeamSelection : Form
     {
         TournamentTeamSelectionController methods = new TournamentTeamSelectionController();
+
         public TournamentTeamSelection(int selectedMode)
         {
             InitializeComponent();
@@ -31,11 +27,11 @@ namespace Foosball
 
         private void next_Click(object sender, EventArgs e)
         {
-            List<Player> teamNames = new List<Player>();
+            List<string> teamNames = new List<string>();
             var myTextBox = Controls.OfType<TextBox>();
             foreach(var txt in myTextBox)
             {
-                teamNames.Add(new Player(txt.Text));
+                teamNames.Add(txt.Text);
             }
             methods.NameValidation(teamNames, this);
         }

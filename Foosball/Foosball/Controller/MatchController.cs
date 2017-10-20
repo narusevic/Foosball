@@ -34,7 +34,7 @@ namespace Foosball
         public int AScore
         {
             get { return _match.AScore; }
-            set {  _match.AScore = value; }
+            set { _match.AScore = value; }
         }
 
         public int BScore
@@ -64,13 +64,15 @@ namespace Foosball
         }
         public Rectangle FindObject(Mat m, Hsv lowerLimit, Hsv upperLimit)
         {
+
             Rectangle rect = new Rectangle(new Point(0,0), new Size(0,0));                     
             Image<Gray, byte> imgHSVDest = (new Image<Hsv, byte>(m.Bitmap)).InRange(lowerLimit, upperLimit);
+
 
             int largestContourIndex = 0;
             double largestArea = 0;
             var contours = new VectorOfVectorOfPoint();
-            
+
             CvInvoke.FindContours(imgHSVDest, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
      
             for (int i = 0; i < contours.Size; i++)
@@ -91,7 +93,8 @@ namespace Foosball
 
             return rect;           
 
-            
+
+
         }
 
         public bool SetScores(Rectangle ball)
@@ -99,6 +102,7 @@ namespace Foosball
 
             if (counter>24)
             {
+
                 foreach (Rectangle g in _goalAHistory)
                 {
                     if (ball.IntersectsWith(g))
@@ -119,6 +123,7 @@ namespace Foosball
                     }
                 }
 
+
             }
             else
             {
@@ -134,11 +139,11 @@ namespace Foosball
       
 
         public bool CheckForWinner()
-        { 
-              
+        {
+
             if (_match.AScore >= 10)
             {
-                
+
                 return true;
             }
             if (_match.BScore >= 10)
@@ -147,8 +152,15 @@ namespace Foosball
             }
 
             return false;
-                    
+
         }
 
+        public bool CheckIfPlayerAWon()
+        {
+            if (_match.AScore >= 10) {
+                return true;
+            }
+            return false;
+        }
     }
 }
