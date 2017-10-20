@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controllers\ManagingController.cs" />
-    <Compile Include="Controller\MatchController.cs" />
+    <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="CreateTeam.cs">
       <SubType>Form</SubType>
@@ -309,6 +309,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controller\" />
     <Folder Include="FileDatabase\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -11,7 +11,7 @@ using System.Drawing;
 using Foosball.Models;
 using Foosball.Repositories;
 
-namespace Foosball
+namespace Foosball.Controllers
 {
     public class MatchController
     {
