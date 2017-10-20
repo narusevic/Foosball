@@ -71,8 +71,7 @@ namespace Foosball
         }
 
         private void Capture_ImageGrabbed(object sender, EventArgs e)
-        {
-          
+        { 
             _capture.Retrieve(m);
             CvInvoke.Resize(m, m, new Size(_width, _height));          
             Image<Bgr, byte> imgBGR = new Image<Bgr, byte>(m.Bitmap);  
@@ -91,24 +90,21 @@ namespace Foosball
             
             pictureBox1.Image = imgBGR.ToBitmap();
           
-            Thread.Sleep((int)_capture.GetCaptureProperty(CapProp.Fps));
-            
-           
+            Thread.Sleep((int)_capture.GetCaptureProperty(CapProp.Fps));  
         }
-
-
+        
         private void UpdateScores()
         {
             if(_matchController.CheckForWinner())
             {
-                if(_tournament.Players.Count != 0) {
+                if(_tournament.Teams.Count != 0) {
                     if(_matchController.CheckIfPlayerAWon())
                     {
-                        _tournament.Players.Add(_matchController.PlayerA);
+                        _tournament.Teams.Add(_matchController.PlayerA);
                     }
                     else
                     {
-                        _tournament.Players.Add(_matchController.PlayerB);
+                        _tournament.Teams.Add(_matchController.PlayerB);
                     }
                     _tournament.Round++;
                     this.Hide();
@@ -135,7 +131,6 @@ namespace Foosball
             
             lbScoreA.Text = _matchController.AScore.ToString();
             lbScoreB.Text = _matchController.BScore.ToString();
-
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)

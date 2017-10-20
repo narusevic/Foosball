@@ -10,16 +10,16 @@ namespace Foosball.Models
 
         public string Name { get; set; }
 
-		public List<Player> Players { get; set; }
+		public List<Team> Teams { get; set; }
 
-        public Player Winner { get; set; }
+        public Team Winner { get; set; }
 
         public int Round { get; set; } = 1;
 		
         public Tournament()
         {
             Id = GlobalId++;
-            Players = new List<Player>();
+            Teams = new List<Team>();
         }
     }
 }

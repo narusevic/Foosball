@@ -36,7 +36,19 @@ namespace Foosball.Repositories
 
         public void Update(int id, Player player)
         {
-            
+            var item = _dataContext.Players.SingleOrDefault(p => p.Id == id);
+
+            if (item == null)
+            {
+                return;
+            }
+
+            item.MatchWins = player.MatchWins;
+            item.MatchPlayed = player.MatchPlayed;
+            item.Name = player.Name;
+            item.TournamentWins = player.TournamentWins;
+
+            _dataContext.SaveChanges();
         }
 
         public void Delete(int id)

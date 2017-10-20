@@ -10,7 +10,9 @@
 
         public int MatchWins { get; set; } = 0;
 
-        public int PersonalWins { get; set; } = 0;
+        public int TournamentWins { get; set; } = 0;
+
+        public int MatchPlayed { get; set; } = 0;
 
         public Player()
         {
@@ -21,6 +23,11 @@
             : this()
         {
             Name = name;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

@@ -29,7 +29,23 @@ namespace Foosball.Repositories
 
         public void Update(int id, Match entity)
         {
+            var item = _dataContext.Matches.SingleOrDefault(p => p.Id == id);
 
+            if (item == null)
+            {
+                return;
+            }
+
+            item.TeamA = entity.TeamA;
+            item.TeamB = entity.TeamB;
+            item.AScore = entity.AScore;
+            item.BScore = entity.BScore;
+            item.End = entity.End;
+            item.Id = entity.Id;
+            item.Result = entity.Result;
+            item.Start = entity.Start;
+
+            _dataContext.SaveChanges();
         }
 
         public void Delete(int id)

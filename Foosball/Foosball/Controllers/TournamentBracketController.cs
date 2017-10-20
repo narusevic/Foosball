@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Foosball.Repositories;
 
 namespace Foosball.Controllers
 {
@@ -19,7 +20,7 @@ namespace Foosball.Controllers
 
         public int AmountFinder()
         {
-            int amount = _tournament.Players.Count();
+            int amount = _tournament.Teams.Count();
             if (amount < 8)
             {
                 _amount = 4;
@@ -40,11 +41,16 @@ namespace Foosball.Controllers
 
         public void CheckIfEnded()
         {
-            if (_tournament.Players.Count == AmountFinder() * 2 - 1)
+            if (_tournament.Teams.Count == AmountFinder() * 2 - 1)
             {
-                _tournament.Winner = _tournament.Players.Last();
+                _tournament.Winner = _tournament.Teams.Last();
                 _tournamentBracket.Hide();
+
                 var load = new TournamentWinner(_tournament.Winner.Name.ToString());
+
+                _tournament.Winner.TournamentWins++;
+                TeamRepository.Instance.Update(_tournament.Winner.Id, _tournament.Winner);
+
                 load.ShowDialog();
                 _tournamentBracket.Close();
             }
