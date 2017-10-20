@@ -13,7 +13,10 @@ namespace Foosball
 {
     class MatchController
     {
-        private List<Rectangle> _lastRectangles = new List<Rectangle>();
+        int counter = 25;
+        private List<Rectangle> _goalAHistory = new List<Rectangle>();
+        private List<Rectangle> _goalBHistory = new List<Rectangle>();
+
         private Match _match;
 
         public Player PlayerA
@@ -44,22 +47,32 @@ namespace Foosball
         {
             _match = match;
         }
-
-        public Rectangle FindBall(Mat m, Hsv lowerLimit, Hsv upperLimit)
+        public Tuple<Rectangle,Rectangle> FindGoals(Mat m, Hsv lowerLimit, Hsv upperLimit)
         {
-            
-            Image<Hsv, byte> imgHSV = new Image<Hsv, byte>(m.Bitmap);
-            Image<Bgr, byte> imgBGR = new Image<Bgr, byte>(m.Bitmap); ;
-            Image<Gray, byte> imgHSVDest = imgHSV.InRange(lowerLimit, upperLimit);
-            imgHSVDest.Erode(2);
-            imgHSVDest.Dilate(2);
-         
+            var goalA = FindObject(new Mat(m, new Rectangle(new Point(0, 100), new Size(200, 100))), lowerLimit, upperLimit);
+            var goalB = FindObject(new Mat(m, new Rectangle(new Point(400, 100), new Size(200, 100))), lowerLimit, upperLimit);
+
+            goalA = new Rectangle(new Point(goalA.X, goalA.Y+100), new Size(goalA.Width, goalA.Height));
+            goalB = new Rectangle(new Point(goalB.X+400, goalB.Y+100), new Size(goalB.Width, goalB.Height));
+            _goalAHistory.Add(goalA);
+            _goalBHistory.Add(goalB);
+
+            if (_goalAHistory.Count > 10) _goalAHistory.RemoveAt(0);
+            if (_goalBHistory.Count > 10) _goalBHistory.RemoveAt(0);
+
+            return Tuple.Create(goalA, goalB);
+        }
+        public Rectangle FindObject(Mat m, Hsv lowerLimit, Hsv upperLimit)
+        {
+            Rectangle rect = new Rectangle(new Point(0,0), new Size(0,0));                     
+            Image<Gray, byte> imgHSVDest = (new Image<Hsv, byte>(m.Bitmap)).InRange(lowerLimit, upperLimit);
+
             int largestContourIndex = 0;
             double largestArea = 0;
             var contours = new VectorOfVectorOfPoint();
             
             CvInvoke.FindContours(imgHSVDest, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
-            Console.WriteLine(contours.Size);
+     
             for (int i = 0; i < contours.Size; i++)
               {
                   var color = new MCvScalar(0, 0, 255);
@@ -71,73 +84,61 @@ namespace Foosball
                       largestContourIndex = i;
                   }
               }
+            if (contours.Size != 0)
+            {
+                rect = CvInvoke.BoundingRectangle(contours[largestContourIndex]);              
+            }
 
-            Rectangle rect = CvInvoke.BoundingRectangle(contours[largestContourIndex]);
-            _lastRectangles.Add(rect);
-            
-
-            return rect;
-           
+            return rect;           
 
             
         }
 
-        public bool SetScores(int width)
+        public bool SetScores(Rectangle ball)
         {
-            //the idea is to select 30 frames and compare if first 15 rectangle coordinates
-            //are different than last 15. In that case, The user, who had the ball before
-            //loosing it, has scored.
-            if (_lastRectangles.Count < 20)
-                return false;
 
-            bool goal = false;
-
-            if (IsBallLost())
+            if (counter>24)
             {
-                if (_lastRectangles[9].X < width / 2)
-                    _match.BScore++;
-                else 
-                    _match.AScore++;
+                foreach (Rectangle g in _goalAHistory)
+                {
+                    if (ball.IntersectsWith(g))
+                    {
+                        counter = 0;
+                        _match.AScore++;
+                        return true;
+                    }
+                }
 
-                goal = true;
-               
+                foreach (Rectangle g in _goalBHistory)
+                {
+                    if (ball.IntersectsWith(g))
+                    {
+                        counter = 0;
+                        _match.BScore++;
+                        return true;
+                    }
+                }
+
+            }
+            else
+            {
+                counter++;
             }
 
-            _lastRectangles.RemoveAt(0);
 
-            return goal;
-        }
 
-        private bool IsBallLost()
-        {
-            for (var i = 0; i < 9; i++)
-            {
-                if (Math.Abs(_lastRectangles[i].X - _lastRectangles[i + 1].X) > 20 ||
-                    Math.Abs(_lastRectangles[i].Y - _lastRectangles[i + 1].Y) > 20)
-                    return false;
-            }
-
-            for (var i = 10; i < 19; i++)
-            {
-                if (Math.Abs(_lastRectangles[i].X - _lastRectangles[i + 1].X) > 20 ||
-                    Math.Abs(_lastRectangles[i].Y - _lastRectangles[i + 1].Y) > 20)
-                    return false;
-            }
-
-            if (Math.Abs(_lastRectangles[14].X - _lastRectangles[15].X) > 50 ||
-                Math.Abs(_lastRectangles[14].Y - _lastRectangles[15].Y) > 50)
-            {
-                return true;
-            }
 
             return false;
         }
+
+      
 
         public bool CheckForWinner()
         { 
               
             if (_match.AScore >= 10)
-            { 
+            {
+                
                 return true;
             }
             if (_match.BScore >= 10)
