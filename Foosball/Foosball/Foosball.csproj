@@ -37,12 +37,6 @@
   <ItemGroup>
     <Compile Include="Controllers\ManagingController.cs" />
     <Compile Include="Controller\MatchController.cs" />
-    <Compile Include="BallTracking.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BallTracking.Designer.cs">
-      <DependentUpon>BallTracking.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="CreateTeam.cs">
       <SubType>Form</SubType>
@@ -147,16 +141,6 @@
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\MatchRepository.cs" />
     <Compile Include="Repositories\PlayerRepository.cs" />
-    <Compile Include="Video.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Video.Designer.cs">
-      <DependentUpon>Video.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VideoProvider.cs" />
-    <EmbeddedResource Include="BallTracking.resx">
-      <DependentUpon>BallTracking.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="BallTracker.resx">
       <DependentUpon>BallTracker.cs</DependentUpon>
     </EmbeddedResource>
@@ -211,9 +195,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TournamentWinner.resx">
       <DependentUpon>TournamentWinner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Video.resx">
-      <DependentUpon>Video.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Models\Tournament.cs" />
     <None Include="OpenTK.dll.config" />
