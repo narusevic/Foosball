@@ -48,7 +48,6 @@
     <Compile Include="DataAccess\DataReader.cs" />
     <Compile Include="DataAccess\DataWriter.cs" />
     <Compile Include="DataAccess\IDataContext.cs" />
-    <Compile Include="Deque.cs" />
     <Compile Include="BallTracker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +58,14 @@
     <Compile Include="Migrations\201710192214222_TeamPlayers.cs" />
     <Compile Include="Migrations\201710192214222_TeamPlayers.Designer.cs">
       <DependentUpon>201710192214222_TeamPlayers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710200353522_Teamsupdate.cs" />
+    <Compile Include="Migrations\201710200353522_Teamsupdate.Designer.cs">
+      <DependentUpon>201710200353522_Teamsupdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710200405416_PlayerUpdate.cs" />
+    <Compile Include="Migrations\201710200405416_PlayerUpdate.Designer.cs">
+      <DependentUpon>201710200405416_PlayerUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="RenameForm.cs">
       <SubType>Form</SubType>
@@ -149,6 +156,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710192214222_TeamPlayers.resx">
       <DependentUpon>201710192214222_TeamPlayers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710200353522_Teamsupdate.resx">
+      <DependentUpon>201710200353522_Teamsupdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710200405416_PlayerUpdate.resx">
+      <DependentUpon>201710200405416_PlayerUpdate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RenameForm.resx">
       <DependentUpon>RenameForm.cs</DependentUpon>

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Foosball.Controllers;
+using Foosball.Models;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Foosball.Controllers;
-using Foosball.Models;
 
 namespace Foosball
 {
@@ -20,8 +16,8 @@ namespace Foosball
         {
             _tournament = tournament;
             if(_tournament.Round == 1) {
-                var shuffledTeamNames = tournament.Players.OrderBy(a => Guid.NewGuid()).ToList();
-                tournament.Players = shuffledTeamNames;
+                var shuffledTeamNames = tournament.Teams.OrderBy(a => Guid.NewGuid()).ToList();
+                tournament.Teams = shuffledTeamNames;
             }
             
             TournamentBracketController methods = new TournamentBracketController(tournament, this);
@@ -34,7 +30,7 @@ namespace Foosball
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var match = new Match(_tournament.Players[_tournament.Round * 2 - 2].Name.ToString(), _tournament.Players[_tournament.Round * 2 - 1].Name.ToString());
+            var match = new Match(_tournament.Teams[_tournament.Round * 2 - 2].Name.ToString(), _tournament.Teams[_tournament.Round * 2 - 1].Name.ToString());
             this.Hide();
             var load = new BallTracker(match, _tournament);
             load.ShowDialog();
@@ -56,11 +52,11 @@ namespace Foosball
         public void AddTeamNames()
         {
             int n = _amount * 2 - 1;
-            int z = _tournament.Players.Count - 1;
+            int z = _tournament.Teams.Count - 1;
             var myLabel = this.Controls.OfType<Label>();
             myLabel = myLabel.OrderBy(label => label.TabIndex);
-            for(int i = n - _tournament.Players.Count; i < n; i++) {
-                myLabel.ElementAt(i).Text = _tournament.Players[z].Name.ToString();
+            for(int i = n - _tournament.Teams.Count; i < n; i++) {
+                myLabel.ElementAt(i).Text = _tournament.Teams[z].Name.ToString();
                 if ((z == _tournament.Round * 2 - 1) || (z == _tournament.Round * 2 - 2))
                 {
                     myLabel.ElementAt(i).BackColor = Color.Red;

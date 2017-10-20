@@ -15,7 +15,6 @@ namespace Foosball
     {
         private Capture _capture;
        
-        private Deque<Point> _deque = new Deque<Point>();
         private int _hLow = 0;
         private int _sLow = 43;
         private int _vLow = 209;
@@ -83,14 +82,14 @@ namespace Foosball
         {
             if(_matchController.CheckForWinner())
             {
-                if(_tournament.Players.Count != 0) {
+                if(_tournament.Teams.Count != 0) {
                     if(_matchController.CheckIfPlayerAWon())
                     {
-                        _tournament.Players.Add(_matchController.PlayerA);
+                        _tournament.Teams.Add(_matchController.PlayerA);
                     }
                     else
                     {
-                        _tournament.Players.Add(_matchController.PlayerB);
+                        _tournament.Teams.Add(_matchController.PlayerB);
                     }
                     _tournament.Round++;
                     this.Hide();

@@ -21,14 +21,7 @@ namespace Foosball
         {
             if(NameValidation(tbPlayerAName.Text, tbPlayerBName.Text))
             {
-                var playerA = new Player(tbPlayerAName.Text);
-                var playerB = new Player(tbPlayerBName.Text);
-                PlayerRepository.Instance.Create(playerA);
-                PlayerRepository.Instance.Create(playerB);
-
-                _match.PlayerA = playerA;
-                _match.PlayerB = playerB;
-                MatchRepository.Instance.Create(_match);
+                MatchController.CreateMatch(_match, tbPlayerAName.Text, tbPlayerBName.Text);
 
                 DialogResult = DialogResult.OK;
             }

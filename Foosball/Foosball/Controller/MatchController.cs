@@ -9,6 +9,8 @@ using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using System.Drawing;
 using Foosball.Models;
+using Foosball.Repositories;
+
 namespace Foosball
 {
     class MatchController
@@ -16,16 +18,16 @@ namespace Foosball
         private List<Rectangle> _lastRectangles = new List<Rectangle>();
         private Match _match;
 
-        public Player PlayerA
+        public Team PlayerA
         {
-            get { return _match.PlayerA; }
-            set { _match.PlayerA = value; }
+            get { return _match.TeamA; }
+            set { _match.TeamA = value; }
         }
 
-        public Player PlayerB
+        public Team PlayerB
         {
-            get { return _match.PlayerB; }
-            set { _match.PlayerB = value; }
+            get { return _match.TeamB; }
+            set { _match.TeamB = value; }
         }
 
         public int AScore
@@ -43,6 +45,7 @@ namespace Foosball
         public MatchController(Match match)
         {
             _match = match;
+
         }
 
         public Rectangle FindBall(Mat m, Hsv lowerLimit, Hsv upperLimit)
@@ -74,12 +77,9 @@ namespace Foosball
 
             Rectangle rect = CvInvoke.BoundingRectangle(contours[largestContourIndex]);
             _lastRectangles.Add(rect);
-
+            
 
             return rect;
-
-
-
         }
 
         public bool SetScores(int width)
@@ -135,26 +135,79 @@ namespace Foosball
 
         public bool CheckForWinner()
         {
-
             if (_match.AScore >= 10)
             {
+                _match.TeamA.MatchWins++;
+                _match.TeamA.MatchesPlayed++;
+
+                if (_match.TeamA.PlayerA != null)
+                {
+                    _match.TeamA.PlayerA.MatchWins++;
+                    _match.TeamA.PlayerA.MatchPlayed++;
+                }
+
+                if (_match.TeamA.PlayerB != null)
+                {
+                    _match.TeamA.PlayerB.MatchPlayed++;
+                }
+                
                 return true;
             }
+
             if (_match.BScore >= 10)
             {
+                _match.TeamB.MatchWins++;
+                _match.TeamB.MatchesPlayed++;
+
+                if (_match.TeamA.PlayerA != null)
+                {
+                    _match.TeamA.PlayerA.MatchWins++;
+                }
+
+                if (_match.TeamA.PlayerB != null)
+                {
+                    _match.TeamA.PlayerB.MatchPlayed++;
+                    _match.TeamA.PlayerB.MatchPlayed++;
+                }
+
                 return true;
             }
 
             return false;
-
         }
 
         public bool CheckIfPlayerAWon()
         {
-            if (_match.AScore >= 10) {
+            if (_match.AScore >= 10)
+            {
                 return true;
             }
+
             return false;
+        }
+
+        public static void CreateMatch(Match match, string teamAName, string teamBName)
+        {
+            var teamA = TeamRepository.Instance[teamAName];
+
+            if (teamA == null)
+            {
+                teamA = new Team(teamAName);
+                TeamRepository.Instance.Create(teamA);
+            }
+
+            var teamB = TeamRepository.Instance[teamBName];
+
+            if (teamB == null)
+            {
+                teamB = new Team(teamBName); 
+                TeamRepository.Instance.Create(teamB);
+            }
+
+            match.TeamA = teamA;
+            match.TeamB = teamB;
+
+            MatchRepository.Instance.Create(match);
         }
     }
 }

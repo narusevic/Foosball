@@ -8,9 +8,9 @@ namespace Foosball.Models
 
         public static int GlobalId { get; set; } = 0;
 
-        public Player PlayerA { get; set; }
+        public Team TeamA { get; set; }
 
-        public Player PlayerB { get; set; }
+        public Team TeamB { get; set; }
 
         public int? Result { get; set; }
 
@@ -33,8 +33,8 @@ namespace Foosball.Models
         public Match(string playerA, string playerB)
             : this()
         {
-            PlayerA = new Player(playerA);
-            PlayerB = new Player(playerB);
+            TeamA = new Team(playerA);
+            TeamB = new Team(playerB);
         }
     }
 }

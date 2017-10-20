@@ -23,7 +23,7 @@ namespace FoosballTests
             var tournament = new Tournament();
             for (int i = 0; i < 5; i++)
             {
-                tournament.Players.Add(new Player("lol" + i));
+                tournament.Teams.Add(new Team("lol" + i));
             }
             var view = new TournamentBracket(tournament);
             var controller = new Foosball.Controllers.TournamentBracketController(tournament, view);
@@ -36,7 +36,7 @@ namespace FoosballTests
             var tournament = new Tournament();
             for (int i = 0; i < 15; i++)
             {
-                tournament.Players.Add(new Player("lol" + i));
+                tournament.Teams.Add(new Team("lol" + i));
             }
             var view = new TournamentBracket(tournament);
             var controller = new Foosball.Controllers.TournamentBracketController(tournament, view);
