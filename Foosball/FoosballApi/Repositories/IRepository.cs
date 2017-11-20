@@ -1,4 +1,4 @@
-﻿namespace Foosball.Repositories
+﻿namespace FoosballApi.Repositories
 {
     public interface IRepository<T>
     {

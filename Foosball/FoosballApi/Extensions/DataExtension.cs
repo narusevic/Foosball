@@ -5,7 +5,7 @@ using System.Data;
 using System.Reflection;
 using System.Text;
 
-namespace Foosball.Extensions
+namespace FoosballApi.Extensions
 {
     public static class DataExtension
     {

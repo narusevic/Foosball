@@ -1,11 +1,11 @@
-﻿using Foosball.DataAccess;
-using Foosball.Models;
+﻿using FoosballApi.DataAccess;
+using FoosballApi.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Foosball.Repositories
+namespace FoosballApi.Repositories
 {
-    public class TournamentRepository : IRepository<Tournament>
+    public class TournamentRepository : ITournamentRepository
     {
         public static TournamentRepository Instance;
         private readonly DataContext _dataContext;

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Data.Entity;
 using System.IO;
-using Foosball.Extensions;
+using FoosballApi.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Foosball.DataAccess
+namespace FoosballApi.DataAccess
 {
     public class DataWriter
     {

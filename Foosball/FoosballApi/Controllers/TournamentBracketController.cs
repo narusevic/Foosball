@@ -1,7 +1,6 @@
-﻿using Foosball.Models;
-using System.Drawing;
+﻿using FoosballApi.Models;
+using FoosballApi.Repositories;
 using System.Linq;
-using Foosball.Repositories;
 
 namespace FoosballApi.Controllers
 {

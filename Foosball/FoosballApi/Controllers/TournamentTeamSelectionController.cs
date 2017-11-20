@@ -1,11 +1,10 @@
-﻿using Foosball.Models;
+﻿using FoosballApi.Models;
+using FoosballApi.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using Foosball.Repositories;
 
-namespace Foosball.Controllers
+namespace FoosballApi.Controllers
 {
     class TournamentTeamSelectionController
     {

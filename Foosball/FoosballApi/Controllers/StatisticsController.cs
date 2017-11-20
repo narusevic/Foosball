@@ -1,20 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Foosball.Models;
-using Foosball.Repositories;
+using System.Web.Http;
+using FoosballApi.Models;
+using FoosballApi.Repositories;
 
-namespace Foosball.Controllers
+namespace FoosballApi.Controllers
 {
-    public class StatisticsController
+    public class StatisticsController : ApiController
     {
+        private readonly ITeamRepository _teamRepository;
+        private readonly IPlayerRepository _playerRepository;
+
+        public StatisticsController(ITeamRepository teamRepository, IPlayerRepository playerRepository)
+        {
+            _teamRepository = teamRepository;
+            _playerRepository = playerRepository;
+        }
+        
+        [Route("api/Managing/Teams")]
+        [HttpGet]
         public List<Team> GetAllTeams()
         {
-            return TeamRepository.Instance.ReadAll().ToList();
+            return _teamRepository.ReadAll().ToList();
         }
 
+        [Route("api/Managing/Players")]
+        [HttpGet]
         public List<Player> GetAllPlayers()
         {
-            return PlayerRepository.Instance.ReadAll().ToList();
+            return _playerRepository.ReadAll().ToList();
         }
     }
 }

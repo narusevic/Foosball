@@ -1,11 +1,8 @@
-namespace Foosball.Migrations
+namespace FoosballApi.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Foosball.DataAccess.DataContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DataAccess.DataContext>
     {
         public Configuration()
         {
@@ -13,7 +10,7 @@ namespace Foosball.Migrations
             ContextKey = "Foosball.DataAccess.DataContext";
         }
 
-        protected override void Seed(Foosball.DataAccess.DataContext context)
+        protected override void Seed(DataAccess.DataContext context)
         {
             //  This method will be called after migrating to the latest version.
 

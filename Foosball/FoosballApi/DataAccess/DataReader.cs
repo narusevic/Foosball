@@ -1,8 +1,8 @@
 ﻿using System.Data.Entity;
 using System.IO;
-using Foosball.Extensions;
+using FoosballApi.Extensions;
 
-namespace Foosball.DataAccess
+namespace FoosballApi.DataAccess
 {
     public class DataReader
     {

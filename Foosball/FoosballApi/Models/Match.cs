@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Foosball.Models
+namespace FoosballApi.Models
 {
     public class Match
     {

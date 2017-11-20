@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using FoosballApi.Repositories;
+using FoosballApi.Services;
 using System.Web.Http;
+using Unity;
+using Unity.Lifetime;
 
 namespace FoosballApi
 {
@@ -9,6 +10,13 @@ namespace FoosballApi
     {
         public static void Register(HttpConfiguration config)
         {
+            var container = new UnityContainer();
+            container.RegisterType<IPlayerRepository, PlayerRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<ITeamRepository, TeamRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IMatchRepository, MatchRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<ITournamentRepository, TournamentRepository>(new HierarchicalLifetimeManager());
+            config.DependencyResolver = new UnityResolver(container);
+
             // Web API configuration and services
 
             // Web API routes

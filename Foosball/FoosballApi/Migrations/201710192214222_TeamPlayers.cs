@@ -1,4 +1,4 @@
-namespace Foosball.Migrations
+namespace FoosballApi.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

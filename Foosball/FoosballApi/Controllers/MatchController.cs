@@ -2,16 +2,19 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
-using Foosball.Models;
-using Foosball.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using FoosballApi.Models;
+using FoosballApi.Repositories;
 
 namespace FoosballApi.Controllers
 {
     public class MatchController
     {
+        private readonly ITeamRepository _teamRepository;
+        private readonly IMatchRepository _matchRepository;
+
         private int _counter = 25;
         private List<Rectangle> _goalAHistory = new List<Rectangle>();
         private List<Rectangle> _goalBHistory = new List<Rectangle>();
@@ -42,11 +45,17 @@ namespace FoosballApi.Controllers
             set { _match.BScore = value; }
         }
 
-        public MatchController(Match match)
+        public MatchController(ITeamRepository teamRepository, IMatchRepository matchRepository)
+        {
+            _teamRepository = teamRepository;
+            _matchRepository = matchRepository;
+        }
+
+        public void SetMatch(Match match)
         {
             _match = match;
-
         }
+
         public Tuple<Rectangle,Rectangle> FindGoals(Mat m, Hsv lowerLimit, Hsv upperLimit)
         {
             var goalA = FindObject(new Mat(m, new Rectangle(new Point(0, 100), new Size(200, 100))), lowerLimit, upperLimit);
@@ -96,7 +105,6 @@ namespace FoosballApi.Controllers
 
         public bool SetScores(Rectangle ball)
         {
-
             if (_counter>24)
             {
                 foreach (Rectangle g in _goalAHistory)
@@ -174,28 +182,28 @@ namespace FoosballApi.Controllers
             return false;
         }
 
-        public static void CreateMatch(Match match, string teamAName, string teamBName)
+        public void CreateMatch(Match match, string teamAName, string teamBName)
         {
-            var teamA = TeamRepository.Instance[teamAName];
+            var teamA = _teamRepository[teamAName];
 
             if (teamA == null)
             {
                 teamA = new Team(teamAName);
-                TeamRepository.Instance.Create(teamA);
+                _teamRepository.Create(teamA);
             }
 
-            var teamB = TeamRepository.Instance[teamBName];
+            var teamB = _teamRepository[teamBName];
 
             if (teamB == null)
             {
-                teamB = new Team(teamBName); 
-                TeamRepository.Instance.Create(teamB);
+                teamB = new Team(teamBName);
+                _teamRepository.Create(teamB);
             }
 
             match.TeamA = teamA;
             match.TeamB = teamB;
 
-            MatchRepository.Instance.Create(match);
+            _matchRepository.Create(match);
         }
     }
 }

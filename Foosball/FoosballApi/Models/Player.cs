@@ -1,4 +1,4 @@
-﻿namespace Foosball.Models
+﻿namespace FoosballApi.Models
 {
     public class Player
     {

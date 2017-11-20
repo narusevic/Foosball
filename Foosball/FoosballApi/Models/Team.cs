@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Foosball.Models
+namespace FoosballApi.Models
 {
     public class Team
     {

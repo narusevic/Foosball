@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
-using Foosball.Models;
+using FoosballApi.Models;
 
-namespace Foosball.DataAccess
+namespace FoosballApi.DataAccess
 {
     internal interface IDataContext
     {
