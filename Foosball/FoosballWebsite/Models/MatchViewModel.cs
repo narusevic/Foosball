@@ -13,6 +13,6 @@ namespace LiveGameFeed.Models
         public DateTime MatchDate { get; set; }
         public string Type { get; set; }
 
-        public ICollection<FeedViewModel> Feeds {get; set; }
+        public ICollection<FeedViewModel> Feeds { get; set; }
     }
 }

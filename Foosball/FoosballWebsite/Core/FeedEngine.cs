@@ -10,18 +10,18 @@ namespace LiveGameFeed.Core
 {
     public class FeedEngine : IRunnable
     {
-        private ILogger logger;
+        private ILogger _logger;
         IMatchRepository _matchRepository;
         public FeedEngine(IMatchRepository matchRepository,
                           ILogger<FeedEngine> logger)
         {
-            this.logger = logger;
+            _logger = logger;
             this._matchRepository = matchRepository;
         }
         public void Run(TaskRunStatus taskRunStatus)
         {
             var msg = string.Format("Run at: {0}", DateTimeOffset.Now);
-            logger.LogDebug(msg);
+            _logger.LogDebug(msg);
             UpdateScore();
         }
 
@@ -65,8 +65,8 @@ namespace LiveGameFeed.Core
                 FeedViewModel _feed = new FeedViewModel()
                 {
                     MatchId = match.Id,
-                    Description = _matchEnded == false ? 
-                    (points + " points for " + (updateHost == true ? match.Host : match.Guest) + "!") :
+                    Description = !_matchEnded ? 
+                    (points + " points for " + (updateHost ? match.Host : match.Guest) + "!") :
                     "Match started",
                     CreatedAt = DateTime.Now
                 };

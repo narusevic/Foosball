@@ -7,17 +7,17 @@ namespace LiveGameFeed.Data
 {
     public class LiveGameDbInitializer
     {
-        private static LiveGameContext context;
+        private static LiveGameContext _context;
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            context = (LiveGameContext)serviceProvider.GetService(typeof(LiveGameContext));
+            _context = (LiveGameContext)serviceProvider.GetService(typeof(LiveGameContext));
 
             InitializeSchedules();
         }
 
         private static void InitializeSchedules()
         {
-            if (!context.Matches.Any())
+            if (!_context.Matches.Any())
             {
                 Match match_01 = new Match
                 {
@@ -57,9 +57,9 @@ namespace LiveGameFeed.Data
                     }
                 };
 
-                context.Matches.Add(match_01); context.Matches.Add(match_02);
+                _context.Matches.Add(match_01); _context.Matches.Add(match_02);
 
-                context.SaveChanges();
+                _context.SaveChanges();
             }
         }
     }

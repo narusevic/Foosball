@@ -19,15 +19,11 @@ namespace LiveGameFeed.Data
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
-             modelBuilder.Entity<Match>()
-                .ToTable("Match");
+             modelBuilder.Entity<Match>().ToTable("Match");
 
-            modelBuilder.Entity<Feed>()
-                .ToTable("Feed");
+            modelBuilder.Entity<Feed>().ToTable("Feed");
 
-            modelBuilder.Entity<Feed>()
-                .Property(f => f.MatchId)
-                .IsRequired();
+            modelBuilder.Entity<Feed>().Property(f => f.MatchId).IsRequired();
         }
     }
 }
