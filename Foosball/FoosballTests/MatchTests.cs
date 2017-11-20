@@ -1,4 +1,5 @@
 ﻿using Foosball;
+using Foosball.Controllers;
 using Foosball.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
