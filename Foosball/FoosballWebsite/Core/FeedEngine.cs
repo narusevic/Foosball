@@ -41,7 +41,7 @@ namespace LiveGameFeed.Core
                 else
                     match.GuestScore += points;
 
-                MatchScore score = new MatchScore()
+                var score = new MatchScore()
                 {
                     HostScore = match.HostScore,
                     GuestScore = match.GuestScore
@@ -53,6 +53,7 @@ namespace LiveGameFeed.Core
                     score.GuestScore = 0;
                     _matchEnded = true;
                 }
+
                 // Update Score for all clients
                 using (var client = new HttpClient())
                 {
@@ -60,9 +61,7 @@ namespace LiveGameFeed.Core
                 }
 
                 // Update Feed for subscribed only clients
-
-
-                FeedViewModel _feed = new FeedViewModel()
+                var _feed = new FeedViewModel()
                 {
                     MatchId = match.Id,
                     Description = !_matchEnded ? 
