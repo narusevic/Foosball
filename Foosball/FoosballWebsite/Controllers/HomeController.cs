@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace LiveGameFeed.Controllers
+namespace FoosballWebsite.Controllers
 {
     public class HomeController : Controller
     {

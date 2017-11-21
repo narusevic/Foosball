@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LiveGameFeed.Models;
+using FoosballWebsite.Models;
 
-namespace LiveGameFeed.Data
+namespace FoosballWebsite.Data
 {
     public class LiveGameDbInitializer
     {

@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
-using LiveGameFeed.Models;
+using FoosballWebsite.Models;
 
-namespace LiveGameFeed.Hubs
+namespace FoosballWebsite.Hubs
 {
     public class Broadcaster : Hub<IBroadcaster>
     {

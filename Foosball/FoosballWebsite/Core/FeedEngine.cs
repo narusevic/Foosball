@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using LiveGameFeed.Data.Abstract;
-using LiveGameFeed.Models;
+using FoosballWebsite.Data.Abstract;
+using FoosballWebsite.Models;
 using Microsoft.Extensions.Logging;
 using RecurrentTasks;
 
-namespace LiveGameFeed.Core
+namespace FoosballWebsite.Core
 {
     public class FeedEngine : IRunnable
     {

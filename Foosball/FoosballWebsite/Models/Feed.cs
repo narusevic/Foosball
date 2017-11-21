@@ -1,6 +1,6 @@
 using System;
 
-namespace LiveGameFeed.Models
+namespace FoosballWebsite.Models
 {
     public class Feed : IEntityBase
     {

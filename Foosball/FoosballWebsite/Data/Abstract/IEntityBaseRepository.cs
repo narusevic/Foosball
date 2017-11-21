@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using LiveGameFeed.Models;
+using FoosballWebsite.Models;
 
-namespace LiveGameFeed.Data.Abstract
+namespace FoosballWebsite.Data.Abstract
 {
     public interface IEntityBaseRepository<T> where T : class, IEntityBase, new()
     {

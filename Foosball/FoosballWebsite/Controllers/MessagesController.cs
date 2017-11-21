@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Infrastructure;
-using LiveGameFeed.Hubs;
-using LiveGameFeed.Models;
+using FoosballWebsite.Hubs;
+using FoosballWebsite.Models;
 
-namespace LiveGameFeed.Controllers
+namespace FoosballWebsite.Controllers
 {
     [Route("api/[controller]")]
     public class MessagesController : ApiHubController<Broadcaster>

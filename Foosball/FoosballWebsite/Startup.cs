@@ -1,19 +1,19 @@
 using System;
-using LiveGameFeed.Data;
-using LiveGameFeed.Data.Repositories;
-using LiveGameFeed.Data.Abstract;
+using FoosballWebsite.Data;
+using FoosballWebsite.Data.Repositories;
+using FoosballWebsite.Data.Abstract;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using LiveGameFeed.Core.Mappings;
+using FoosballWebsite.Core.Mappings;
 using Newtonsoft.Json.Serialization;
 using RecurrentTasks;
-using LiveGameFeed.Core;
+using FoosballWebsite.Core;
 
-namespace LiveGameFeed
+namespace FoosballWebsite
 {
     public class Startup
     {

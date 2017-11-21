@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Infrastructure;
-using LiveGameFeed.Hubs;
-using LiveGameFeed.Data.Abstract;
-using LiveGameFeed.Models;
+using FoosballWebsite.Hubs;
+using FoosballWebsite.Data.Abstract;
+using FoosballWebsite.Models;
 using AutoMapper;
 
-namespace LiveGameFeed.Controllers
+namespace FoosballWebsite.Controllers
 {
     [Route("api/[controller]")]
     public class FeedsController : ApiHubController<Broadcaster>

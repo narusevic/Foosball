@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using LiveGameFeed.Models;
+using FoosballWebsite.Models;
 
-namespace LiveGameFeed.Core.Mappings
+namespace FoosballWebsite.Core.Mappings
 {
     public class DomainToViewModelMappingProfile : Profile
     {

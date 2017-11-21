@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace LiveGameFeed.Core.Mappings
+namespace FoosballWebsite.Core.Mappings
 {
     public class AutoMapperConfiguration
     {

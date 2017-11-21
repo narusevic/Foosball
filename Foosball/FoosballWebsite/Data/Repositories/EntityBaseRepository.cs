@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using LiveGameFeed.Data.Abstract;
+using FoosballWebsite.Data.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using LiveGameFeed.Models;
+using FoosballWebsite.Models;
 
-namespace LiveGameFeed.Data.Repositories
+namespace FoosballWebsite.Data.Repositories
 {
     public class EntityBaseRepository<T> : IEntityBaseRepository<T>
             where T : class, IEntityBase, new()

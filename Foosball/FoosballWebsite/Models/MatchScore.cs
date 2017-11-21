@@ -1,4 +1,4 @@
-namespace LiveGameFeed.Models
+namespace FoosballWebsite.Models
 {
     public class MatchScore
     {
