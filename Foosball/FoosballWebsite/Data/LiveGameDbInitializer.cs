@@ -21,8 +21,8 @@ namespace FoosballWebsite.Data
             {
                 Match match_01 = new Match
                 {
-                    Host = "Team 1",
-                    Guest = "Team 2",
+                    Host = "Kartu",
+                    Guest = "Hello World",
                     HostScore = 0,
                     GuestScore = 0,
                     MatchDate = DateTime.Now,
@@ -40,8 +40,8 @@ namespace FoosballWebsite.Data
 
                 Match match_02 = new Match
                 {
-                    Host = "Team 3",
-                    Guest = "Team 4",
+                    Host = "Kamanes",
+                    Guest = "Takeliukas",
                     HostScore = 0,
                     GuestScore = 0,
                     MatchDate = DateTime.Now,

@@ -33,7 +33,7 @@ namespace FoosballWebsite.Core
             {
                 Random r = new Random();
                 bool updateHost = r.Next(0, 2) == 1;
-                int points = r.Next(2, 4);
+                int points = r.Next(1, 2);
                 bool _matchEnded = false;
 
                 if (updateHost)
@@ -47,7 +47,7 @@ namespace FoosballWebsite.Core
                     GuestScore = match.GuestScore
                 };
 
-                if (score.HostScore > 80 || score.GuestScore > 76)
+                if (score.HostScore >= 10 || score.GuestScore >= 10)
                 {
                     score.HostScore = 0;
                     score.GuestScore = 0;
