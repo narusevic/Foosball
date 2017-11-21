@@ -1,7 +1,0 @@
-{
-  "globalDependencies": {
-    "jquery": "registry:dt/jquery",
-    "signalr": "registry:dt/signalr",
-    "jasmine": "registry:dt/jasmine"
-  }
-}
