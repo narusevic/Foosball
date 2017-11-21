@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Foosball.DataAccess;
@@ -17,11 +18,17 @@ namespace Foosball
         [STAThread]
         static void Main()
         {
-            SetupRepositories();
+            using (var client = new HttpClient())
+            {
+                
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainUI());
+            }
+
+            //SetupRepositories();
+
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new MainUI());
         }
 
         private static void SetupRepositories()
