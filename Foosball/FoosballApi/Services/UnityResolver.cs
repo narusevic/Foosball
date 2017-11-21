@@ -45,12 +45,7 @@ namespace FoosballApi.Services
             return new UnityResolver(child);
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-
-        protected virtual void Dispose(bool disposing)
+        public virtual void Dispose(bool disposing = true)
         {
             container.Dispose();
         }

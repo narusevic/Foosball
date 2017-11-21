@@ -7,7 +7,6 @@ namespace FoosballApi.Repositories
 {
     public class TeamRepository : ITeamRepository
     {
-        public static TeamRepository Instance;
         private readonly DataContext _dataContext;
 
         public Team this[string name] => FindByName(name);
@@ -15,7 +14,6 @@ namespace FoosballApi.Repositories
         public TeamRepository(DataContext dataContext)
         {
             _dataContext = dataContext;
-            Instance = this;
         }
 
         public Team Read(int id)

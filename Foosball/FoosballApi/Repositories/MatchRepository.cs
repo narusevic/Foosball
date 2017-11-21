@@ -7,13 +7,11 @@ namespace FoosballApi.Repositories
 {
     public class MatchRepository : IMatchRepository
     {
-        public static MatchRepository Instance;
         private readonly DataContext _dataContext;
 
         public MatchRepository(DataContext dataContext)
         {
             _dataContext = dataContext;
-            Instance = this;
         }
 
         public Match Read(int id)

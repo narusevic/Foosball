@@ -7,13 +7,11 @@ namespace FoosballApi.Repositories
 {
     public class TournamentRepository : ITournamentRepository
     {
-        public static TournamentRepository Instance;
         private readonly DataContext _dataContext;
 
         public TournamentRepository(DataContext dataContext)
         {
             _dataContext = dataContext;
-            Instance = this;
         }
 
         public Tournament Read(int id)
