@@ -18,6 +18,7 @@ namespace FoosballApi
             config.DependencyResolver = new UnityResolver(container);
 
             // Web API configuration and services
+            config.EnableCors();
 
             // Web API routes
             config.MapHttpAttributeRoutes();
