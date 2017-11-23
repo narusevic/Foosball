@@ -10,7 +10,6 @@ import { FeedService } from '../services/feed.service';
 export class ChatComponent implements OnInit {
 
     @Input() matches: Match[];
-    @Input() connection: string;
     messages: ChatMessage[];
 
     constructor(private feedService: FeedService) { }

@@ -78,7 +78,7 @@ namespace FoosballWebsite
 
             LiveGameDbInitializer.Initialize(app.ApplicationServices);
 
-            app.StartTask<FeedEngine>(TimeSpan.FromSeconds(15));
+            app.StartTask<FeedEngine>(TimeSpan.FromSeconds(2));
         }
     }
 }
