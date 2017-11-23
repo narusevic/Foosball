@@ -16,7 +16,7 @@ namespace FoosballWebsite.Core
                           ILogger<FeedEngine> logger)
         {
             _logger = logger;
-            this._matchRepository = matchRepository;
+            _matchRepository = matchRepository;
         }
         public void Run(TaskRunStatus taskRunStatus)
         {
@@ -31,15 +31,18 @@ namespace FoosballWebsite.Core
 
             foreach (var match in _matches)
             {
-                Random r = new Random();
-                bool updateHost = r.Next(0, 2) == 1;
-                int points = r.Next(1, 2);
-                bool _matchEnded = false;
+                bool updateHost;
+                bool scoreUpdated = true;
+                if (match.IsChangedHost || match.IsChangedGuest)
+                {
+                    if (match.IsChangedHost)
+                    {
+                        updateHost = true;
+                    }
+                }
+                scoreUpdated = false;
 
-                if (updateHost)
-                    match.HostScore += points;
-                else
-                    match.GuestScore += points;
+                bool _matchEnded = false;
 
                 var score = new MatchScore()
                 {
@@ -49,8 +52,6 @@ namespace FoosballWebsite.Core
 
                 if (score.HostScore >= 10 || score.GuestScore >= 10)
                 {
-                    score.HostScore = 0;
-                    score.GuestScore = 0;
                     _matchEnded = true;
                 }
 
@@ -61,17 +62,42 @@ namespace FoosballWebsite.Core
                 }
 
                 // Update Feed for subscribed only clients
-                var _feed = new FeedViewModel()
+                if (scoreUpdated)
                 {
-                    MatchId = match.Id,
-                    Description = !_matchEnded ? 
-                    (points + " points for " + (updateHost ? match.Host : match.Guest) + "!") :
-                    "Match started",
-                    CreatedAt = DateTime.Now
-                };
-                using (var client = new HttpClient())
+                    var _feed = new FeedViewModel()
+                    {
+                        MatchId = match.Id,
+                        Description = (1 + " points for " + (updateHost ? match.Host : match.Guest) + "!"),
+                        CreatedAt = DateTime.Now
+                    };
+
+                    using (var client = new HttpClient())
+                    {
+                        await client.PostAsJsonAsync<FeedViewModel>(Startup.API_URL + "feeds", _feed);
+                    }
+                }
+
+                if (_matchEnded)
                 {
-                    await client.PostAsJsonAsync<FeedViewModel>(Startup.API_URL + "feeds", _feed);
+                    var _feed2 = new FeedViewModel()
+                    {
+                        MatchId = match.Id,
+                        Description = "Match Ended",
+                        CreatedAt = DateTime.Now
+                    };
+
+                    var _feed3 = new FeedViewModel()
+                    {
+                        MatchId = match.Id,
+                        Description = "Winner " + ((match.HostScore >= 10) ? match.Host : match.Guest),
+                        CreatedAt = DateTime.Now
+                    };
+
+                    using (var client = new HttpClient())
+                    {
+                        await client.PostAsJsonAsync<FeedViewModel>(Startup.API_URL + "feeds", _feed2);
+                        await client.PostAsJsonAsync<FeedViewModel>(Startup.API_URL + "feeds", _feed3);
+                    }
                 }
             }
         }
