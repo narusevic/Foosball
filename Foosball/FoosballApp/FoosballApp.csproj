@@ -72,10 +72,10 @@
     <AndroidResource Include="Resources\layout\GameRecord.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\QuickMatch.axml">
+    <AndroidResource Include="Resources\layout\TournamentMode.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\TournamentMode.axml">
+    <AndroidResource Include="Resources\layout\QuickMatch.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Statistics.axml">
