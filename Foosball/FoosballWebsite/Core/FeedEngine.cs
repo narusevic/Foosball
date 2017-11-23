@@ -86,9 +86,17 @@ namespace FoosballWebsite.Core
                         CreatedAt = DateTime.Now
                     };
 
+                    var _feed3 = new FeedViewModel()
+                    {
+                        MatchId = match.Id,
+                        Description = "Winner " + ((match.HostScore >= 10) ? match.Host : match.Guest),
+                        CreatedAt = DateTime.Now
+                    };
+
                     using (var client = new HttpClient())
                     {
                         await client.PostAsJsonAsync<FeedViewModel>(Startup.API_URL + "feeds", _feed2);
+                        await client.PostAsJsonAsync<FeedViewModel>(Startup.API_URL + "feeds", _feed3);
                     }
                 }
             }
