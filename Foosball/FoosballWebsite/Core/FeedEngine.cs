@@ -33,9 +33,9 @@ namespace FoosballWebsite.Core
             {
                 bool updateHost = false;
                 bool scoreUpdated = true;
-                if(match.IsChangedHost || match.IsChangedGuest)
+                if (match.IsChangedHost || match.IsChangedGuest)
                 {
-                    if(match.IsChangedHost)
+                    if (match.IsChangedHost)
                     {
                         updateHost = true;
                     }
@@ -70,12 +70,13 @@ namespace FoosballWebsite.Core
                         Description = (1 + " points for " + (updateHost ? match.Host : match.Guest) + "!"),
                         CreatedAt = DateTime.Now
                     };
+
+                    using (var client = new HttpClient())
+                    {
+                        await client.PostAsJsonAsync<FeedViewModel>(Startup.API_URL + "feeds", _feed);
+                    }
                 }
 
-                using (var client = new HttpClient())
-                {
-                    await client.PostAsJsonAsync<FeedViewModel>(Startup.API_URL + "feeds", _feed);
-                }
                 if (_matchEnded)
                 {
                     var _feed2 = new FeedViewModel()
