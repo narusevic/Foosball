@@ -5,8 +5,8 @@ namespace FoosballWebsite.Models
 {
     public class Match : IEntityBase
     {
-        private bool _IsChangedHost = false;
-        private bool _IsChangedGuest = false;
+        private bool _IsChangedHost;
+        private bool _IsChangedGuest;
 
         private int _GuestScore;
         private int _HostScore;
@@ -39,10 +39,12 @@ namespace FoosballWebsite.Models
                 _GuestScore = value;
             }
         }
-        public bool IsChangedHost {
+        public bool IsChangedHost
+        {
             get { return _IsChangedHost; }
         }
-        public bool IsChangedGuest {
+        public bool IsChangedGuest
+        {
             get { return _IsChangedGuest; }
         }
         public DateTime MatchDate { get; set; }
