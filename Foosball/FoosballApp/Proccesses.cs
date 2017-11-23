@@ -17,10 +17,13 @@ namespace FoosballApp
         public string AnalyzeGame(string pathtovideo)
         {
             //analyze the video
+            //return value;
+            return "result";
         }
         public string UploadResults(Uri endpoint)
         {
             //send info to web
+            return "result";
         }
     }
 }
