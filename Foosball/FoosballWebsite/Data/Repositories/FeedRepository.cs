@@ -1,7 +1,7 @@
-using LiveGameFeed.Data.Abstract;
-using LiveGameFeed.Models;
+using FoosballWebsite.Data.Abstract;
+using FoosballWebsite.Models;
 
-namespace LiveGameFeed.Data.Repositories
+namespace FoosballWebsite.Data.Repositories
 {
     public class FeedRepository : EntityBaseRepository<Feed>, IFeedRepository
     {

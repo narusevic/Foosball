@@ -1,6 +1,6 @@
-﻿using LiveGameFeed.Models;
+﻿using FoosballWebsite.Models;
 
-namespace LiveGameFeed.Data.Abstract
+namespace FoosballWebsite.Data.Abstract
 {
     public interface IMatchRepository : IEntityBaseRepository<Match> { }
 

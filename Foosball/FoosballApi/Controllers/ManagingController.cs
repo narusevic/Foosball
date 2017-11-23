@@ -9,11 +9,17 @@ namespace FoosballApi.Controllers
     public class ManagingController : ApiController
     {
         public readonly ITeamRepository _teamRepository;
+        public readonly IPlayerRepository _playerRepository;
 
-        public ManagingController(ITeamRepository teamRepository)
+        public ManagingController(ITeamRepository teamRepository, IPlayerRepository playerRepository)
         {
             _teamRepository = teamRepository;
+            _playerRepository = playerRepository;
         }
+
+        [Route("api/Managing/GetName")]
+        [HttpGet]
+        public string GetName() => "Foosball";
 
         [Route("api/Managing/GetAllTeams")]
         [HttpGet]
@@ -43,8 +49,8 @@ namespace FoosballApi.Controllers
             var playerA = new Player(playerAName);
             var playerB = new Player(playerAName);
 
-            PlayerRepository.Instance.Create(playerA);
-            PlayerRepository.Instance.Create(playerB);
+            _playerRepository.Create(playerA);
+            _playerRepository.Create(playerB);
             _teamRepository.Create(new Team(teamName, playerA, playerB));
         }
         
@@ -52,7 +58,7 @@ namespace FoosballApi.Controllers
         [HttpPut]
         public void RenameTeam(int teamId, string name)
         {
-            var team = TeamRepository.Instance.Read(teamId);
+            var team = _teamRepository.Read(teamId);
             team.Name = name;
 
             _teamRepository.Update(teamId, team);
@@ -62,8 +68,8 @@ namespace FoosballApi.Controllers
         [HttpPut]
         public void ChangePlayers(int teamId, string playerAName, string playerBName)
         {
-            var playerA = PlayerRepository.Instance[playerAName] ?? new Player(playerAName);
-            var playerB = PlayerRepository.Instance[playerBName] ?? new Player(playerBName);
+            var playerA = _playerRepository[playerAName] ?? new Player(playerAName);
+            var playerB = _playerRepository[playerBName] ?? new Player(playerBName);
             var team = _teamRepository.Read(teamId);
 
             team.PlayerA = playerA;

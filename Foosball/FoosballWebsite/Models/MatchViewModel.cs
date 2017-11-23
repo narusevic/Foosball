@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LiveGameFeed.Models
+namespace FoosballWebsite.Models
 {
     public class MatchViewModel : IEntityBase
     {

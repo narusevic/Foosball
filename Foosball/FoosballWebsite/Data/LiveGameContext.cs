@@ -1,9 +1,9 @@
 using System.Linq;
-using LiveGameFeed.Models;
+using FoosballWebsite.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace LiveGameFeed.Data
+namespace FoosballWebsite.Data
 {
     public class LiveGameContext : DbContext
     {

@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using LiveGameFeed.Data.Abstract;
-using LiveGameFeed.Models;
+using FoosballWebsite.Data.Abstract;
+using FoosballWebsite.Models;
 using Microsoft.Extensions.Logging;
 using RecurrentTasks;
 
-namespace LiveGameFeed.Core
+namespace FoosballWebsite.Core
 {
     public class FeedEngine : IRunnable
     {
@@ -33,7 +33,7 @@ namespace LiveGameFeed.Core
             {
                 Random r = new Random();
                 bool updateHost = r.Next(0, 2) == 1;
-                int points = r.Next(2, 4);
+                int points = r.Next(1, 2);
                 bool _matchEnded = false;
 
                 if (updateHost)
@@ -41,18 +41,19 @@ namespace LiveGameFeed.Core
                 else
                     match.GuestScore += points;
 
-                MatchScore score = new MatchScore()
+                var score = new MatchScore()
                 {
                     HostScore = match.HostScore,
                     GuestScore = match.GuestScore
                 };
 
-                if (score.HostScore > 80 || score.GuestScore > 76)
+                if (score.HostScore >= 10 || score.GuestScore >= 10)
                 {
                     score.HostScore = 0;
                     score.GuestScore = 0;
                     _matchEnded = true;
                 }
+
                 // Update Score for all clients
                 using (var client = new HttpClient())
                 {
@@ -60,9 +61,7 @@ namespace LiveGameFeed.Core
                 }
 
                 // Update Feed for subscribed only clients
-
-
-                FeedViewModel _feed = new FeedViewModel()
+                var _feed = new FeedViewModel()
                 {
                     MatchId = match.Id,
                     Description = !_matchEnded ? 
