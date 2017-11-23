@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foosball", "Foosball\Foosball.csproj", "{50223EFF-1E78-4BBD-B1DD-AC857749C710}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoosballApi", "FoosballApi\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoosballWebsite", "FoosballWebsite\FoosballWebsite.csproj", "{8AC9BCF3-3566-4FBE-B4B9-0014359D2C4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoosballApp", "..\..\..\..\..\Users\Tomas\source\repos\FoosballApp\FoosballApp\FoosballApp.csproj", "{0216BC30-85D0-45D7-900F-10926B4A078C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoosballApp", "FoosballApp\FoosballApp.csproj", "{0216BC30-85D0-45D7-900F-10926B4A078C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
