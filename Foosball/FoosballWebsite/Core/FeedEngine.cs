@@ -31,7 +31,7 @@ namespace FoosballWebsite.Core
 
             foreach (var match in _matches)
             {
-                bool updateHost;
+                bool updateHost = false;
                 bool scoreUpdated = true;
                 if (match.IsChangedHost || match.IsChangedGuest)
                 {
@@ -40,7 +40,10 @@ namespace FoosballWebsite.Core
                         updateHost = true;
                     }
                 }
-                scoreUpdated = false;
+                else
+                {
+                    scoreUpdated = false;
+                }
 
                 bool _matchEnded = false;
 
