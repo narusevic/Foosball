@@ -1,16 +1,22 @@
-﻿using Android.App;
+﻿using System;
+using System.Collections.Generic;
+using System.Json;
+using Android.App;
 using Android.Widget;
 using Android.OS;
 using Android.Media;
 using Android.Content;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace FoosballApp
 {
     [Activity(Label = "FoosballApp", MainLauncher = true)]
     public class MainActivity : Activity
     {
-        private readonly string BaseURL = "http://localhost:4860/";
+        private readonly string BaseURL = "http://10.0.2.2:4860/";
         MediaRecorder recorder;
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -37,6 +43,7 @@ namespace FoosballApp
                 {
                     AddPlayer(name1.Text);
                     AddPlayer(name2.Text);
+
                     SetContentView(Resource.Layout.GameRecord);
                     //Need to test file deletion after proccessing the match
                     string path = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/video.mp4";
@@ -96,7 +103,7 @@ namespace FoosballApp
             };
             webe.Click += (s, arg) =>
             {
-                var uri = Android.Net.Uri.Parse("http://localhost:4860/");
+                var uri = Android.Net.Uri.Parse(BaseURL);
                 var intent = new Intent(Intent.ActionView, uri: uri);
                 StartActivity(intent);
             };
@@ -104,7 +111,7 @@ namespace FoosballApp
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            if (recorder!= null)
+            if (recorder != null)
             {
                 recorder.Release();
                 recorder.Dispose();
@@ -113,12 +120,11 @@ namespace FoosballApp
         }
         private void AddPlayer(string name)
         {
-            var wc = new WebClient();
-            if (!(wc.DownloadString(BaseURL + "api/Managing/TeamExists/" + name) == "true"))
-            {
-                wc.UploadString(BaseURL, "api/Managing/GetAllTeams/" + name);
-            }
-            
+             var wc = new WebClient();
+             if (wc.DownloadString(BaseURL + "api/Managing/TeamExists/" + name) != "true")
+             {
+                 wc.UploadString(BaseURL, "api/Managing/GetAllTeams/" + name);
+             }
         }
     }
 }
