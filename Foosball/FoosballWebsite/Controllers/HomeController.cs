@@ -25,7 +25,7 @@ namespace FoosballWebsite.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var response = await client.GetAsync("api/Managing/GetAllTeams");
+                //var response = await client.GetAsync("api/Managing/GetAllTeams");
             }
         }
     }
