@@ -5,9 +5,8 @@ namespace FoosballApp.Exceptions
     public class NameIsIncorrectException : Exception
     {
         public NameIsIncorrectException(string message)
-            : base()
+            : base($"Name \"{message}\" is incorrect or empty")
         {
-            //Console.()
         }
     }
 }

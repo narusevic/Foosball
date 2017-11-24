@@ -44,9 +44,15 @@ namespace FoosballApp
                  };
                 submitQuickMatchbtn.Click += delegate
                 {
-                    
-                    AddPlayer(name1.Text);
-                    AddPlayer(name2.Text);
+                    try
+                    {
+                        AddPlayer(name1.Text);
+                        AddPlayer(name2.Text);
+                    }
+                    catch (NameIsIncorrectException ex)
+                    {
+                        FindViewById<TextView>(Resource.Id.textView1).Text = ex.Message;
+                    }
 
                     SetContentView(Resource.Layout.GameRecord);
                     //Need to test file deletion after proccessing the match
@@ -118,7 +124,11 @@ namespace FoosballApp
         }
         protected override void OnDestroy()
         {
+
             base.OnDestroy();
+
+            var recorder = _recorder.Value;
+
             if (recorder != null)
             {
                 recorder.Release();
