@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using FoosballApp.Exceptions;
 
 namespace FoosballApp
 {
@@ -17,7 +18,9 @@ namespace FoosballApp
     public class MainActivity : Activity
     {
         private readonly string BaseURL = "http://10.0.2.2:4860/";
-        MediaRecorder recorder;
+
+        private Lazy<MediaRecorder> _recorder = new Lazy<MediaRecorder>(() => new MediaRecorder());
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -41,6 +44,7 @@ namespace FoosballApp
                  };
                 submitQuickMatchbtn.Click += delegate
                 {
+                    
                     AddPlayer(name1.Text);
                     AddPlayer(name2.Text);
 
@@ -59,7 +63,7 @@ namespace FoosballApp
                     record.Click += delegate
                     {
                         video.StopPlayback();
-                        recorder = new MediaRecorder();
+                        var recorder = _recorder.Value;
                         recorder.SetVideoSource(VideoSource.Default);
                         recorder.SetAudioSource(AudioSource.Default);
                         recorder.SetOutputFormat(OutputFormat.Default);
@@ -67,11 +71,13 @@ namespace FoosballApp
                         recorder.SetAudioEncoder(AudioEncoder.Default);
                         recorder.SetOutputFile(path);
                         recorder.SetPreviewDisplay(video.Holder.Surface);
-                        //recorder.Prepare();
-                        //recorder.Start();
+                        recorder.Prepare();
+                        recorder.Start();
                     };
                     stop.Click += delegate
                     {
+                        var recorder = _recorder.Value;
+
                         if (recorder != null)
                         {
                             video.StopPlayback();
@@ -86,6 +92,8 @@ namespace FoosballApp
                     };
                     play.Click += delegate
                     {
+                        var recorder = _recorder.Value;
+
                         if (recorder == null)
                         {
                             //make it process the vid
@@ -120,11 +128,17 @@ namespace FoosballApp
         }
         private void AddPlayer(string name)
         {
-             var wc = new WebClient();
-             if (wc.DownloadString(BaseURL + "api/Managing/TeamExists/" + name) != "true")
-             {
-                 wc.UploadString(BaseURL, "api/Managing/GetAllTeams/" + name);
-             }
+            if (string.IsNullOrEmpty(name) || name.Contains(" "))
+            {
+                throw new NameIsIncorrectException(name);
+            }
+
+            var wc = new WebClient();
+
+            if (wc.DownloadString(BaseURL + "api/Managing/TeamExists/" + name) != "true")
+            {
+                //wc.UploadString(BaseURL, "api/Managing/GetAllTeams/" + name);
+            }
         }
     }
 }
