@@ -3,7 +3,7 @@ using FoosballApi.Models;
 
 namespace FoosballApi.DataAccess
 {
-    internal interface IDataContext
+    public interface IDataContext
     {
         DbSet<Match> Matches { get; set; }
 

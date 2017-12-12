@@ -5,6 +5,12 @@ namespace FoosballApi.DataAccess
 {
     public class DataContext : DbContext, IDataContext
     {
+        public DataContext()
+            : base("DefaultConnection")
+        {
+
+        }
+
         public DbSet<Match> Matches { get; set; }
 
         public DbSet<Player> Players { get; set; }
