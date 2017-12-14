@@ -24,33 +24,28 @@ namespace FoosballApp
             _baseURL = "http://192.168.1.242:4860/";
             _webClient = new WebClient
             {
-                Headers = { [HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded" }
+                //Headers = { [HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded" }
             };
         }
 
-        public void AddTeams(string team1, string team2)
+        public void AddTeams(string teamName1, string temaName2)
         {
-            if (IsNullOrEmpty(team1) || team2.Contains(" "))
+            if (IsNullOrEmpty(teamName1) || temaName2.Contains(" "))
             {
-                throw new NameIsIncorrectException(team1);
+                throw new NameIsIncorrectException(teamName1);
             }
 
-            if (IsNullOrEmpty(team2) || team2.Contains(" "))
+            if (IsNullOrEmpty(temaName2) || temaName2.Contains(" "))
             {
-                throw new NameIsIncorrectException(team2);
+                throw new NameIsIncorrectException(temaName2);
             }
 
-            var uri = _baseURL + "api/Match/Create/";
+            var uri = _baseURL + "api/CreateMatch/";
             var parameters = SetParams(
                 new[]
                 {
-                    nameof(team1),
-                    nameof(team2)
-                },
-                new[]
-                {
-                    team1,
-                    team2
+                    teamName1,
+                    temaName2
                 });
 
             string HtmlResult = _webClient.UploadString(uri, parameters);
@@ -66,6 +61,21 @@ namespace FoosballApp
                     result += "&";
 
                 result += $"{parameters[i]}={values[i]}";
+            }
+
+            return result;
+        }
+
+        private string SetParams(string[] values)
+        {
+            string result = string.Empty;
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (result != string.Empty)
+                    result += "&";
+
+                result += $"{values[i]}";
             }
 
             return result;
