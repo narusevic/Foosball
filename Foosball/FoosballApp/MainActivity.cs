@@ -124,7 +124,7 @@ namespace FoosballApp
             };
             webe.Click += (s, arg) =>
             {
-                var uri = Android.Net.Uri.Parse(BaseURL);
+                var uri = Android.Net.Uri.Parse("");
                 var intent = new Intent(Intent.ActionView, uri: uri);
                 StartActivity(intent);
             };
