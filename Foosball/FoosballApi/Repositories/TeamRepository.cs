@@ -16,6 +16,11 @@ namespace FoosballApi.Repositories
             _dataContext = dataContext;
         }
 
+        public List<Player> ReadMatchTeams(int matchId)
+        {
+            return _dataContext.Matches.Find(matchId).TeamA
+        }
+
         public Team Read(int id)
         {
             return _dataContext.Teams.FirstOrDefault(p => p.Id == id);

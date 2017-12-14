@@ -148,6 +148,7 @@
     <Compile Include="Controllers\ManagingController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
+    <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="DataAccess\DataContext.cs" />
     <Compile Include="DataAccess\DataReader.cs" />
     <Compile Include="DataAccess\DataWriter.cs" />

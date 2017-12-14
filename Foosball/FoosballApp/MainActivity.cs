@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using FoosballApp.Exceptions;
 using Plugin.Media;
+using System.IO;
 
 namespace FoosballApp
 {
@@ -57,7 +58,7 @@ namespace FoosballApp
 
                     SetContentView(Resource.Layout.GameRecord);
                     //Need to test file deletion after proccessing the match
-                    // string path = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/video.mp4";
+                    string path = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryMovies) + "test.mp4";
                     var record = FindViewById<Button>(Resource.Id.Record);
                     var stop = FindViewById<Button>(Resource.Id.Stop);
                     var play = FindViewById<Button>(Resource.Id.Play);
@@ -69,11 +70,12 @@ namespace FoosballApp
                     };
                     record.Click += delegate
                     {
+
                         video.StopPlayback();
                         
                         var recorder = _recorder.Value;
-                        recorder.SetVideoSource(VideoSource.Default);
-                        recorder.SetAudioSource(AudioSource.Default);
+                        recorder.SetVideoSource(VideoSource.Camera);
+                        recorder.SetAudioSource(AudioSource.Mic);
                         recorder.SetOutputFormat(OutputFormat.Default);
                         recorder.SetVideoEncoder(VideoEncoder.Default);
                         recorder.SetAudioEncoder(AudioEncoder.Default);
@@ -81,29 +83,8 @@ namespace FoosballApp
                         recorder.SetPreviewDisplay(video.Holder.Surface);
                         recorder.Prepare();
                         recorder.Start();
-                        
-                        //recorder = new MediaRecorder();
-                        //recorder.SetVideoSource(VideoSource.Default);
-                        //recorder.SetAudioSource(AudioSource.Default);
-                        //recorder.SetOutputFormat(OutputFormat.Default);
-                        //recorder.SetVideoEncoder(VideoEncoder.Default);
-                        //recorder.SetAudioEncoder(AudioEncoder.Default);
-                        //recorder.SetOutputFile(path);
-                        //recorder.SetPreviewDisplay(video.Holder.Surface);
-                        //recorder.Prepare();
-                        //recorder.Start();
-                        if (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakeVideoSupported)
-                        {
-                            // Supply media options for saving our video after it's taken.
-                            var mediaOptions = new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                            {
-                                Directory = "Videos",
-                                Name = $"{DateTime.UtcNow}.mp4"
-                            };
 
-                            // Record a video
-                            var file = CrossMedia.Current.TakeVideoAsync((Plugin.Media.Abstractions.StoreVideoOptions)mediaOptions);
-                        }
+
                     };
                     stop.Click += delegate
                     {
@@ -114,20 +95,25 @@ namespace FoosballApp
                             video.StopPlayback();
                             recorder.Stop();
                             recorder.Release();
+                            WebClient webClient = new WebClient();
+                            byte[] responsearray = webClient.UploadFile("http://192.168.1.128:4860/api/Upload", path);
                         }
                     };
-                    play.Click += async delegate
+                    play.Click += delegate
                     {
-                        var recorder = _recorder.Value;
+                        Intent mediaScanIntent = new Intent(Intent.ActionMediaScannerScanFile);
+                        var uri = Android.Net.Uri.Parse(path);
+                        
+                        mediaScanIntent.SetData(uri);
+                        SendBroadcast(mediaScanIntent);
 
-                        if (recorder == null)
-                        {
-                            //make it process the vid
-                            // Select a video. 
-                            if (CrossMedia.Current.IsPickVideoSupported) { var mockvideo = await CrossMedia.Current.PickVideoAsync(); }
-                        }
+                        video.SetVideoURI(uri);
+                            video.Start();
+                        
                     };
                 };
+
+
             };
             doubl.Click += (s, arg) =>
             {

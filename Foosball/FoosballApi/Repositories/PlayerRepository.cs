@@ -23,7 +23,29 @@ namespace FoosballApi.Repositories
 
         public Player FindByName(string name)
         {
-            return _dataContext.Players.FirstOrDefault(p => p.Name == name);
+            return DeleteSamePlayers(name);
+        }
+
+        public Player DeleteSamePlayers(string name)
+        {
+            var playersCount = _dataContext.Players.Where(x => x.Name == name).Count();
+
+            Player result = null; 
+
+            if (playersCount > 0)
+            {
+                result = _dataContext.Players.Where(x => x.Name == name).Take(1).First();
+                var removedPlayers = _dataContext.Players.Where(x => x.Name == name).Skip(1);
+                
+                foreach (var player in removedPlayers)
+                {
+                    _dataContext.Players.Remove(player);
+                }
+
+                _dataContext.SaveChanges();
+            }
+
+            return result;
         }
 
         public void Create(Player player)
