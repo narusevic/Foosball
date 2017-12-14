@@ -5,12 +5,16 @@ using Emgu.CV.Util;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
 using FoosballApi.Models;
 using FoosballApi.Repositories;
 
 namespace FoosballApi.Controllers
 {
-    public class MatchController
+    public class MatchController : ApiController
     {
         private readonly ITeamRepository _teamRepository;
         private readonly IMatchRepository _matchRepository;
@@ -204,6 +208,24 @@ namespace FoosballApi.Controllers
             match.TeamB = teamB;
 
             _matchRepository.Create(match);
+        }
+
+
+        [Route("api/Match/Create/")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> CreateMatchApi([FromBody] string teamName1, string teamName2)
+        {
+            var team1 = new Team(teamName1);
+            var team2 = new Team(teamName2);
+
+            _teamRepository.Create(team1);
+            _teamRepository.Create(team2);
+
+            var match = new Match(team1, team2);
+
+            _matchRepository.Create(match);
+
+            return Request.CreateResponse(HttpStatusCode.OK, match.Id);
         }
     }
 }

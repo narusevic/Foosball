@@ -2,6 +2,9 @@
 using FoosballApi.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace FoosballApi.Controllers
@@ -41,7 +44,7 @@ namespace FoosballApi.Controllers
         [HttpGet]
         public bool PlayersExists(string playerAName, string playerBName) 
             => _teamRepository[playerAName] != null || _teamRepository[playerBName] != null;
-        
+
         [Route("api/Managing/GetAllTeams/{teamName}/")]
         [HttpPost]
         public void CreateTeam([FromBody] string teamName, string playerAName, string playerBName)
@@ -53,7 +56,17 @@ namespace FoosballApi.Controllers
             _playerRepository.Create(playerB);
             _teamRepository.Create(new Team(teamName, playerA, playerB));
         }
-        
+
+        [Route("api/Managing/CreateTeams/")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> CreateTeams([FromBody] string team1, string team2)
+        {
+            _teamRepository.Create(new Team(team1));
+            _teamRepository.Create(new Team(team2));
+            
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
         [Route("api/Managing/RenameTeam")]
         [HttpPut]
         public void RenameTeam(int teamId, string name)
