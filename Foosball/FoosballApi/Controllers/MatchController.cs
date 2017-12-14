@@ -5,9 +5,11 @@ using Emgu.CV.Util;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 using System.Web.Http;
 using FoosballApi.Models;
 using FoosballApi.Repositories;
@@ -186,7 +188,7 @@ namespace FoosballApi.Controllers
             return false;
         }
 
-        public void CreateMatch(Match match, string teamAName, string teamBName)
+        public void CreateMatch2(Match match, string teamAName, string teamBName)
         {
             var teamA = _teamRepository[teamAName];
 
@@ -209,23 +211,34 @@ namespace FoosballApi.Controllers
 
             _matchRepository.Create(match);
         }
-
-
-        [Route("api/Match/Create/")]
+        
         [HttpPost]
-        public async Task<HttpResponseMessage> CreateMatchApi([FromBody] string teamName1, string teamName2)
+        [Route("api/CreateMatch/")]
+        public async Task<HttpResponseMessage> CreateMatch()
         {
-            var team1 = new Team(teamName1);
-            var team2 = new Team(teamName2);
+            var provider = new CustomMultipartFormDataStreamProvider(HostingEnvironment.MapPath("~/App_Data"));
+            
+            try
+            {
+                var info = await Request.Content.ReadAsStringAsync();
+                var data = info.Split('&');
+                
+                var team1 = new Team(data[0]);
+                var team2 = new Team(data[1]);
 
-            _teamRepository.Create(team1);
-            _teamRepository.Create(team2);
+                _teamRepository.Create(team1);
+                _teamRepository.Create(team2);
 
-            var match = new Match(team1, team2);
+                var match = new Match(team1, team2);
 
-            _matchRepository.Create(match);
+                _matchRepository.Create(match);
 
-            return Request.CreateResponse(HttpStatusCode.OK, match.Id);
+                return Request.CreateResponse(HttpStatusCode.OK, match.Id);
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
         }
     }
 }
