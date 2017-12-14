@@ -89,6 +89,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client.cs" />
     <Compile Include="Exceptions\NameIsIncorrectException.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="Proccesses.cs" />

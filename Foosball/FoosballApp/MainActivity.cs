@@ -13,15 +13,15 @@ using System.Threading.Tasks;
 using FoosballApp.Exceptions;
 using Plugin.Media;
 using System.IO;
+using Android;
 
 namespace FoosballApp
 {
     [Activity(Label = "FoosballApp", MainLauncher = true)]
     public class MainActivity : Activity
     {
-        private readonly string BaseURL = "http://10.0.2.2:4860/";
-
         private Lazy<MediaRecorder> _recorder = new Lazy<MediaRecorder>(() => new MediaRecorder());
+        private Client _client = new Client();
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -41,15 +41,14 @@ namespace FoosballApp
                 var submitQuickMatchbtn = FindViewById<Button>(Resource.Id.SumbitQuickMatch);
                 var backQuickMatchbtn = FindViewById<Button>(Resource.Id.QuickMatchBack);
                 backQuickMatchbtn.Click += delegate
-                 {
-                     SetContentView(Resource.Layout.Main);
-                 };
+                {
+                    SetContentView(Resource.Layout.Main);
+                };
                 submitQuickMatchbtn.Click += delegate
                 {
                     try
                     {
-                        AddPlayer(name1.Text);
-                        AddPlayer(name2.Text);
+                        _client.AddTeams(name1.Text, name2.Text);
                     }
                     catch (NameIsIncorrectException ex)
                     {
@@ -63,7 +62,7 @@ namespace FoosballApp
                     var stop = FindViewById<Button>(Resource.Id.Stop);
                     var play = FindViewById<Button>(Resource.Id.Play);
                     var video = FindViewById<VideoView>(Resource.Id.VideoView);
-                    var backGame = FindViewById<Button>(Resource.Id.GameRecordBack); 
+                    var backGame = FindViewById<Button>(Resource.Id.GameRecordBack);
                     backGame.Click += delegate
                     {
                         SetContentView(Resource.Layout.QuickMatch);
@@ -103,13 +102,13 @@ namespace FoosballApp
                     {
                         Intent mediaScanIntent = new Intent(Intent.ActionMediaScannerScanFile);
                         var uri = Android.Net.Uri.Parse(path);
-                        
+
                         mediaScanIntent.SetData(uri);
                         SendBroadcast(mediaScanIntent);
 
                         video.SetVideoURI(uri);
-                            video.Start();
-                        
+                        video.Start();
+
                     };
                 };
 
@@ -130,6 +129,7 @@ namespace FoosballApp
                 StartActivity(intent);
             };
         }
+
         protected override void OnDestroy()
         {
 
@@ -142,20 +142,6 @@ namespace FoosballApp
                 recorder.Release();
                 recorder.Dispose();
                 recorder = null;
-            }
-        }
-        private void AddPlayer(string name)
-        {
-            if (string.IsNullOrEmpty(name) || name.Contains(" "))
-            {
-                throw new NameIsIncorrectException(name);
-            }
-
-            var wc = new WebClient();
-
-            if (wc.DownloadString(BaseURL + "api/Managing/TeamExists/" + name) != "true")
-            {
-                //wc.UploadString(BaseURL, "api/Managing/GetAllTeams/" + name);
             }
         }
     }
