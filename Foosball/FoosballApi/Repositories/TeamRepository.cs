@@ -18,7 +18,7 @@ namespace FoosballApi.Repositories
 
         public List<Player> ReadMatchTeams(int matchId)
         {
-            return _dataContext.Matches.Find(matchId).TeamA
+            return new List<Player>();
         }
 
         public Team Read(int id)
