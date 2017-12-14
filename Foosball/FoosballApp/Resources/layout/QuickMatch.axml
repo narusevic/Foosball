@@ -7,13 +7,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText1"
-        tools:text="Name 1 ..."
+        android:text="Name 1 ..."
         android:backgroundTint="#ffb4b4b4" />
     <EditText xmlns:p2="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText2"
-        p2:text="Name 2 ..."
+        android:text="Name 2 ..."
         android:backgroundTint="#ffb4b4b4" />
     <Button
         android:text="Lets go!"
