@@ -2,6 +2,7 @@
 using FoosballApi.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 
 namespace FoosballApi.Repositories
 {
@@ -18,7 +19,13 @@ namespace FoosballApi.Repositories
 
         public List<Player> ReadMatchTeams(int matchId)
         {
-            return _dataContext.Matches.Find(matchId).TeamA
+            var match = _dataContext.Matches.FirstOrDefault(p => p.Id == matchId);
+            var players = new List<Player>();
+            players.Add(_dataContext.Entry(match).Reference(p => p.TeamA.PlayerA).CurrentValue);
+            players.Add(_dataContext.Entry(match).Reference(p => p.TeamA.PlayerB).CurrentValue);
+            players.Add(_dataContext.Entry(match).Reference(p => p.TeamB.PlayerA).CurrentValue);
+            players.Add(_dataContext.Entry(match).Reference(p => p.TeamB.PlayerB).CurrentValue);
+            return players;
         }
 
         public Team Read(int id)

@@ -16,8 +16,10 @@ namespace FoosballApi.Models
 
         public int MatchesPlayed { get; set; } = 0;
 
+        public int PlayerA_Id { get; set; }
         public Player PlayerA { get; set; }
 
+        public int PlayerB_Id { get; set; }
         public Player PlayerB { get; set; }
         
         public Team()
