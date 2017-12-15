@@ -8,8 +8,10 @@ namespace FoosballApi.Models
 
         public static int GlobalId { get; set; } = 0;
 
+        public int TeamA_Id { get; set; }
         public Team TeamA { get; set; }
 
+        public int TeamB_Id { get; set; }
         public Team TeamB { get; set; }
 
         public int? Result { get; set; }
