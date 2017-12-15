@@ -61,6 +61,15 @@ namespace FoosballWebsite.Core
                 // Update Score for all clients
                 using (var client = new HttpClient())
                 {
+                    var _feed = new FeedViewModel()
+                    {
+                        MatchId = match.Id,
+                        Description = "Match",
+                        CreatedAt = DateTime.Now
+                    };
+
+                    await client.PostAsJsonAsync<FeedViewModel>(Startup.API_URL + "feeds", _feed);
+
                     await client.PutAsJsonAsync<MatchScore>(Startup.API_URL + "matches/" + match.Id, score);
                 }
 

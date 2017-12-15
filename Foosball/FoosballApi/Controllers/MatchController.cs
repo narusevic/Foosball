@@ -21,6 +21,7 @@ namespace FoosballApi.Controllers
         private readonly ITeamRepository _teamRepository;
         private readonly IMatchRepository _matchRepository;
 
+        private string _baseURL = "http://localhost:5000/";
         private int _counter = 25;
         private List<Rectangle> _goalAHistory = new List<Rectangle>();
         private List<Rectangle> _goalBHistory = new List<Rectangle>();
@@ -233,7 +234,56 @@ namespace FoosballApi.Controllers
 
                 _matchRepository.Create(match);
 
+                using (var client = new HttpClient())
+                {
+                    var matchViewModel = new MatchViewModel()
+                    {
+                        Guest = match.TeamA.Name,
+                        Host = match.TeamB.Name,
+                        Id = match.Id,
+                        GuestScore = 0,
+                        HostScore = 0,
+                        MatchDate = match.Start,
+                        Type = nameof(Match)
+                    };
+
+                    await client.PostAsJsonAsync(_baseURL + "api/matches", matchViewModel);
+                }
+
                 return Request.CreateResponse(HttpStatusCode.OK, match.Id);
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+        }
+
+        [HttpPut]
+        [Route("api/UpdateScore/{matchId}")]
+        public async Task<HttpResponseMessage> CreateMatch(int matchId)
+        {
+            var provider = new CustomMultipartFormDataStreamProvider(HostingEnvironment.MapPath("~/App_Data"));
+
+            try
+            {
+                var info = await Request.Content.ReadAsStringAsync();
+                var data = info.Split('&');
+
+                var score1 = int.Parse(data[0]);
+                var score2 = int.Parse(data[0]);
+
+                using (var client = new HttpClient())
+                {
+                    var matchScore = new MatchScore()
+                    {
+                        GuestScore = score1,
+                        HostScore = score2
+                    };
+
+                    await client.PutAsJsonAsync(_baseURL + "api/matches/" + matchId, matchScore);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (System.Exception e)
             {

@@ -183,6 +183,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Match.cs" />
+    <Compile Include="Models\MatchScore.cs" />
+    <Compile Include="Models\MatchViewModel.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\Tournament.cs" />

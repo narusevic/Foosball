@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Infrastructure;
@@ -47,6 +48,31 @@ namespace FoosballWebsite.Controllers
 
             MatchViewModel _matchVM = Mapper.Map<Match, MatchViewModel>(_match);
             await Clients.All.UpdateMatch(_matchVM);
+        }
+
+        [HttpPost]
+        public void Post([FromBody]MatchViewModel match)
+        {
+            var _match = new Match()
+            {
+                Id = match.Id,
+                Guest = match.Host,
+                Host = match.Guest,
+                MatchDate = DateTime.Now,
+                Type = MatchTypeEnums.Foosball,
+                Feeds = new List<Feed>
+                {
+                    new Feed()
+                    {
+                        Description = "Match started",
+                        MatchId = match.Id,
+                        CreatedAt = DateTime.Now
+                    }
+                }
+            };
+
+            _matchRepository.Add(_match);
+            _matchRepository.Commit();
         }
     }
 }
