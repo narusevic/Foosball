@@ -217,8 +217,6 @@ namespace FoosballApi.Controllers
         [Route("api/CreateMatch/")]
         public async Task<HttpResponseMessage> CreateMatch()
         {
-            var provider = new CustomMultipartFormDataStreamProvider(HostingEnvironment.MapPath("~/App_Data"));
-            
             try
             {
                 var info = await Request.Content.ReadAsStringAsync();
@@ -262,8 +260,6 @@ namespace FoosballApi.Controllers
         [Route("api/UpdateScore/{matchId}")]
         public async Task<HttpResponseMessage> CreateMatch(int matchId)
         {
-            var provider = new CustomMultipartFormDataStreamProvider(HostingEnvironment.MapPath("~/App_Data"));
-
             try
             {
                 var info = await Request.Content.ReadAsStringAsync();

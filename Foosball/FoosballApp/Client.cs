@@ -28,7 +28,7 @@ namespace FoosballApp
             };
         }
 
-        public void AddTeams(string teamName1, string temaName2)
+        public int AddTeams(string teamName1, string temaName2)
         {
             if (IsNullOrEmpty(teamName1) || temaName2.Contains(" "))
             {
@@ -49,6 +49,8 @@ namespace FoosballApp
                 });
 
             string HtmlResult = _webClient.UploadString(uri, parameters);
+
+            return int.TryParse(HtmlResult, out int id) ? id : 0;
         }
 
         private string SetParams(string[] parameters, string[] values)
@@ -79,6 +81,19 @@ namespace FoosballApp
             }
 
             return result;
+        }
+
+        public void UpdateScore(bool isHost, int scoreHost, int scoreGuest, int matchId)
+        {
+            var uri = _baseURL + "api/UpdateScores/" + matchId;
+            var parameters = SetParams(
+                new[]
+                {
+                    scoreHost.ToString(),
+                    scoreGuest.ToString()
+                });
+
+            string HtmlResult = _webClient.UploadString(uri, parameters);
         }
     }
 }

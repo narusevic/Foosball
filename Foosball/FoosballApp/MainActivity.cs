@@ -23,6 +23,10 @@ namespace FoosballApp
         private Lazy<MediaRecorder> _recorder = new Lazy<MediaRecorder>(() => new MediaRecorder());
         private Client _client = new Client();
 
+        private int _scoreGuest = 0;
+        private int _scoreHost = 0;
+        private int _matchId = -1;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -48,7 +52,7 @@ namespace FoosballApp
                 {
                     try
                     {
-                        _client.AddTeams(name1.Text, name2.Text);
+                        _matchId = _client.AddTeams(name1.Text, name2.Text);
                     }
                     catch (NameIsIncorrectException ex)
                     {
@@ -63,10 +67,12 @@ namespace FoosballApp
                     var play = FindViewById<Button>(Resource.Id.Play);
                     var video = FindViewById<VideoView>(Resource.Id.VideoView);
                     var backGame = FindViewById<Button>(Resource.Id.GameRecordBack);
+
                     backGame.Click += delegate
                     {
                         SetContentView(Resource.Layout.QuickMatch);
                     };
+
                     record.Click += delegate
                     {
 
@@ -82,9 +88,8 @@ namespace FoosballApp
                         recorder.SetPreviewDisplay(video.Holder.Surface);
                         recorder.Prepare();
                         recorder.Start();
-
-
                     };
+
                     stop.Click += delegate
                     {
                         var recorder = _recorder.Value;
@@ -98,6 +103,7 @@ namespace FoosballApp
                             byte[] responsearray = webClient.UploadFile("http://192.168.1.128:4860/api/Upload", path);
                         }
                     };
+
                     play.Click += delegate
                     {
                         Intent mediaScanIntent = new Intent(Intent.ActionMediaScannerScanFile);
@@ -108,11 +114,10 @@ namespace FoosballApp
 
                         video.SetVideoURI(uri);
                         video.Start();
-
                     };
+
+                    ScoreClick();
                 };
-
-
             };
             doubl.Click += (s, arg) =>
             {
@@ -127,6 +132,28 @@ namespace FoosballApp
                 var uri = Android.Net.Uri.Parse("");
                 var intent = new Intent(Intent.ActionView, uri: uri);
                 StartActivity(intent);
+            };
+        }
+
+        private void ScoreClick()
+        {
+            var scoreGuest = FindViewById<Button>(Resource.Id.ScoreGuest);
+            var scoreHost = FindViewById<Button>(Resource.Id.ScoreHost);
+            
+            scoreGuest.Click += (s, args) =>
+            {
+                _scoreHost++;
+
+                _client.UpdateScore(true, _scoreHost, _scoreGuest, _matchId);
+                ScoreClick();
+            };
+
+            scoreHost.Click += (s, args) =>
+            {
+                _scoreGuest++;
+
+                _client.UpdateScore(false, _scoreHost, _scoreGuest, _matchId);
+                ScoreClick();
             };
         }
 
