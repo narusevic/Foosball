@@ -22,7 +22,7 @@ namespace FoosballApi.Repositories
         public void Create(Match match)
         {
             _dataContext.Matches.Add(match);
-            _dataContext.WriteChanges();
+            _dataContext.SaveChanges();
         }
 
         public void Update(int id, Match entity)
@@ -49,7 +49,7 @@ namespace FoosballApi.Repositories
         public void Delete(int id)
         {
             _dataContext.Matches.Remove(Read(id));
-            _dataContext.WriteChanges();
+            _dataContext.SaveChanges();
         }
 
         public IEnumerable<Match> ReadAll()

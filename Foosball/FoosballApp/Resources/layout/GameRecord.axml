@@ -3,28 +3,38 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <Button
-        android:text="Record"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/Record" />
-    <Button
-        android:text="Play"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/Play" />
-    <Button
-        android:text="Stop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/Stop" />
-    <Button
-        android:text="Back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/GameRecordBack" />
-    <VideoView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/VideoView" />
+  <Button
+      android:text="Record"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/Record" />
+  <Button
+      android:text="Play"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/Play" />
+  <Button
+    android:text="Stop"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/Stop" />
+  <Button
+    android:text="Score Host"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ScoreHost" />
+  <Button
+    android:text="Score Guest"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ScoreGuest" />
+  <Button
+      android:text="Back"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/GameRecordBack" />
+  <VideoView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/VideoView" />
 </LinearLayout>

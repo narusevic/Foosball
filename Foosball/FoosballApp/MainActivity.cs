@@ -13,15 +13,19 @@ using System.Threading.Tasks;
 using FoosballApp.Exceptions;
 using Plugin.Media;
 using System.IO;
+using Android;
 
 namespace FoosballApp
 {
     [Activity(Label = "FoosballApp", MainLauncher = true)]
     public class MainActivity : Activity
     {
-        private readonly string BaseURL = "http://10.0.2.2:4860/";
-
         private Lazy<MediaRecorder> _recorder = new Lazy<MediaRecorder>(() => new MediaRecorder());
+        private Client _client = new Client();
+
+        private int _scoreGuest = 0;
+        private int _scoreHost = 0;
+        private int _matchId = -1;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -41,15 +45,14 @@ namespace FoosballApp
                 var submitQuickMatchbtn = FindViewById<Button>(Resource.Id.SumbitQuickMatch);
                 var backQuickMatchbtn = FindViewById<Button>(Resource.Id.QuickMatchBack);
                 backQuickMatchbtn.Click += delegate
-                 {
-                     SetContentView(Resource.Layout.Main);
-                 };
+                {
+                    SetContentView(Resource.Layout.Main);
+                };
                 submitQuickMatchbtn.Click += delegate
                 {
                     try
                     {
-                        AddPlayer(name1.Text);
-                        AddPlayer(name2.Text);
+                        _matchId = _client.AddTeams(name1.Text, name2.Text);
                     }
                     catch (NameIsIncorrectException ex)
                     {
@@ -63,11 +66,13 @@ namespace FoosballApp
                     var stop = FindViewById<Button>(Resource.Id.Stop);
                     var play = FindViewById<Button>(Resource.Id.Play);
                     var video = FindViewById<VideoView>(Resource.Id.VideoView);
-                    var backGame = FindViewById<Button>(Resource.Id.GameRecordBack); 
+                    var backGame = FindViewById<Button>(Resource.Id.GameRecordBack);
+
                     backGame.Click += delegate
                     {
                         SetContentView(Resource.Layout.QuickMatch);
                     };
+
                     record.Click += delegate
                     {
 
@@ -83,9 +88,8 @@ namespace FoosballApp
                         recorder.SetPreviewDisplay(video.Holder.Surface);
                         recorder.Prepare();
                         recorder.Start();
-
-
                     };
+
                     stop.Click += delegate
                     {
                         var recorder = _recorder.Value;
@@ -99,21 +103,21 @@ namespace FoosballApp
                             byte[] responsearray = webClient.UploadFile("http://192.168.1.128:4860/api/Upload", path);
                         }
                     };
+
                     play.Click += delegate
                     {
                         Intent mediaScanIntent = new Intent(Intent.ActionMediaScannerScanFile);
                         var uri = Android.Net.Uri.Parse(path);
-                        
+
                         mediaScanIntent.SetData(uri);
                         SendBroadcast(mediaScanIntent);
 
                         video.SetVideoURI(uri);
-                            video.Start();
-                        
+                        video.Start();
                     };
+
+                    ScoreClick();
                 };
-
-
             };
             doubl.Click += (s, arg) =>
             {
@@ -125,11 +129,34 @@ namespace FoosballApp
             };
             webe.Click += (s, arg) =>
             {
-                var uri = Android.Net.Uri.Parse(BaseURL);
+                var uri = Android.Net.Uri.Parse("");
                 var intent = new Intent(Intent.ActionView, uri: uri);
                 StartActivity(intent);
             };
         }
+
+        private void ScoreClick()
+        {
+            var scoreGuest = FindViewById<Button>(Resource.Id.ScoreGuest);
+            var scoreHost = FindViewById<Button>(Resource.Id.ScoreHost);
+            
+            scoreGuest.Click += (s, args) =>
+            {
+                _scoreHost++;
+
+                _client.UpdateScore(true, _scoreHost, _scoreGuest, _matchId);
+                ScoreClick();
+            };
+
+            scoreHost.Click += (s, args) =>
+            {
+                _scoreGuest++;
+
+                _client.UpdateScore(false, _scoreHost, _scoreGuest, _matchId);
+                ScoreClick();
+            };
+        }
+
         protected override void OnDestroy()
         {
 
@@ -142,20 +169,6 @@ namespace FoosballApp
                 recorder.Release();
                 recorder.Dispose();
                 recorder = null;
-            }
-        }
-        private void AddPlayer(string name)
-        {
-            if (string.IsNullOrEmpty(name) || name.Contains(" "))
-            {
-                throw new NameIsIncorrectException(name);
-            }
-
-            var wc = new WebClient();
-
-            if (wc.DownloadString(BaseURL + "api/Managing/TeamExists/" + name) != "true")
-            {
-                //wc.UploadString(BaseURL, "api/Managing/GetAllTeams/" + name);
             }
         }
     }

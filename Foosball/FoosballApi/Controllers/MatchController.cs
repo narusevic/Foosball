@@ -5,16 +5,23 @@ using Emgu.CV.Util;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Hosting;
+using System.Web.Http;
 using FoosballApi.Models;
 using FoosballApi.Repositories;
 
 namespace FoosballApi.Controllers
 {
-    public class MatchController
+    public class MatchController : ApiController
     {
         private readonly ITeamRepository _teamRepository;
         private readonly IMatchRepository _matchRepository;
 
+        private string _baseURL = "http://localhost:5000/";
         private int _counter = 25;
         private List<Rectangle> _goalAHistory = new List<Rectangle>();
         private List<Rectangle> _goalBHistory = new List<Rectangle>();
@@ -182,7 +189,7 @@ namespace FoosballApi.Controllers
             return false;
         }
 
-        public void CreateMatch(Match match, string teamAName, string teamBName)
+        public void CreateMatch2(Match match, string teamAName, string teamBName)
         {
             var teamA = _teamRepository[teamAName];
 
@@ -204,6 +211,80 @@ namespace FoosballApi.Controllers
             match.TeamB = teamB;
 
             _matchRepository.Create(match);
+        }
+        
+        [HttpPost]
+        [Route("api/CreateMatch/")]
+        public async Task<HttpResponseMessage> CreateMatch()
+        {
+            try
+            {
+                var info = await Request.Content.ReadAsStringAsync();
+                var data = info.Split('&');
+                
+                var team1 = new Team(data[0]);
+                var team2 = new Team(data[1]);
+
+                _teamRepository.Create(team1);
+                _teamRepository.Create(team2);
+
+                var match = new Match(team1, team2);
+
+                _matchRepository.Create(match);
+
+                using (var client = new HttpClient())
+                {
+                    var matchViewModel = new MatchViewModel()
+                    {
+                        Guest = match.TeamA.Name,
+                        Host = match.TeamB.Name,
+                        Id = match.Id,
+                        GuestScore = 0,
+                        HostScore = 0,
+                        MatchDate = match.Start,
+                        Type = nameof(Match)
+                    };
+
+                    await client.PostAsJsonAsync(_baseURL + "api/matches", matchViewModel);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, match.Id);
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+        }
+
+        [HttpPut]
+        [Route("api/UpdateScore/{matchId}")]
+        public async Task<HttpResponseMessage> CreateMatch(int matchId)
+        {
+            try
+            {
+                var info = await Request.Content.ReadAsStringAsync();
+                var data = info.Split('&');
+
+                var score1 = int.Parse(data[0]);
+                var score2 = int.Parse(data[0]);
+
+                using (var client = new HttpClient())
+                {
+                    var matchScore = new MatchScore()
+                    {
+                        GuestScore = score1,
+                        HostScore = score2
+                    };
+
+                    await client.PutAsJsonAsync(_baseURL + "api/matches/" + matchId, matchScore);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
         }
     }
 }

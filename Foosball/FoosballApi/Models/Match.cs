@@ -36,5 +36,12 @@ namespace FoosballApi.Models
             TeamA = new Team(playerA);
             TeamB = new Team(playerB);
         }
+
+        public Match(Team teamA, Team teamB)
+            : this()
+        {
+            TeamA = teamA;
+            TeamB = teamB;
+        }
     }
 }

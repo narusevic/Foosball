@@ -51,7 +51,7 @@ namespace FoosballApi.Repositories
         public void Create(Player player)
         {
             _dataContext.Players.Add(player);
-            _dataContext.WriteChanges();
+            _dataContext.SaveChanges();
         }
 
         public void Update(int id, Player player)
@@ -74,7 +74,7 @@ namespace FoosballApi.Repositories
         public void Delete(int id)
         {
             _dataContext.Players.Remove(Read(id));
-            _dataContext.WriteChanges();
+            _dataContext.SaveChanges();
         }
 
         public IEnumerable<Player> ReadAll()
